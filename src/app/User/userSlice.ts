@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 import { useAppSelector } from "../../app/store";
 
-interface UserState {
+export interface UserState {
   user: User | null;
   isLoggedIn: boolean;
 }

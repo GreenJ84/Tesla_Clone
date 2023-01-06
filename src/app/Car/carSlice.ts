@@ -17,7 +17,7 @@ type Car = {
   quantity: number;
 };
 
-interface CarState {
+export interface CarState {
   cars: Car[];
   cart: Car[];
   total: number;
