@@ -1,15 +1,22 @@
 /** @format */
 
 import { createSlice } from "@reduxjs/toolkit";
+import { User } from "firebase/auth";
 import { useAppSelector } from "../../app/store";
 
+interface UserState {
+  user: User | null;
+  isLoggedIn: boolean;
+}
+
+const initialState: UserState = {
+  user: null,
+  isLoggedIn: false,
+};
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: {
-    user: null,
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
     setLogin: (state, action) => {
       state.isLoggedIn = true;
