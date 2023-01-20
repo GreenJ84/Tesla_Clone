@@ -25,7 +25,13 @@ export const Nav = styled.div`
 `;
 
 export const SideMenu = styled.div`
-
+  display: flex;
+  align-items: center;
+  a {
+    font-weight: 600;
+    text-transform: small-caps;
+    margin-right: 10px;
+  }
 `;
 
 export const Cart = styled.div``;
