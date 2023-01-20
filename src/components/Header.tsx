@@ -3,11 +3,16 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { selectCars } from "../app/Store/Car/carSlice";
+
+import { FaOpencart } from 'react-icons/fa';
+
 import { storeType } from "../app/Store/store";
+import { selectCars } from "../app/Store/Car/carSlice";
+import { setLogout } from "../app/Store/User/userSlice";
 import { useCartState } from "../app/Utils/hooks/useCartState";
+
 import {
+  BurgerIcon,
   Close,
   Container,
   Nav,
@@ -31,29 +36,87 @@ const Header = (props: HeaderType) => {
   const cartData = useCartState();
 
   return (
-    <Container>
+    <Container className={ bgColor ? bgColor : "" }>
+      {/* Tesla Logo Display */}
       <Link to="/">
         <img
           src="/images/logo.svg"
           alt="Tesla Logo"
         />
       </Link>
+      {/* Cars Menu */}
       <Nav>
-        {cars.map((car) => (
+        {cars.map(( car ) => (
           <h1
             className=""
-            onClick={() => {}}
-            key=""
+            onClick={() => {
+              homeRef
+                ?
+                  homeRef.current?.scrollTo({
+                    behavior: 'smooth',
+                    top: car.ref?.offsetTop
+                  })
+                :
+                  nav(`/cars/${ car.id }`)
+            }}
+            key={ car.id }
           >
             {car.title}
           </h1>
         ))}
       </Nav>
-      <SideMenu></SideMenu>
+      {/* Loggin, Logout, and Cart Menu */}
+      <SideMenu>
+        {user.isLoggedIn
+          ?
+            <h1
+              onClick={() => {
+                dispatch(setLogout());
+                window.location.reload();
+              }}
+            >
+              Logout
+            </h1>
+          :
+            <h1
+              onClick={() => nav('/login')}
+            >
+              Sign In
+            </h1>
+        }
+          <Link to="/cart">
+            <FaOpencart />
+            <p>
+              {cartData.length}
+            </p>
+          </Link>
+
+          <BurgerIcon
+            onClick={() => setMenuStatus(true)}
+          />
+      </SideMenu>
       {/* Right side drop in Nav, under 800px  */}
       <SmallNav>
         {/* Close button for Burger Nav */}
         <Close></Close>
+        <ul>
+          {cars.map((car) => 
+            <li
+              onClick={() => {
+                homeRef
+                  ?
+                    homeRef.current?.scrollTo({
+                      behavior: 'smooth',
+                      top: car.ref?.offsetTop
+                    })
+                  :
+                    nav(`/cars/${ car.id }`)
+              }}
+            >
+              <h1> { car.title }</h1>
+            </li>
+          )}
+        </ul>
       </SmallNav>
     </Container>
   );
