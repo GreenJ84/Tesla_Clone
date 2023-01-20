@@ -4,8 +4,13 @@ import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import { carsData } from "../../teslaCarInfo";
-import carReducer from "./Car/carSlice";
-import userReducer from "./User/userSlice";
+import carReducer, { CarState } from "./Car/carSlice";
+import userReducer, { UserState } from "./User/userSlice";
+
+export interface storeType{
+  user: UserState
+  car: CarState
+}
 
 export const store = configureStore({
   reducer: {
