@@ -1,14 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
-import { setLogin, setLogout } from './app/User/userSlice';
+import { setLogin, setLogout } from './app/Store/User/userSlice';
 
 function App() {
   const dispatch = useDispatch();
 
-  const auth = () => {
+  const auth = (user: any) => {
     if (true) {
-      dispatch(setLogin())
+      dispatch(setLogin(user))
     } else {
       dispatch(setLogout())
     }
