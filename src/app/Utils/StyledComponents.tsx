@@ -2,6 +2,10 @@
 
 import styled from "styled-components";
 
+interface StyledProps {
+  show: boolean
+}
+
 export const Container = styled.div`
   position: fixed;
   display: flex;
@@ -34,9 +38,38 @@ export const SideMenu = styled.div`
   }
 `;
 
+export const SmallNav = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 20px;
+  width: 300px;
+  background: white;
+  list-style: none;
+  text-align: start;
+  z-index: 16;
+  transition: transform 0.2s ease-in;
+  transform: ${({ show }: StyledProps) =>
+    show ? "translateX(0)" : "translateX(100%)"};
+  ul {
+    list-style: none;
+    li {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        h1 {
+          font-size: 16px;
+          font-weight: 600;
+        }
+    }
+  }
+`;
+
 export const Cart = styled.div``;
 
-export const SmallNav = styled.div``;
 
 export const Close = styled.div``;
 
