@@ -68,9 +68,7 @@ export const SmallNav = styled.div`
   }
 `;
 
-export const Cart = styled.div``;
-
-
-export const Close = styled.div``;
-
-export const BurgerIcon = styled.div``;
+export const Close = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
