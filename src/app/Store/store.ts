@@ -3,14 +3,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
-import { carsData } from "../teslaCarInfo";
+import { carsData } from "../../teslaCarInfo";
 import carReducer from "./Car/carSlice";
 import userReducer from "./User/userSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    car: carReducer
+    car: carReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -20,10 +20,10 @@ export const store = configureStore({
         ignoredPaths: [
           ...carsData.map((_, index) => {
             return `car.cars.${index}.ref`;
-            }),
+          }),
         ],
       },
-      immutableCheck: true
+      immutableCheck: true,
     }),
 });
 

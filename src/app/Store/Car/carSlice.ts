@@ -2,8 +2,8 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-import { RootState } from "../../app/store";
-import { carsData } from "../../teslaCarInfo";
+import { RootState } from "../store";
+import { carsData } from "../../../teslaCarInfo";
 
 type Car = {
   id: number;
@@ -68,8 +68,7 @@ export const carSlice = createSlice({
   },
 });
 
-export const { setCarRef, addToCart, removeFromCart, setTotal, setQuantity } =
-  carSlice.actions;
+export const { setCarRef, addToCart, removeFromCart, setTotal, setQuantity } = carSlice.actions;
 export const selectCars = (state: RootState) => state.car.cars;
 
 export default carSlice.reducer;
