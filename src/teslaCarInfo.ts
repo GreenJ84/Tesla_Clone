@@ -1,4 +1,16 @@
-export const carsData = [
+export interface carData{
+   id: number
+   title: string
+   backgroundImg: string
+   description: string
+   price: number
+   inStock: boolean
+   highlights: string[]
+   quantity: number
+   ref: React.RefObject<HTMLDivElement> | null
+}
+
+export const carsData: carData[] = [
    {
       id: 1,
       title: "Model 3",
