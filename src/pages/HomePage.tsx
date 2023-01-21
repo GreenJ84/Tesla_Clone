@@ -1,11 +1,17 @@
-import React from 'react'
+/** @format */
+
+import React, { useRef } from "react";
+import Header from "../components/Header";
 
 const HomePage = () => {
-    return (
-    // Need The Website Header
-    // Need The Rolling selector body
-    <div>HomePage</div>
-    )
-}
+  const homeRef = useRef<HTMLDivElement>(null);
 
-export default HomePage
+  return (
+    <>
+      <Header homeRef={homeRef} />
+      {/* Need The Rolling selector body */}
+    </>
+  );
+};
+
+export default HomePage;
