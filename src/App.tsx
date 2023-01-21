@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { setLogin, setLogout } from './app/Store/User/userSlice';
+import HomePage from './pages/HomePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function App() {
       {/* Login Page */}
       <Route />
       {/* Registration Page */}
-      <Route />
+      <Route path="/" element={ <HomePage />} />
       {/* Home Page */}
       <Route />
       {/* Showcase Page */}
