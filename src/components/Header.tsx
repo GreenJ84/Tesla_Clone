@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -35,6 +35,15 @@ const Header = (props: HeaderType) => {
   const cars = useSelector(selectCars);
   const [menuStatus, setMenuStatus] = useState(false);
   const cartData = useCartState();
+
+  useEffect(() => {
+    const sizeHandler = () => {
+      if (window.innerWidth > 900) {
+        setMenuStatus(false);
+      }
+    };
+    window.addEventListener("resize", sizeHandler);
+  })
 
   return (
     <Container className={ bgColor ? bgColor : "" }>
