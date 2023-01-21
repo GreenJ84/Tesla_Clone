@@ -46,7 +46,7 @@ export const SmallNav = styled.div`
   bottom: 0;
   right: 0;
   padding: 20px;
-  width: 300px;
+  width: 200px;
   background: white;
   list-style: none;
   text-align: start;
@@ -57,12 +57,19 @@ export const SmallNav = styled.div`
   ul {
     list-style: none;
     li {
-        padding: 15px 0;
+        padding: 25px 0 5px 5px;
         border-bottom: 1px solid rgba(0, 0, 0, 0.2);
         cursor: pointer;
         h1 {
-          font-size: 16px;
-          font-weight: 600;
+          width: 150px;
+          padding-left: 15px;
+          font-size: 24px;
+          font-weight: 500;
+          border-radius: 20px;
+        }
+        h1:hover{
+          background-color: rgba(0, 0, 0, .1);
+          box-shadow: 0px 2px 5px black;
         }
     }
   }
