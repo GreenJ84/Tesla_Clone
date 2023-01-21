@@ -1,16 +1,10 @@
 /** @format */
 
 import { configureStore } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 import { carsData } from "../../teslaCarInfo";
-import carReducer, { CarState } from "./Car/carSlice";
-import userReducer, { UserState } from "./User/userSlice";
-
-export interface storeType{
-  user: UserState
-  car: CarState
-}
+import carReducer from "./Car/carSlice";
+import userReducer from "./User/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -34,7 +28,3 @@ export const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-
-// Export a hook that can be reused to resolve types
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
