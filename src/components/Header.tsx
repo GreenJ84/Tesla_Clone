@@ -6,13 +6,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { FaOpencart } from 'react-icons/fa';
 
-import { storeType } from "../app/Store/store";
+import { RootState } from "../app/Store/store";
 import { selectCars } from "../app/Store/Car/carSlice";
 import { setLogout } from "../app/Store/User/userSlice";
 import { useCartState } from "../app/Utils/hooks/useCartState";
 
 import {
-  BurgerIcon,
   Close,
   Container,
   Nav,
@@ -30,7 +29,7 @@ const Header = (props: HeaderType) => {
   const dispatch = useDispatch();
 
   const { homeRef, bgColor } = props;
-  const user = useSelector((state: storeType) => state.user);
+  const user = useSelector((state: RootState) => state.user);
   const cars = useSelector(selectCars);
   const [menuStatus, setMenuStatus] = useState(false);
   const cartData = useCartState();
@@ -91,12 +90,14 @@ const Header = (props: HeaderType) => {
             </p>
           </Link>
 
-          <BurgerIcon
+          <div
+            style={{ "cursor": "pointer" }}
+            
             onClick={() => setMenuStatus(true)}
           />
       </SideMenu>
       {/* Right side drop in Nav, under 800px  */}
-      <SmallNav>
+      <SmallNav show={menuStatus}>
         {/* Close button for Burger Nav */}
         <Close></Close>
         <ul>

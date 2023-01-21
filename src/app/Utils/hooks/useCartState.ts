@@ -1,6 +1,8 @@
 /** @format */
 
-import { storeType, useAppSelector } from "../../Store/store";
+import { RootState } from "../../Store/store";
+import { useAppSelector } from "./useAppSelector";
+
 
 export const useCartState = () =>
-  useAppSelector((state: storeType) => state.car.cart);
+  useAppSelector((state: RootState) => state.car.cart);
