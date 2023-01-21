@@ -46,3 +46,7 @@ a{
     transform: translateY(3px);
   }
 }
+
+.cursor{
+  cursor: pointer;
+}
