@@ -19,7 +19,7 @@ import {
   Nav,
   SideMenu,
   SmallNav,
-} from "../app/Utils/StyledComponents";
+} from "../app/Utils/StyledComponents/HeaderComponents";
 
 interface HeaderType {
   homeRef?: React.RefObject<HTMLDivElement>;
