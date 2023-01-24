@@ -19,12 +19,12 @@ const HomeBody = (props: HomeProps) => {
         <Container ref={homeRef}>
             {cars.map((car: carData) => 
                 <div key={car.id}>
-                <CarDisplay
+                    <CarDisplay
                         id={car.id}
                         title={car.title}
                         homeRef={homeRef}
                         backgroundImg={car.backgroundImg}
-                />
+                    />
                 </div>
             )}
         </Container>
@@ -34,4 +34,8 @@ const HomeBody = (props: HomeProps) => {
 export default HomeBody
 
 const Container = styled.div`
+    overflow-y: auto;
+    text-align: center;
+    height: 100vh;
+    scroll-snap-type: y mandatory;
 `;
