@@ -4,11 +4,11 @@ import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Fade } from "react-awesome-reveal";
 
-import styled from "styled-components";
-
 import { selectCars, setCarRef } from "../app/Store/Car/carSlice";
 import { useAppDispatch } from "../app/Utils/hooks/useAppDispatch";
 import { useAppSelector } from "../app/Utils/hooks/useAppSelector";
+
+import {Container, ButtonWrap, Button, DownArrow} from '../app/Utils/StyledComponents/DisplayComponents'
 
 interface DisplayProps {
   id: number;
@@ -71,53 +71,3 @@ const CarDisplay = (props: DisplayProps) => {
 };
 
 export default CarDisplay;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  scroll-snap-align: start;
-  background-image: ${(props: { bgImage: string }) =>
-    `url("images/${props.bgImage}")`};
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-
-const ButtonWrap = styled.div`
-  display: flex;
-  margin-bottom: 30px;
-  @media (max-width: 744px) {
-    flex-direction: column;
-  }
-`;
-
-const Button = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 50px;
-  margin: 8px 16px;
-  width: 17vw;
-  min-width: 300px;
-  @media (max-width: 744px) {
-    flex-direction: column;
-    min-width: 90vw;
-    margin: 12px 0px;
-  }
-  height: 50px;
-  font-size: 20px;
-  border-radius: 5px;
-  cursor: pointer;
-`;
-
-const DownArrow = styled.img`
-  margin-bottom: 35px;
-  height: 40px;
-  width: 80px;
-  animation: animateDown infinite 1.5s;
-  overflow-x: hidden;
-`;
