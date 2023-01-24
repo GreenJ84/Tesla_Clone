@@ -35,25 +35,25 @@ const CarDisplay = (props: DisplayProps) => {
     >
       <Fade direction="up">
         <div style={{ paddingTop: "15vh", textAlign: "center" }}>
-          <h1 className="text-4xl font-bold text-black">{props.title}</h1>
-          <p>Schedule a Demo Drive</p>
+          <h1 className="text-6xl font-medium text-black">{props.title}</h1>
+          <p className="text-xl border-b-2 hover:border-b-4 border-slate-800">Schedule a Demo Drive</p>
         </div>
       </Fade>
       <Fade direction="up">
         <ButtonWrap>
           <Link to={`/cars/${props.id}`}>
-            <Button className="text-white bg-slate-800 opacity-80 hover:animate-bounce">
+            <Button className="text-white bg-slate-800 opacity-95 hover:animate-bounce">
               Custom Order
             </Button>
           </Link>
           <Link to={`/cart`}>
-            <Button className="text-black bg-slate-50 opacity-65 hover:animate-bounce">
+            <Button className="text-black bg-slate-300 opacity-90 hover:animate-bounce">
               View Inventory
             </Button>
           </Link>
         </ButtonWrap>
       </Fade>
-      {props.id !== cars.length && (
+      {props.id !== cars.length ?
         <DownArrow
           onClick={() =>
             props.homeRef?.current?.scrollTo({
@@ -64,7 +64,8 @@ const CarDisplay = (props: DisplayProps) => {
           className="cursor mx-auto"
           src="images/down-arrow.svg"
         />
-      )}
+      :
+        <div style={{ "marginBottom": "35px", "height": "40px", "width": "80px"}}></div>}
     </Container>
   );
 };
@@ -88,7 +89,7 @@ const Container = styled.div`
 const ButtonWrap = styled.div`
   display: flex;
   margin-bottom: 30px;
-  @media (max-width: 768px) {
+  @media (max-width: 744px) {
     flex-direction: column;
   }
 `;
@@ -97,18 +98,26 @@ const Button = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px;
-  width: 256px;
-  height: 40px;
-  font-size: 12px;
-  text-transform: uppercase;
-  border-radius: 100px;
+  position: relative;
+  top: 50px;
+  margin: 8px 16px;
+  width: 17vw;
+  min-width: 300px;
+  @media (max-width: 744px) {
+    flex-direction: column;
+    min-width: 90vw;
+    margin: 12px 0px;
+  }
+  height: 50px;
+  font-size: 20px;
+  border-radius: 5px;
   cursor: pointer;
 `;
 
 const DownArrow = styled.img`
-  margin-top: 20px;
+  margin-bottom: 35px;
   height: 40px;
+  width: 80px;
   animation: animateDown infinite 1.5s;
   overflow-x: hidden;
 `;
