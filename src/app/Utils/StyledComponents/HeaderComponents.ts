@@ -2,16 +2,16 @@
 
 import styled from "styled-components";
 
-interface StyledProps {
+export interface StyledProps {
   show: boolean
 }
 
 export const Container = styled.div`
-  position: fixed;
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  top: 0;
+  top: 5px;
   left: 0;
   right: 0;
   padding: 0 20px;
