@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import Header from "../components/Header";
+import HomeBody from "../components/HomeBody";
 
 const HomePage = () => {
   const homeRef = useRef<HTMLDivElement>(null);
@@ -9,7 +10,7 @@ const HomePage = () => {
   return (
     <>
       <Header homeRef={homeRef} />
-      {/* Need The Rolling selector body */}
+      <HomeBody homeRef={homeRef}/>
     </>
   );
 };
