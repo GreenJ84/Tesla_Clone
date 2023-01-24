@@ -33,7 +33,7 @@ export const carsData: carData[] = [
    {
       id: 2,
       title: "Model 3",
-      backgroundImg: "model-s.jpg",
+      backgroundImg: "model-3.jpg",
       description:
          "Tesla All-Wheel Drive has two independent motors for improved redundancy, each with only one moving part for minimal maintenance and maximum durability. Unlike traditional all-wheel drive systems, they digitally control torque to the front and rear wheels for far better handling and traction control.",
       price: 41940,
@@ -51,10 +51,9 @@ export const carsData: carData[] = [
    {
       id: 3,
       title: "Model S",
-
       description:
          "Tesla designed Model S from the ground-up as an electric vehicle — each component, including batteries, motors and exterior aerodynamics are optimized to benefit from one another and create one of the most efficient, yet unbelievably powerful vehicles ever built.",
-      backgroundImg: "model-3.jpg",
+      backgroundImg: "model-s.jpg",
       price: 93740,
       inStock: false,
 
