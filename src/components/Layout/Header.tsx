@@ -128,6 +128,7 @@ const Header = (props: HeaderType) => {
         <ul>
           {cars.map((car) => (
             <li
+              key={car.id}
               onClick={() => {
                 homeRef
                   ? homeRef.current?.scrollTo({
