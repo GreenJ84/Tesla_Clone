@@ -2,6 +2,7 @@ export interface carData{
    id: number
    title: string
    backgroundImg: string
+   backgroundImg2?: string
    description: string
    price: number
    inStock: boolean
@@ -16,6 +17,7 @@ export const carsData: carData[] = [
       title: "Model Y",
       inStock: true,
       backgroundImg: "model-y.jpg",
+      backgroundImg2: "model-y.jpg",
       description:
          "With the most storage space and towing capacity of any electric SUV, and seating for up to seven adults, Model X delivers maximum utility. Front doors open and close automatically, Falcon Wing doors allow for easier loading and a standard trailer hitch lets you bring your gear anywhere you go.",
       price: 57940,
@@ -34,6 +36,7 @@ export const carsData: carData[] = [
       id: 2,
       title: "Model 3",
       backgroundImg: "model-3.jpg",
+      backgroundImg2: "model-3.jpg",
       description:
          "Tesla All-Wheel Drive has two independent motors for improved redundancy, each with only one moving part for minimal maintenance and maximum durability. Unlike traditional all-wheel drive systems, they digitally control torque to the front and rear wheels for far better handling and traction control.",
       price: 41940,
@@ -54,6 +57,7 @@ export const carsData: carData[] = [
       description:
          "Tesla designed Model S from the ground-up as an electric vehicle — each component, including batteries, motors and exterior aerodynamics are optimized to benefit from one another and create one of the most efficient, yet unbelievably powerful vehicles ever built.",
       backgroundImg: "model-s.jpg",
+      backgroundImg2: "model-s.jpg",
       price: 93740,
       inStock: false,
 
@@ -72,6 +76,7 @@ export const carsData: carData[] = [
       id: 4,
       title: "Model X",
       backgroundImg: "model-x.jpg",
+      backgroundImg2: "model-x.jpg",
       price: 108940,
       inStock: true,
       description:
