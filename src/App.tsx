@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { setLogin, setLogout } from './app/Store/User/userSlice';
+import DisplayPage from './pages/DisplayPage';
 import HomePage from './pages/HomePage';
 
 function App() {
@@ -20,11 +21,11 @@ function App() {
       {/* Login Page */}
       <Route />
       {/* Registration Page */}
-      <Route path="/" element={ <HomePage />} />
+      <Route />
       {/* Home Page */}
-      <Route />
+      <Route path="/" element={ <HomePage />} />
       {/* Showcase Page */}
-      <Route />
+      <Route path="/cars/:id" element={ <DisplayPage />} />
       {/* Cart Page */}
       <Route />
       {/* Order Page */}
