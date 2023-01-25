@@ -19,7 +19,7 @@ const HomeBody = (props: HomeProps) => {
 
   return (
     <Container ref={homeRef}>
-      {cars.map((car: carData) => (
+      {cars.map((car) => (
         <div key={car.id}>
           <Display
             id={car.id}
