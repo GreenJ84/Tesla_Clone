@@ -19,22 +19,10 @@ const Detail = () => {
         <div >
           {/* Product image */}
           <Container bgImage={product.backgroundImg2} className={"flex flex-col items-center"}>
-            <div className="relative top-24 lg:top-32 2xl:top-52">
-              <h1 className="text-5xl xl:text-6xl font-medium tracking-tight text-gray-900 mb-.5 pb-0 border-b border-black">
+            <div className="relative top-40 lg:top-48 2xl:top-52">
+              <h1 className="text-6xl xl:text-7xl font-semibold tracking-loose text-gray-900 mb-.5 pb-0 border-b border-black">
                 {product.title}
               </h1>
-              <div className="flex">
-                {[0, 1, 2, 3, 4].map((rating) => (
-                  <StarIcon
-                    key={rating}
-                    aria-hidden="true"
-                    className={"h-5 w-8 flex-shrink-0"}
-                  />
-                ))}
-              </div>
-              <p className="sr-only">
-                {5} out of 5 stars
-              </p> 
             </div>
             <DownArrow
           onClick={() => window.scrollTo({
@@ -44,25 +32,25 @@ const Detail = () => {
               className="absolute bottom-80 cursor mx-auto"
               src="/images/down-arrow.svg"
             />
-        <div className="flex text-5xl">
+        <div className="absolute flex text-5xl bottom-56 gap-x-28">
               { product.title === "Model Y" ?
                 <CarStat value={`${product.stats.capacity} cu ft`} description="Cargo Space" />
               : 
                 ""
               }
-              <CarStat value={`${product.stats.range}mi`} description="Range (EPA est.)"/>
+              <CarStat value={`${product.stats.range} mi`} description="Range (EPA est.)"/>
               { product.title !== "Model Y" ?
-                <CarStat value={`${product.stats.acceleration}s`} description="0-60 mph"/>
+                <CarStat value={`${product.stats.acceleration} s`} description="0-60 mph"/>
               : 
                 ""
               }
               { product.title !== "Model Y" && product.title !== "Model 3" ?
-                <CarStat value={`${product.stats.topSpeed}mph`} description="Top Speed"/>
+                <CarStat value={`${product.stats.topSpeed} mph`} description="Top Speed"/>
               :
                 <CarStat value={`${product.stats.drive}`} description="Dual Motor"/>
               }
             </div>
-            <button>
+            <button className="absolute bottom-32 py-1.5 px-40 text-2xl transition-colors ease-in-out duration-300 text-white border-white border-4 rounded-lg hover:bg-white hover:text-black">
               Order Now
             </button>
           </Container>
