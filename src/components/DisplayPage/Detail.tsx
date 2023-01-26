@@ -8,6 +8,7 @@ import styled from "styled-components";
 import {DownArrow} from '../../app/Utils/StyledComponents/DisplayComponents';
 import { addToCart } from "../../app/Store/Car/carSlice";
 import { carsData } from "../../teslaCarInfo";
+import CarStat from "./CarStat";
 
 const Detail = () => {
   const { id } = useParams();
@@ -40,9 +41,30 @@ const Detail = () => {
                 behavior: 'smooth',
                 top: window.innerHeight
               })}
-              className="absolute bottom-0 cursor mx-auto"
+              className="absolute bottom-80 cursor mx-auto"
               src="/images/down-arrow.svg"
             />
+        <div className="flex text-5xl">
+              { product.title === "Model Y" ?
+                <CarStat value={`${product.stats.capacity} cu ft`} description="Cargo Space" />
+              : 
+                ""
+              }
+              <CarStat value={`${product.stats.range}mi`} description="Range (EPA est.)"/>
+              { product.title !== "Model Y" ?
+                <CarStat value={`${product.stats.acceleration}s`} description="0-60 mph"/>
+              : 
+                ""
+              }
+              { product.title !== "Model Y" && product.title !== "Model 3" ?
+                <CarStat value={`${product.stats.topSpeed}mph`} description="Top Speed"/>
+              :
+                <CarStat value={`${product.stats.drive}`} description="Dual Motor"/>
+              }
+            </div>
+            <button>
+              Order Now
+            </button>
           </Container>
           {/* Product details */}
       <div className="relative flex flex-col w-3/4 md:w-5/6 2xl:w-2/3 mx-auto pt-10">
@@ -145,7 +167,7 @@ export default Detail;
 const Container = styled.div`
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: 130vh;
   background-image: ${(props: { bgImage: string }) =>
   `url("/images/${props.bgImage}")`};
   background-position: center;
