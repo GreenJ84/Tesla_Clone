@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { CheckIcon, ClockIcon, StarIcon } from "@heroicons/react/24/solid";
+import { CheckIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
@@ -19,10 +19,20 @@ const Detail = () => {
         <div >
           {/* Product image */}
           <Container bgImage={product.backgroundImg2} className={"flex flex-col items-center"}>
-            <div className="relative top-40 lg:top-48 2xl:top-52">
-              <h1 className="text-6xl xl:text-7xl font-semibold tracking-loose text-gray-900 mb-.5 pb-0 border-b border-black">
-                {product.title}
+            <div className="flex flex-col items-center relative top-40 lg:top-48 2xl:top-52">
+              <h1 className={product.title !== "Model 3" ?
+                    "text-6xl xl:text-7xl font-semibold tracking-wider text-gray-900 mb-.5"
+                  : 
+                    "text-6xl xl:text-7xl font-semibold tracking-wider text-white mb-.5"}>
+                    {product.title}
               </h1>
+            {window.location.pathname !== "/cars/4" && window.location.pathname !== "/cars/3" ?
+                <p className="text-center text-xl text-white border-b hover:border-b-2 tracking-widest">
+                  Schedule a Demo Drive
+                </p>
+              :
+                ""
+              }
             </div>
             <DownArrow
           onClick={() => window.scrollTo({
@@ -32,7 +42,7 @@ const Detail = () => {
               className="absolute bottom-80 cursor mx-auto"
               src="/images/down-arrow.svg"
             />
-        <div className="absolute flex text-5xl bottom-56 gap-x-28">
+            <div className="absolute flex text-5xl bottom-56 gap-x-28">
               { product.title === "Model Y" ?
                 <CarStat value={`${product.stats.capacity} cu ft`} description="Cargo Space" />
               : 
