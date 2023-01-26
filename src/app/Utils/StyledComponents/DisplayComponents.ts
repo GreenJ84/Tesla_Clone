@@ -18,7 +18,8 @@ export const Container = styled.div`
 
 export const ButtonWrap = styled.div`
   display: flex;
-  margin-bottom: 30px;
+  position: relative;
+  top: 240px;
   @media (max-width: 744px) {
     flex-direction: column;
   }
@@ -32,7 +33,7 @@ export const Button = styled.button`
   top: 50px;
   margin: 8px 16px;
   width: 17vw;
-  min-width: 300px;
+  min-width: 35vw;
   @media (max-width: 744px) {
     flex-direction: column;
     min-width: 90vw;
