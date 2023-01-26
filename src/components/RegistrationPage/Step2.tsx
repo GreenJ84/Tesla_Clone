@@ -39,7 +39,7 @@ const Step2 = (props: Step2) => {
 
             <label htmlFor="">
                 Password
-                <span><InformationCircleIcon className="relative inline bottom-[3px] w-6 h-6 ml-1" /></span>
+                <span><InformationCircleIcon className="relative inline bottom-[3px] w-4 h-4 ml-1" /></span>
             </label>
             <input 
                 type={showPass ? "text" : "password"}
