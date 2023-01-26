@@ -26,6 +26,7 @@ const RegistrationPage = () => {
                     <Step1 
                         firstName={[firstName, setFirstName]}
                         lastName={[lastName, setLastName]}
+                        setStep={() => setSecStep(true)}
                     />
                 :
                     <Step2 
