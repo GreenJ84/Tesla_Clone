@@ -10,7 +10,9 @@ interface show {
 
 const Show = (props: show) => {
   return (
-    <Container onClick={() => props.set()}>
+    <Container
+      onClick={() => props.set()}
+    >
         {props.state ? 
             <EyeIcon />
         :
@@ -23,5 +25,9 @@ const Show = (props: show) => {
 export default Show;
 
 const Container = styled.div`
-
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  transform: translateY(-70px) translateX(385px);
+  cursor: pointer;
 `;
