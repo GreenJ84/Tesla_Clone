@@ -49,12 +49,12 @@ const Display = (props: DisplayProps) => {
       <Fade direction="up">
         <ButtonWrap>
           <Link to={`/cars/${props.id}`}>
-            <Button className="text-white bg-slate-800 opacity-95 hover:animate-bounce">
+            <Button className="text-white bg-[rgba(20,20,20,.85)] opacity-95 hover:animate-bounce">
               Custom Order
             </Button>
           </Link>
           <Link to={`/cart`}>
-            <Button className="text-black bg-slate-300 opacity-90 hover:animate-bounce">
+            <Button className="text-black bg-[rgba(255,255,255,.7)] opacity-90 hover:animate-bounce">
               View Inventory
             </Button>
           </Link>
