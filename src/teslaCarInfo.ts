@@ -115,8 +115,8 @@ export const carsData: carData[] = [
    {
       id: 4,
       title: "Model X",
-      backgroundImg: "model-x.jpg",
-      backgroundImg2: "model-x-2.jpg",
+      backgroundImg: "model-x-2.jpg",
+      backgroundImg2: "model-x.jpg",
       description: "Model X platforms unite powertrain and battery technologies for an unrivaled combination of performance, range and efficiency. New module and pack thermal architecture allows for faster charging and gives you more power and endurance in all conditions.",
       description2: "With ample storage and 5,000 lbs of towing capacity, Model X is built for maximum utility. Front doors open and close automatically, Falcon Wing rear doors allow for easier loading and a trailer hitch comes standard, so you can bring your gear with you wherever you go.",
       description3: "With up to 348 miles of estimated range and access to the world’s largest and most powerful fast charging network, you’ll spend less time plugged in and more time on the road. Chat with a Tesla Advisor to learn more about Model X or schedule a demo drive today.",
