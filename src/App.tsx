@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { setLogin, setLogout } from './app/Store/User/userSlice';
 import DisplayPage from './pages/DisplayPage';
 import HomePage from './pages/HomePage';
+import RegistrationPage from './pages/RegistrationPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
       {/* Login Page */}
       <Route />
       {/* Registration Page */}
-      <Route />
+      <Route path="/registration" element={ <RegistrationPage /> } />
       {/* Home Page */}
       <Route path="/" element={ <HomePage />} />
       {/* Showcase Page */}
