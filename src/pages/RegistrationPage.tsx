@@ -1,22 +1,30 @@
 import React, { useState } from 'react'
-import { useNavigation } from 'react-router-dom';
+
 import Header from '../components/Layout/Header';
+import Step1 from '../components/RegistrationPage/Step1';
+import Step2 from '../components/RegistrationPage/Step2';
 
 const RegistrationPage = () => {
-    const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [passCon, setPassCon] = useState("");
-    const nav = useNavigation()
+    // const nav = useNavigation();
 
   return (
     <>
         <Header />
         <form>
-            {/* Step 1 */}
-            {/* Step 2 */}
+            <Step1 
+                firstName={[firstName, setFirstName]}
+                lastName={[lastName, setLastName]}
+                username={[username, setUsername]}
+            />
+            <Step2 
+                email={[email, setEmail]} 
+                password={[password, setPassword]}
+            />
         </form>
     </>
   )
