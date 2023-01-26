@@ -33,7 +33,7 @@ const Container = styled.div`
         color: white;
         font-size: 36px;
         font-weight: 600;
-        text-shadow: 0px 0px 8px rgba(255,255,255, 0.4);
+        text-shadow: 0px 0px 8px rgba(10,10,10);
     }
     h2{
         margin-top: 6px;
