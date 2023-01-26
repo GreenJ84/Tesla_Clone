@@ -33,7 +33,7 @@ const Step2 = (props: Step2) => {
                 type="email"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.currentTarget.value)}
-                pattern="/([A-Za-z]+[1-9]+[!#$%&]){8,}/g"
+                pattern='[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
                 required
             />
 
@@ -46,7 +46,7 @@ const Step2 = (props: Step2) => {
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.currentTarget.value)}
                 className="w-[430px]"
-                pattern="/([A-Za-z]+[1-9]+[!#$%&]){8,}/g"
+                pattern="/[A-Za-z!#$%&]+[1-9]+{8,}/g"
                 required
             />
             <div>
@@ -54,16 +54,11 @@ const Step2 = (props: Step2) => {
             </div>
 
             <label htmlFor="">Confirm Password</label>
-            <input 
-                className={confirmMatch ? 
-                    "w-[430px]"
-                :
-                    "w-[430px]"
-                }
+            <input
                 type={showCon ? "text" : "password"} 
                 value={conPass}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setConPass(e.currentTarget.value)}
-                pattern="/([A-Za-z]+[1-9]+[!#$%&]){8,}/g"
+                pattern={password}
                 required
             />
             <div>
@@ -99,7 +94,7 @@ const Container = styled.div`
         font-weight: 500;
         padding: 10px 0 10px 13px;
         border-radius: 3px;
-        background-color: rgba(240,240,240);
+        background-color: rgba(245,245,245);
         margin-bottom: 30px;
     }
     div{
