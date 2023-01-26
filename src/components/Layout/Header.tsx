@@ -27,6 +27,7 @@ interface HeaderType {
 }
 
 const Header = (props: HeaderType) => {
+
   const nav = useNavigate();
   const dispatch = useDispatch();
 
@@ -51,7 +52,10 @@ const Header = (props: HeaderType) => {
       <Link to="/">
         <img
           className="relative top-2 left-2 w-40 h-5 xl:w-48 2xl:top-5 2xl:left-5 2xl:w-52"
-          src="/images/logo.svg"
+          src={window.location.pathname === "/cars/1" ?
+            "/images/logo2.svg"
+          :
+            "/images/logo.svg"}
           alt="Tesla Logo"
         />
       </Link>
@@ -108,7 +112,10 @@ const Header = (props: HeaderType) => {
 
         <p
           style={{ cursor: "pointer", borderRadius: "5px" }}
-          className="xl:bg-transparent bg-slate-300 px-6 py-2 text-lg text-black font-medium"
+          className={window.location.pathname === "/cars/1" ?
+            "xl:bg-transparent bg-[rgba(80,80,80,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 px-6 py-2 text-lg text-white font-medium"
+          :
+            "xl:bg-transparent bg-[rgba(0,0,0,.05)] hover:bg-[rgba(0,0,0,.2)] transition-colors duration-700 px-6 py-2 text-lg text-black font-medium"}
           onClick={() => setMenuStatus(true)}
         >
           Menu
