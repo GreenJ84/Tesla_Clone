@@ -1,16 +1,28 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { useCaptcha } from '../../app/Utils/hooks/useCaptcha'
 import Captcha from './Captcha'
 
-interface Step1 {
+interface StepProps {
     firstName: [string, Function]
     lastName: [string, Function]
+    setStep: Function
 }
 
-const Step1 = (props:Step1) => {
+const Step1 = (props: StepProps) => {
     const [fN, setFN] = props.firstName;
     const [lN, setLN] = props.lastName;
-    const [captcha, setCaptcha] = useState("");
+    const {setStep} = props;
+    const [captcha, setCaptcha] = useCaptcha();
+    const [cap, setCap] = useState(captcha);
+    const [confirmCap, setConfirmCap] = useState("");
+
+    const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        setStep();
+    }
+
   return (
     <Container>
         <label htmlFor="first-name">
@@ -23,7 +35,6 @@ const Step1 = (props:Step1) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setFN(e.currentTarget.value)
             }}
-            pattern={`/[A-Za-z]{3,}/g`}
             required
         />
         <label htmlFor="last-name">
@@ -36,26 +47,32 @@ const Step1 = (props:Step1) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setLN(e.currentTarget.value)
             }}
-            pattern={`/[A-Za-z]{3,}/g`}
             required
         />
-        <Captcha />
+        <Captcha cap={[cap, () => setCap(setCaptcha)]} />
         <label htmlFor="CAPTCHA">
             Enter the characters in the image
         </label>
         <input 
             name="CAPTCHA" 
             type="text"
-            value={captcha}
+            value={confirmCap}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setCaptcha(e.currentTarget.value)
+                setConfirmCap(e.currentTarget.value)
+            }}
+            pattern={ cap }
+            title="Incorrect image characters"
+            onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
+                e.currentTarget.style.border = '2px solid red';
             }}
         />
         <p>
             By continuing, I understand and agree to Tesla's <span>Privacy Notice</span> and <span>Terms of Use</span> for creating a Tesla Account
         </p>
-        {fN && lN && captcha ?
-            <button>
+        {fN && lN && confirmCap ?
+            <button
+                onClick={buttonHandler}
+            >
                 Next
             </button>
         :
@@ -84,7 +101,7 @@ const Container = styled.div`
         font-weight: 500;
         padding: 10px 0 10px 13px;
         border-radius: 3px;
-        background-color: rgba(240,240,240);
+        background-color: rgba(245,245,245);
         margin-bottom: 30px;
     }
     p{
