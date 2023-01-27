@@ -32,6 +32,7 @@ const CartPage = () => {
             <OrderSummary />
         </Container>
         <SmallFooter />
+        <Checkout />
     </> 
   )
 }
@@ -47,4 +48,13 @@ const Container = styled.div`
 
 const Cart = styled.div`
 
+`;
+
+const Checkout = styled.button`
+    position: fixed;
+    visibility: hidden;
+    bottom: 0;
+@media screen and (max-width: 1100px){
+    visibility: visible;
+}
 `;
