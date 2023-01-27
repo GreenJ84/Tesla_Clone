@@ -1,8 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { GlobeAltIcon } from "@heroicons/react/24/outline";
 
@@ -12,7 +10,7 @@ import {
   SideMenu,
 } from "../../app/Utils/StyledComponents/HeaderComponents";
 
-const Header = () => {
+export const LogRegHeader = () => {
 
   return (
     <Container>
@@ -27,7 +25,7 @@ const Header = () => {
       <SideMenu>
         <p
           style={{ cursor: "pointer", borderRadius: "5px" }}
-          className="bg-transparent hover:bg-[rgba(210,210,210,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 pl-1 pr-3 py-4 mt-2 text-lg text-black font-semibold"
+          className="bg-transparent hover:bg-[rgba(220,220,220,.5)] transition-colors duration-700 pl-1 pr-3 py-4 mt-2 text-lg text-black font-semibold"
         >
           <GlobeAltIcon className="inline w-9 h-7"/>en-US
         </p>
@@ -36,4 +34,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default LogRegHeader;
