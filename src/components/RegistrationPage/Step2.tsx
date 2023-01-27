@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Show from '../Layout/Show'
 import { InformationCircleIcon } from '@heroicons/react/24/outline'
 import styled from 'styled-components'
@@ -25,6 +25,24 @@ const Step2 = (props: Step2) => {
             setShowCon(false) : setShowCon (true)
     }
 
+    useEffect(() => {
+        let hover = document.getElementById("pass")!
+        let tip = document.getElementById("passTip")!
+
+        const displayTip = () => {
+            tip.style.visibility = "visible";
+        }
+        const hideTip = () => {
+            tip.style.visibility = "visible";
+        }
+        hover.addEventListener("mouseover", displayTip);
+        hover.addEventListener("mouseout", hideTip);
+        return () => {
+            hover.removeEventListener("mouseover", displayTip);
+            hover.removeEventListener("mouseout", hideTip);
+        }
+    }, [])
+
 
     return (
         <Container>
@@ -37,9 +55,15 @@ const Step2 = (props: Step2) => {
                 required
             />
 
-            <label htmlFor="">
+            <label htmlFor="" className="relative">
                 Password
-                <span><InformationCircleIcon className="relative inline bottom-[3px] w-4 h-4 ml-1" /></span>
+                <InformationCircleIcon
+                    id="pass"
+                    className="relative inline bottom-[3px] w-4 h-4 ml-1"
+                />
+                <ToolTip id="passTip">
+                    Password must be at least 8 characters and include at least one number and one letter
+                </ToolTip>
             </label>
             <input 
                 type={showPass ? "text" : "password"}
@@ -115,7 +139,19 @@ const Container = styled.div`
         background-color: rgba(20, 35, 205, .8);
     }
     button:disabled{
-        background-color: rgba(20, 35, 205, .4);
+        background-color: rgba(0,65, 205, .4);
         cursor: not-allowed;
     }
+`;
+
+const ToolTip = styled.span`
+    position: absolute;
+    bottom: -114px;
+    left: -140px;
+    width: 500px;
+    padding: 26px 30px;
+    background-color: white;
+    font-weight: 450;
+    box-shadow: 0px 10px 20px rgba(20,20,20,.2);
+    z-index: 10;
 `;
