@@ -14,7 +14,6 @@ const Step2 = (props: Step2) => {
     const [showPass, setShowPass] = useState(false);
     const [showCon, setShowCon] = useState(false);
     const [conPass, setConPass] = useState("");
-    const confirmMatch = !conPass || conPass === password
 
     const showPassHandler = () => {
         showPass ?
@@ -33,7 +32,7 @@ const Step2 = (props: Step2) => {
             tip.style.visibility = "visible";
         }
         const hideTip = () => {
-            tip.style.visibility = "visible";
+            tip.style.visibility = "hidden";
         }
         hover.addEventListener("mouseover", displayTip);
         hover.addEventListener("mouseout", hideTip);
@@ -61,7 +60,7 @@ const Step2 = (props: Step2) => {
                     id="pass"
                     className="relative inline bottom-[3px] w-4 h-4 ml-1"
                 />
-                <ToolTip id="passTip">
+                <ToolTip id="passTip" className="invisible">
                     Password must be at least 8 characters and include at least one number and one letter
                 </ToolTip>
             </label>
