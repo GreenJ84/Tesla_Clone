@@ -100,14 +100,19 @@ const Container = styled.div`
         font-size: 18px;
         font-weight: 500;
         padding: 10px 0 10px 13px;
-        border-radius: 3px;
-        background-color: rgba(245,245,245);
+        border-radius: 4px;
+        background-color: rgba(240,240,240);
         margin-bottom: 30px;
     }
-    p{
-        font-size: 17px;
+    > p{
+        position: relative;
+        top: -3px;
+        font-size: 16px;
         color: rgba(100,100,100);
         margin-bottom: 30px;
+        line-height: 22px;
+        letter-spacing: 1px;
+        font-weight: 400;
         span{
             cursor: pointer;
             color: rgba(20,20,20);
@@ -120,14 +125,14 @@ const Container = styled.div`
         font-weight: 600;
         letter-spacing: 1.2px;
         color: white;
-        background-color: rgba(40, 65, 255, .8);
+        background-color: rgba(20, 65, 255, .8);
         border-radius: 4px;
     }
     button:hover{
-        background-color: rgba(20, 35, 205, .8);
+        background-color: rgba(0, 35, 205, .8);
     }
     button:disabled{
-        background-color: rgba(20, 35, 205, .4);
+        background-color: rgba(0,65, 205, .4);
         cursor: not-allowed;
     }
 `;
