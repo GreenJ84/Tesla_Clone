@@ -30,10 +30,11 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 430px;
-  background-color: rgba(245,245,245);
-  height: 110px;
-  border-radius: 5px;
-  margin-bottom: 50px;
+  background-color: rgba(240,240,240);
+  height: 95px;
+  border-radius: 10px;
+  margin-top: 5px;
+  margin-bottom: 24px;
   p{
     position: relative;
     top: 14px;
