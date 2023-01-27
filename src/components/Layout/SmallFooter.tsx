@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
-const LogRegFooter = () => {
+const SmallFooter = () => {
   return (
     <Container >
         <p>Tesla © 2023</p>
@@ -11,7 +11,7 @@ const LogRegFooter = () => {
   )
 }
 
-export default LogRegFooter
+export default SmallFooter
 
 const Container = styled.div`
     position: absolute;
