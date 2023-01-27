@@ -51,12 +51,16 @@ const Container = styled.div`
     width: 430px;
     margin: 0 auto;
     p{
-        margin-bottom: 25px;
+        position: relative;
+        top: 12px;
+        font-weight: 600;
+        color: rgba(100,100,100);
+        margin-bottom: 15px;
     }
     h1{
         font-size: 44px;
         font-weight: 550;
         letter-spacing: 1.6px;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
     }
 `;
