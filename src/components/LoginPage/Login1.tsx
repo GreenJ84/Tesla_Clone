@@ -65,7 +65,15 @@ const Login1 = (props: Login1Props) => {
                 Next
             </Button1>
             }
-        <a>Trouble Signing In?</a>
+        <div className="relative mb-[76px]">
+            <Underline 
+                href="https://www.teslUnderline.com/support/account-support?redirect=no" 
+                rel="noreferrer" 
+                target="_blank"
+            >
+                Trouble Signing In?
+            </Underline>
+        </div>
     </Container>
   )
 }
@@ -90,24 +98,26 @@ const Container = styled.div`
         background-color: rgba(245,245,245);
         margin-bottom: 36px;
     }
-    a{
-        cursor: pointer;
-        font-size: 18px;
-        text-align: center;
-        letter-spacing: 1.4px;
-        margin-bottom: 72px;
-    }
-    a:after{
+`;
+
+const Underline = styled.a`
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    width: 190px;
+    font-size: 19px;
+    letter-spacing: 1.4px;
+    :after{
         content: "";
         position: absolute;
-        bottom: 213px;
-        left: 124px;
+        bottom: .5px;
+        left: 118px;
         height: 0;
-        width: 42%;
+        width: 44%;
         border-bottom: 1.4px solid black;
         transition: width 0.3s ease;
     }
-    a:hover:after{
+    :hover:after{
         border-bottom: 3px solid black;
     }
 `;
