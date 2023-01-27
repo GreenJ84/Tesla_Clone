@@ -1,14 +1,15 @@
 /** @format */
 
-import React from "react";
-import { CheckIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+
+import { CheckIcon, ClockIcon } from "@heroicons/react/24/solid";
+import CarStat from "./CarStat";
+
 import {DownArrow} from '../../app/Utils/StyledComponents/DisplayComponents';
 import { addToCart } from "../../app/Store/Car/carSlice";
 import { carsData } from "../../teslaCarInfo";
-import CarStat from "./CarStat";
 
 const Detail = () => {
   const { id } = useParams();
