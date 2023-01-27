@@ -65,7 +65,7 @@ const Display = (props: DisplayProps) => {
           onClick={() =>
             props.homeRef?.current?.scrollTo({
               behavior: "smooth",
-              top: cars[props.id].ref.offsetTop,
+              top: cars[props.id].ref?.current!.offsetTop,
             })
           }
           className="cursor mx-auto"
