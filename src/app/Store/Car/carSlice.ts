@@ -1,30 +1,17 @@
 /** @format */
 
 import { createSlice } from "@reduxjs/toolkit";
-import { carsData } from "../../../teslaCarInfo";
+import { carData, carsData } from "../../../teslaCarInfo";
 import { UserState } from "../User/userSlice";
 
+export interface CarState {
+  cars: carData[];
+  cart: carData[];
+  total: number;
+}
 export interface storeType{
   user: UserState
   car: CarState
-}
-
-type Car = {
-  id: number;
-  title: string;
-  inStock: boolean;
-  description: string;
-  backgroundImg: string;
-  ref: any;
-  price: number;
-  highlights: string[];
-  quantity: number;
-};
-
-export interface CarState {
-  cars: Car[];
-  cart: Car[];
-  total: number;
 }
 
 const initialState: CarState = {
