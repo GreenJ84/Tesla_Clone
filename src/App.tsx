@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { setLogin, setLogout } from './app/Store/User/userSlice';
 import DisplayPage from './pages/DisplayPage';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
   return (
     <Routes>
       {/* Login Page */}
-      <Route />
+      <Route path="/login" element={<LoginPage />}/>
       {/* Registration Page */}
       <Route path="/registration" element={ <RegistrationPage /> } />
       {/* Home Page */}
