@@ -20,6 +20,16 @@ const RegistrationPage = () => {
         <LogRegHeader />
         <Container>
             <h1>Sign In</h1>
+            {secStep ? 
+                <div className="flex justify-between mb-6">
+                    <h4 className="text-lg">{ email }</h4>
+                    <div className="relative">
+                        <Underline>Change</Underline>
+                    </div>
+                </div>
+            : 
+                ""
+            }
             <form>
                 {!secStep ?
                     <Login1 
@@ -28,12 +38,15 @@ const RegistrationPage = () => {
                     />
                 :
                     <Login2
+                        email={email}
                         password={[password, setPassword]}
                         setStep={() => setSecStep(false)}
                     />
                 }
             </form>
-            <p> Or </p>
+            <div className="relative">
+                <Divide> Or </Divide>
+            </div>
             <Button2
                 onClick={() => nav('/registration')}
             >
@@ -60,27 +73,50 @@ const Container = styled.div`
         letter-spacing: 1.6px;
         margin-bottom: 20px;
     }
-    p{
-        font-size: 18px;
-        font-weight: 620;
-        color: rgba(90,90,90);
-        text-align: center;
-        letter-spacing: 1.4px;
-        margin-bottom: 64px;
-    }
-    p:before,p:after{
+`;
+
+const Underline = styled.p`
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    width: 80px;
+    font-size: 19px;
+    letter-spacing: 1.4px;
+    :after{
         content: "";
         position: absolute;
-        bottom: 124px;
+        bottom: .5px;
+        left: -3px;
+        height: 0;
+        width: 95%;
+        border-bottom: 1.4px solid black;
+        transition: width 0.3s ease;
+    }
+    :hover:after{
+        border-bottom: 3px solid black;
+    }
+`;
+
+const Divide = styled.p`
+    font-size: 18px;
+    font-weight: 620;
+    color: rgba(90,90,90);
+    text-align: center;
+    letter-spacing: 1.4px;
+    margin-bottom: 64px;
+    :before,:after{
+        content: "";
+        position: absolute;
+        bottom: 76px;
         height: 0;
         width: 42%;
         border-bottom: 1.4px solid rgba(200,200,200,.5);
         transition: width 0.3s ease;
     }
-    p:before{
+    :before{
         left: 0px;
     }
-    p:after{
+    :after{
         right: 0px;
     }
 `;
@@ -88,12 +124,12 @@ const Container = styled.div`
 const Button2 = styled.button`
     padding: 10px 0;
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
     letter-spacing: 1.2px;
     color: black;
     background-color: rgba(220,220,220,.3);
     border-radius: 4px;
     :hover{
-    background-color: rgba(220,220,220,.6);
+    background-color: rgba(220,220,220,.5);
     }
 `;
