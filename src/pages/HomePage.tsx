@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useRef } from "react";
+import { useRef } from "react";
 import Header from "../components/Layout/Header";
 import HomeBody from "../components/HomePage/HomeBody";
 import AdModal from "../components/Layout/AdModal";
