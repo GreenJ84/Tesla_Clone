@@ -2,11 +2,10 @@
 
 import React from "react";
 import { useSelector } from "react-redux";
-
 import styled from "styled-components";
+
 import Display from "./Display";
 
-import { carData } from "../../teslaCarInfo";
 import { selectCars } from "../../app/Store/Car/carSlice";
 
 interface HomeProps {
