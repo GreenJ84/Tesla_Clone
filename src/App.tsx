@@ -1,40 +1,52 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
-import { setLogin, setLogout } from './app/Store/User/userSlice';
-import DisplayPage from './pages/DisplayPage';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import RegistrationPage from './pages/RegistrationPage';
+/** @format */
+
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import { setLogin, setLogout } from "./app/Store/User/userSlice";
+import CartPage from "./pages/CartPage";
+import DisplayPage from "./pages/DisplayPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import RegistrationPage from "./pages/RegistrationPage";
 
 function App() {
   const dispatch = useDispatch();
 
   const auth = (user: any) => {
     if (true) {
-      dispatch(setLogin(user))
+      dispatch(setLogin(user));
     } else {
-      dispatch(setLogout())
+      dispatch(setLogout());
     }
-  }
+  };
 
   return (
     <Routes>
-      {/* Login Page */}
-      <Route path="/login" element={<LoginPage />}/>
-      {/* Registration Page */}
-      <Route path="/registration" element={ <RegistrationPage /> } />
-      {/* Home Page */}
-      <Route path="/" element={ <HomePage />} />
-      {/* Showcase Page */}
-      <Route path="/cars/:id" element={ <DisplayPage />} />
-      {/* Cart Page */}
-      <Route />
+      <Route
+        path="/login"
+        element={<LoginPage />}
+      />
+      <Route
+        path="/registration"
+        element={<RegistrationPage />}
+      />
+      <Route
+        path="/"
+        element={<HomePage />}
+      />
+      <Route
+        path="/cars/:id"
+        element={<DisplayPage />}
+      />
+      <Route
+        path="/cart"
+        element={<CartPage />}
+      />
       {/* Order Page */}
       <Route />
       {/* Checkout Page */}
-      <Route/>
-  </Routes>
+      <Route />
+    </Routes>
   );
 }
 
