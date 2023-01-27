@@ -1,25 +1,24 @@
 /** @format */
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-import LogRegHeader from "../components/Layout/MinimalHeader";
-import LogRegFooter from "../components/Layout/SmallFooter";
+import MinimalHeader from "../components/Layout/MinimalHeader";
+import SmallFooter from "../components/Layout/SmallFooter";
 import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
-import { useNavigate } from "react-router-dom";
 
-const RegistrationPage = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
 
   const [secStep, setSecStep] = useState(false);
-  // const nav = useNavigation();
 
   return (
     <>
-      <LogRegHeader />
+      <MinimalHeader />
       <Container>
         <h1>Sign In</h1>
         {secStep ? (
@@ -51,12 +50,12 @@ const RegistrationPage = () => {
         </div>
         <Button2 onClick={() => nav("/registration")}>Create Account</Button2>
       </Container>
-      <LogRegFooter />
+      <SmallFooter />
     </>
   );
 };
 
-export default RegistrationPage;
+export default LoginPage;
 
 const Container = styled.div`
   position: relative;
