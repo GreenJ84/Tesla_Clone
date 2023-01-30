@@ -4,11 +4,9 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 
 import OrderSummary from "../components/CartPage/OrderSummary";
-import SmallFooter from "../components/Layout/SmallFooter";
 
 import { useCartState } from "../app/Utils/hooks/useCartState";
 import CartItem from "../components/CartPage/CartItem";
-import { carsData } from "../teslaCarInfo";
 import Header from "../components/Layout/Header";
 
 const CartPage = () => {
@@ -16,7 +14,7 @@ const CartPage = () => {
   const dispatch = useDispatch();
 
   let subTotal = 0;
-  for (let product of carsData) {
+  for (let product of _products) {
     subTotal += product.price;
   }
 
@@ -27,7 +25,7 @@ const CartPage = () => {
       <Container>
         <Cart>
           <>
-            {carsData.map((product) => (
+            {_products.map((product) => (
               <span key={product.id}>
                 <CartItem product={product} />
               </span>
