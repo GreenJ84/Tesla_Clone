@@ -7,6 +7,7 @@ import CartPage from "./pages/CartPage";
 import DisplayPage from "./pages/DisplayPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import OrderPage from "./pages/OrderPage";
 import RegistrationPage from "./pages/RegistrationPage";
 
 function App() {
@@ -43,7 +44,7 @@ function App() {
         element={<CartPage />}
       />
       {/* Order Page */}
-      <Route />
+      <Route path={"/order"} element={ <OrderPage /> } />
       {/* Checkout Page */}
       <Route />
     </Routes>
