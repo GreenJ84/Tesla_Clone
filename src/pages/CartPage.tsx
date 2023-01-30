@@ -36,7 +36,6 @@ const CartPage = () => {
         </Cart>
         <OrderSummary subTot={ subTotal} />
       </Container>
-      <SmallFooter />
       <Checkout>
         <button>
           Checkout
@@ -52,8 +51,8 @@ const Body = styled.div`
   padding: 0 40px;
 }
 @media screen and (max-width: 1280px) {
-  width: 600px;
-  padding-bottom: 100px;
+  width: 700px;
+  padding-bottom: 200px;
 }
 `;
 
@@ -61,7 +60,6 @@ const Container = styled.div`
   display: flex;
   margin-bottom: 200px;
   max-width: 1400px;
-  position: relative;
   margin: 0 auto;
   @media screen and (min-width: 1280px) {
     justify-content: space-between;

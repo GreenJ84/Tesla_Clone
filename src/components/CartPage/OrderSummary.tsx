@@ -31,7 +31,6 @@ const OrderSummary = (props: { subTot: number}) => {
 export default OrderSummary;
 
 const Container = styled.div`
-  width: 540px;
   h1{
     margin-top: 45px;
     margin-bottom: 20px;
@@ -63,6 +62,7 @@ const Container = styled.div`
   }
 @media screen and (min-width: 1280px) {
   margin: 0;
+  width: 540px;
   padding: 0 40px;
   height: 360px;
   box-shadow: 0 10px 30px rgba(150, 150, 150, .6);
