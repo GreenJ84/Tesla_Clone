@@ -40,7 +40,7 @@ const Container = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 170px;
+  height: 158px;
   >img{
     height 100px;
     width: 100px;
