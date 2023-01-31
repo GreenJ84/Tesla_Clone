@@ -11,6 +11,18 @@ import { store } from "./app/Store/store";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
+import { initializeApp } from "firebase/app";
+// https://firebase.google.com/docs/web/setup#available-libraries
+const firebaseConfig = {
+  apiKey: process.env!.API_KEY,
+  authDomain: "tesla-gclone.firebaseapp.com",
+  projectId: "tesla-gclone",
+  storageBucket: "tesla-gclone.appspot.com",
+  messagingSenderId: process.env!.MSG_ID,
+  appId: process.env!.APP_ID,
+};
+export const app = initializeApp(firebaseConfig);
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
