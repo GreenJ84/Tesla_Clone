@@ -12,6 +12,8 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 const firebaseConfig = {
   apiKey: process.env!.API_KEY,
@@ -22,6 +24,14 @@ const firebaseConfig = {
   appId: process.env!.APP_ID,
 };
 export const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth();
+export const googleProvider = new GoogleAuthProvider();
+export const facebookProvider = new TwitterAuthProvider();
+export const twitterProvider = new FacebookAuthProvider();
+export const githubProvider = new GithubAuthProvider();
+
+export const db = getFirestore();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
