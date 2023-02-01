@@ -1,10 +1,15 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUserData } from "../app/Store/User/userSlice";
 import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
 const OrderPage = () => {
+  const nav = useNavigate();
+  const user = useUserData();
+
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,7 +20,13 @@ const OrderPage = () => {
   const [state, setState] = useState("");
   const [phone, setPhone] = useState("");
 
-  const [secStep, setSecStep] = useState(false)
+  const [secStep, setSecStep] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      nav('/login')
+    }
+  }, []);
 
   return (
     <>
