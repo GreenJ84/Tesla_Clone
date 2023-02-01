@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
+import { Button } from "../../app/Utils/StyledComponents/DisplayComponents";
 
 interface order1Props{
   fn: [string, Function]
@@ -12,6 +13,7 @@ interface order1Props{
   city: [string, Function]
   state: [string, Function]
   phone: [string, Function]
+  setStep: Function
 }
 
 const Order1 = (props: order1Props) => {
@@ -23,8 +25,16 @@ const Order1 = (props: order1Props) => {
   const [city, setCity] = props.city;
   const [state, setState] = props.state;
   const [phone, setPhone] = props.phone;
+  const { setStep } = props;
 
   const [checked, setChecked] = useState(true);
+
+  const toggleChecked = () => {
+    checked ?
+      setChecked(false)
+    :
+      setChecked(true)
+  }
 
   return (
     <Container>
@@ -101,6 +111,7 @@ const Order1 = (props: order1Props) => {
       <input
         type="checkbox"
         defaultChecked={checked}
+        onChange={() => toggleChecked}
       />
       <label> Billing address same as shipping </label>
       {!checked ? 
@@ -163,6 +174,11 @@ const Order1 = (props: order1Props) => {
               />
             </div>
           </Form>
+          <Button
+            onClick={() => setStep}
+          >
+            Next
+          </Button>
         </>
       :
         ""
