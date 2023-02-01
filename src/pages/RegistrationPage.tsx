@@ -2,13 +2,14 @@
 
 import { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
-import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 
 import LogRegHeader from "../components/Layout/MinimalHeader";
 import LogRegFooter from "../components/Layout/SmallFooter";
 import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
 import { useNavigate } from "react-router-dom";
+import { AUTH } from "../index";
 
 const RegistrationPage = () => {
   const nav = useNavigate();
@@ -28,7 +29,7 @@ const RegistrationPage = () => {
       setError("Passwords are not a match");
       return;
     }
-    const auth = getAuth();
+    const auth = AUTH;
     createUserWithEmailAndPassword(auth, email, password)
       .then(() => {
         // firebase authenticated and signed in
