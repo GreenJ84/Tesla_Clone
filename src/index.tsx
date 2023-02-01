@@ -13,7 +13,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider, OAuthProvider } from "firebase/auth";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 const firebaseConfig = {
@@ -25,14 +25,15 @@ const firebaseConfig = {
   appId: "1:248739858073:web:12b0ab828326283f4cda08",
 };
 export const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
 
 export const googleProvider = new GoogleAuthProvider();
 export const facebookProvider = new TwitterAuthProvider();
 export const twitterProvider = new FacebookAuthProvider();
 export const githubProvider = new GithubAuthProvider();
+export const appleProvider = new OAuthProvider('apple.com');
 
-export const db = getFirestore();
+export const AUTH = getAuth(app);
+export const DB = getFirestore(app);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
