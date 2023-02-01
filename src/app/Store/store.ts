@@ -14,13 +14,13 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ["your/action/type"],
-        ignoredActionPaths: ["payload.ref"],
+        ignoredActions: ["user/setLogin"],
+        ignoredActionPaths: ["payload.ref", "user.user"],
         ignoredPaths: [
           ...carsData.map((_, index) => {
             return `car.cars.${index}.ref`;
           }),
-        ],
+        "user.user"],
       },
       immutableCheck: true,
     }),
