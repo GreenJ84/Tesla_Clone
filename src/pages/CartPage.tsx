@@ -8,15 +8,18 @@ import OrderSummary from "../components/CartPage/OrderSummary";
 import { useCartState } from "../app/Utils/hooks/useCartState";
 import CartItem from "../components/CartPage/CartItem";
 import Header from "../components/Layout/Header";
+import { useNavigate } from "react-router-dom";
+import { setTotal } from "../app/Store/Car/carSlice";
 
 const CartPage = () => {
   const _products = useCartState();
   const dispatch = useDispatch();
+  const nav = useNavigate()
 
-  let subTotal = 0;
-  for (let product of _products) {
-    subTotal += product.price;
-  }
+  const subTotal = _products.reduce((acc, curr) => {
+    acc = curr.price * curr.quantity + acc;
+    return acc;
+  }, 0);
 
   return (
     <Body className="mx-auto">
@@ -24,18 +27,32 @@ const CartPage = () => {
       <h1 style={{ "maxWidth": "1400px","position":"relative" }} className="mt-32 xl:mt-20 mb-2 xl:mb-0 xl:mx-auto pb-8 border-b-[1.5px] xl:border-none text-3xl xl:text-5xl font-semibold"> Cart </h1>
       <Container>
         <Cart>
-          <>
-            {_products.map((product) => (
-              <span key={product.id}>
-                <CartItem product={product} />
-              </span>
-            ))}
-          </>
+          {_products.length > 0 ?
+            <>
+              {_products.map((product) => (
+                <span key={product.id}>
+                  <CartItem product={product} />
+                </span>
+              ))}
+            </>
+          :
+            <>
+              <p>No items in Cart</p>
+              <button
+                onClick={() => nav('/')}
+              > Return Shopping </button>
+            </>
+          }
         </Cart>
-        <OrderSummary subTot={ subTotal} />
+        <OrderSummary subTot={ subTotal } />
       </Container>
       <Checkout>
-        <button>
+        <button
+          onClick={() => {
+            dispatch(setTotal(subTotal));
+            nav('/checkout')
+          }}
+        >
           Checkout
         </button>
       </Checkout>
