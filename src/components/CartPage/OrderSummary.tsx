@@ -1,11 +1,14 @@
 /** @format */
 
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { storeType } from "../../app/Store/Car/carSlice";
-import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
+import { setTotal } from "../../app/Store/Car/carSlice";
 
-const OrderSummary = (props: { subTot: number}) => {
-  const subTotal = useAppSelector((state: storeType) => state.car.total);
+const OrderSummary = (props: { subTot: number }) => {
+  const dispatch = useDispatch()
+  const nav = useNavigate();
+
   return (
     <Container>
       <h1>Order Summary</h1>
@@ -21,7 +24,12 @@ const OrderSummary = (props: { subTot: number}) => {
           <p>${props.subTot}.00</p>
         </div>
       </div>
-      <button>
+      <button
+        onClick={() => {
+          dispatch(setTotal(props.subTot));
+          nav('/checkout');
+        }}
+      >
         Checkout
       </button>
     </Container>
