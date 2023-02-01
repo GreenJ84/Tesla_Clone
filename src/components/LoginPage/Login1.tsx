@@ -74,7 +74,7 @@ const Login1 = (props: Login1Props) => {
       )}
       <div className="relative mb-[76px]">
         <Underline
-          href="https://www.teslUnderline.com/support/account-support?redirect=no"
+          href="https://www.tesla.com/support/account-support?redirect=no"
           rel="noreferrer"
           target="_blank"
         >
