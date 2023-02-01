@@ -95,7 +95,6 @@ const Header = (props: HeaderType) => {
               className="text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-30 transition-colors mr-5 hover:shadow-2xl"
               onClick={() => {
                 dispatch(setLogout());
-                window.location.reload();
               }}
             >
               Logout
