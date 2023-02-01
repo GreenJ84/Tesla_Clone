@@ -13,6 +13,11 @@ const Login2 = (props: Login2Props) => {
   const [password, setPassword] = props.password;
   const { login } = props;
 
+  const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    login(e);
+  };
+
   return (
     <Container>
       <label
@@ -30,9 +35,10 @@ const Login2 = (props: Login2Props) => {
         }
         className="w-[430px]"
         required
+        pattern="[A-Za-z!#$%&]+[1-9]+{8,}"
       />
       {password ? (
-        <Button onClick={() => login()}>Sign In</Button>
+        <Button onClick={buttonHandler}>Sign In</Button>
       ) : (
         <Button disabled>Sign In</Button>
       )}
@@ -71,7 +77,7 @@ const Container = styled.div`
   a:after {
     content: "";
     position: absolute;
-    bottom: 200px;
+    bottom: 276px;
     left: 130px;
     height: 0;
     width: 38%;
