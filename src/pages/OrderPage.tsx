@@ -5,6 +5,7 @@ import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
 const OrderPage = () => {
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [address, setAddress] = useState("");
@@ -34,6 +35,7 @@ const OrderPage = () => {
           city={[city, setCity]}
           state={[state, setState]}
           phone={[phone, setPhone]}
+          setStep={() => setSecStep(true)}
         />
         :
         <Order2
