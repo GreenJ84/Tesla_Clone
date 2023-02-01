@@ -1,20 +1,43 @@
 /** @format */
 
-import { useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
 import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
+import { setLogin } from "../app/Store/User/userSlice";
+import { useDispatch } from "react-redux";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
   const nav = useNavigate();
 
   const [secStep, setSecStep] = useState(false);
+  const [error, setError] = useState("");
+
+  const login = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        dispatch(setLogin(user));
+        nav("/");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message.split(": ")[1];
+        console.log(`Error ${errorCode}: ${errorMessage}`);
+        setError(errorMessage);
+      });
+  }
 
   return (
     <>
@@ -25,13 +48,21 @@ const LoginPage = () => {
           <div className="flex justify-between mb-6">
             <h4 className="text-lg">{email}</h4>
             <div className="relative">
-              <Underline>Change</Underline>
+              <Underline
+                onClick={() => setSecStep(false)}
+              >
+                Change
+              </Underline>
             </div>
           </div>
         ) : (
           ""
         )}
         <form>
+          {error ? 
+            <span>{ error }</span>
+          :
+            ""}
           {!secStep ? (
             <Login1
               email={[email, setEmail]}
@@ -39,15 +70,16 @@ const LoginPage = () => {
             />
           ) : (
             <Login2
-              email={email}
               password={[password, setPassword]}
-              setStep={() => setSecStep(false)}
+              login={() => login}
             />
           )}
         </form>
         <div className="relative">
           <Divide> Or </Divide>
         </div>
+        <Button2>Alternate Sign-In</Button2>
+        <br />
         <Button2 onClick={() => nav("/registration")}>Create Account</Button2>
       </Container>
       <SmallFooter />
