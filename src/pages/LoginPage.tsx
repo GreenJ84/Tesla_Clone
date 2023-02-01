@@ -95,32 +95,6 @@ const LoginPage = () => {
         setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
       });
   }
-  const twitterLogin = async (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    signInWithPopup(AUTH, twitterProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = TwitterAuthProvider.credentialFromResult(result);
-        if (!credential) return;
-
-        dispatch(setLogin(user))
-        nav('/');
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = TwitterAuthProvider.credentialFromError(error);
-        
-        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-      });
-  }
   const githubLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     signInWithPopup(AUTH, githubProvider)
@@ -142,31 +116,6 @@ const LoginPage = () => {
         const email = error.customData.email;
         // The AuthCredential type that was used.
         const credential = GithubAuthProvider.credentialFromError(error);
-        
-        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-      });
-  }
-  const appleLogin = async () => {
-    signInWithPopup(AUTH, appleProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = OAuthProvider.credentialFromResult(result);
-        if (!credential) return;
-
-        dispatch(setLogin(user))
-        nav('/');
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = OAuthProvider.credentialFromError(error);
         
         console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
         setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
