@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { getAuth, createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 
@@ -22,7 +22,8 @@ const RegistrationPage = () => {
   const [secStep, setSecStep] = useState(false);
   const [error, setError] = useState("");
 
-  const register = async () => {
+  const register = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
     if (password !== confPassword) {
       setError("Passwords are not a match");
       return;
