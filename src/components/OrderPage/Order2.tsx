@@ -111,7 +111,7 @@ const Order2 = (props: order2Props) => {
         <Button
           onClick={() => {
             dispatch(setTotal(subTotal + getTax(subTotal)));
-            nav('/order');
+            nav('/confirmation');
           }}
         >
           Place Order
