@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Button } from '../../app/Utils/StyledComponents/DisplayComponents';
 
 interface cardProps{
-  setcard: Function
+  setCard: Function
 }
 
 const CardModal = (props: cardProps) => {
