@@ -3,7 +3,7 @@
 import { BaseSyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, OAuthProvider, signInWithEmailAndPassword, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
@@ -11,6 +11,8 @@ import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
 import { setLogin } from "../app/Store/User/userSlice";
 import { useDispatch } from "react-redux";
+import { appleProvider, AUTH, DB, facebookProvider, githubProvider, googleProvider, twitterProvider } from "../index";
+import { doc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -23,11 +25,17 @@ const LoginPage = () => {
 
   const login = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(AUTH, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        setDoc(
+          doc(DB, "users", user.uid),
+          {
+              name: user.displayName,
+              email: user.email,
+          },
+          { merge: true }
+        );
         dispatch(setLogin(user));
         nav("/");
       })
@@ -35,7 +43,133 @@ const LoginPage = () => {
         const errorCode = error.code;
         const errorMessage = error.message.split(": ")[1];
         console.log(`Error ${errorCode}: ${errorMessage}`);
-        setError(errorMessage);
+        setError(`Error ${errorCode}: ${errorMessage}`);
+      });
+  }
+  const googleLogin = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    signInWithPopup(AUTH, googleProvider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (!credential) return;
+
+      const user = result.user;
+      dispatch(setLogin(user));
+      nav("/");
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message.split(": ")[1];
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+
+      console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+      setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+    });
+  }
+  const facebookLogin = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    signInWithPopup(AUTH, facebookProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = FacebookAuthProvider.credentialFromResult(result);
+        if (!credential) return;
+
+        dispatch(setLogin(user))
+        nav('/');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = FacebookAuthProvider.credentialFromError(error);
+        
+        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+      });
+  }
+  const twitterLogin = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    signInWithPopup(AUTH, twitterProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = TwitterAuthProvider.credentialFromResult(result);
+        if (!credential) return;
+
+        dispatch(setLogin(user))
+        nav('/');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = TwitterAuthProvider.credentialFromError(error);
+        
+        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+      });
+  }
+  const githubLogin = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    signInWithPopup(AUTH, githubProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = GithubAuthProvider.credentialFromResult(result);
+        if (!credential) return;
+
+        dispatch(setLogin(user))
+        nav('/');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GithubAuthProvider.credentialFromError(error);
+        
+        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+      });
+  }
+  const appleLogin = async () => {
+    signInWithPopup(AUTH, appleProvider)
+      .then((result) => {
+        // The signed-in user info.
+        const user = result.user;
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        const credential = OAuthProvider.credentialFromResult(result);
+        if (!credential) return;
+
+        dispatch(setLogin(user))
+        nav('/');
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = OAuthProvider.credentialFromError(error);
+        
+        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
       });
   }
 
