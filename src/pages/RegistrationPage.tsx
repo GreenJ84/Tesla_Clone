@@ -29,12 +29,12 @@ const RegistrationPage = () => {
     }
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
-      .then(async () => {
+      .then(() => {
         // firebase authenticated and signed in
         if (!auth.currentUser) return;
         sendEmailVerification(auth.currentUser);
         // eslint-disable-next-line no-restricted-globals
-        await confirm(`A verification email has been sent to ${auth.currentUser.email}`);
+        confirm(`A verification email has been sent to ${auth.currentUser.email}`);
 
         updateProfile(auth.currentUser, {
           displayName: `${firstName}
