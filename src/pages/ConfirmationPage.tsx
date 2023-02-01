@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import styled from "styled-components";
@@ -9,11 +9,44 @@ import Header from "../components/Layout/Header";
 
 import { useAppSelector } from "../app/Utils/hooks/useAppSelector";
 import { useCartState } from "../app/Utils/hooks/useCartState";
+import { doc, setDoc } from "firebase/firestore";
+import { DB } from "../index";
+import { useUserData } from "../app/Store/User/userSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { completeOrder } from "../app/Store/Car/carSlice";
 
 const ConfirmationPage = () => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+  const user = useUserData();
   const orders = useCartState();
   const total = useAppSelector((state) => state.car.total);
   const { width, height } = useWindowSize();
+
+  useEffect(() => {
+    if (!user) {
+      nav('/login')
+    }
+    else {
+      setDoc(
+        doc(DB, "orders", user.user!.uid),
+        {
+            name: user.user!.displayName,
+            email: user.user!.email,
+            order: orders,
+            total: total,
+        },
+        { merge: true }
+      ).then(() => {
+        dispatch(completeOrder())
+      })
+        .catch((err) => {
+          console.log('Error adding Order to Firestore:', err)
+        });
+    }
+  }, []);
+
 
   return (
     <>
