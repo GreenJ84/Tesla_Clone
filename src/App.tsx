@@ -13,20 +13,21 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import OrderPage from "./pages/OrderPage";
 import RegistrationPage from "./pages/RegistrationPage";
+import ConfirmationPage from "./pages/ConfirmationPage";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     const auth = getAuth();
-    onAuthStateChanged( auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(setLogin(user));
       } else {
         dispatch(setLogout());
       }
     });
-  }, [])
+  }, []);
 
   return (
     <Routes>
@@ -50,10 +51,16 @@ function App() {
         path="/cart"
         element={<CartPage />}
       />
-      {/* Order Page */}
-      <Route path={"/order"} element={ <OrderPage /> } />
-      {/* Checkout Page */}
-      <Route />
+
+      <Route
+        path="/order"
+        element={<OrderPage />}
+      />
+
+      <Route
+        path="/confirmation"
+        element={<ConfirmationPage />}
+      />
     </Routes>
   );
 }
