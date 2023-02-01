@@ -5,42 +5,36 @@ import styled from "styled-components";
 import { Button } from "../../app/Utils/StyledComponents/LoginComponents";
 
 interface Login2Props {
-  email: string;
   password: [string, Function];
-  setStep: Function;
+  login: Function;
 }
 
 const Login2 = (props: Login2Props) => {
-  const [email, setEmail] = props.password;
-  const { setStep } = props;
-
-  const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setStep();
-  };
+  const [password, setPassword] = props.password;
+  const { login } = props;
 
   return (
     <Container>
       <label
-        htmlFor=""
+        htmlFor="password"
         className="relative"
       >
         Password
       </label>
       <input
-        type="email"
-        value={email}
+        type="password"
+        name="password"
+        value={password}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          setEmail(e.currentTarget.value)
+          setPassword(e.currentTarget.value)
         }
         className="w-[430px]"
-        pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         required
       />
-      {email ? (
-        <Button onClick={buttonHandler}>Next</Button>
+      {password ? (
+        <Button onClick={() => login()}>Sign In</Button>
       ) : (
-        <Button disabled>Next</Button>
+        <Button disabled>Sign In</Button>
       )}
       <a href="/">Forgot Password?</a>
     </Container>
