@@ -53,13 +53,16 @@ export const carSlice = createSlice({
     },
     removeFromCart: (state, action) => {
       let [..._car] = state.cart.filter((item) => item.id !== action.payload);
-
       state.cart = [..._car];
+    },
+    completeOrder: (state) => {
+      state.cart = [];
+      state.total = 0;
     },
   },
 });
 
-export const { setCarRef, addToCart, removeFromCart, setTotal, setQuantity } = carSlice.actions;
+export const { setCarRef, addToCart, removeFromCart, setTotal, setQuantity, completeOrder } = carSlice.actions;
 export const selectCars = (state: storeType) => state.car.cars;
 
 export default carSlice.reducer;
