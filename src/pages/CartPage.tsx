@@ -50,7 +50,7 @@ const CartPage = () => {
         <button
           onClick={() => {
             dispatch(setTotal(subTotal));
-            nav('/checkout')
+            nav('/order')
           }}
         >
           Checkout
