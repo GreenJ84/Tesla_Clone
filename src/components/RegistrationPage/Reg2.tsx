@@ -10,12 +10,15 @@ import Show from "../Layout/Show";
 interface Reg2Props {
   email: [string, Function];
   password: [string, Function];
+  confPassword: [string, Function];
+  register: Function
 }
 
 const Reg2 = (props: Reg2Props) => {
   const [email, setEmail] = props.email;
   const [password, setPassword] = props.password;
-  const [conPass, setConPass] = useState("");
+  const [conPass, setConPass] = props.confPassword;
+  const register = props.register;
 
   const [showPass, setShowPass] = useState(false);
   const [showCon, setShowCon] = useState(false);
@@ -117,7 +120,9 @@ const Reg2 = (props: Reg2Props) => {
         )}
       </div>
       {email && password && conPass ? (
-        <button>Create Account</button>
+        <button
+          onClick={() => register}
+        >Create Account</button>
       ) : (
         <button disabled>Create Account</button>
       )}
