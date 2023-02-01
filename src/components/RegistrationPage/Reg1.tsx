@@ -28,9 +28,10 @@ const Reg1 = (props: StepProps) => {
 
   return (
     <Container>
-      <label htmlFor="first-name">First Name</label>
+      <label htmlFor="first-name">First Name / Username</label>
       <input
         name="first-name"
+        placeholder=""
         type="text"
         value={fN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,13 +41,13 @@ const Reg1 = (props: StepProps) => {
       />
       <label htmlFor="last-name">Last Name</label>
       <input
+        placeholder="Not necessary w/ username"
         name="last-name"
         type="text"
         value={lN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
-        required
       />
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
       <label htmlFor="CAPTCHA">Enter the characters in the image</label>
@@ -62,6 +63,7 @@ const Reg1 = (props: StepProps) => {
         onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
           e.currentTarget.style.border = "2px solid red";
         }}
+        required
       />
       <p>
         By continuing, I understand and agree to Tesla's{" "}
