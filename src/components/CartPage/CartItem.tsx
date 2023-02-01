@@ -1,6 +1,9 @@
 /** @format */
 
+import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import { removeFromCart, setQuantity } from "../../app/Store/Car/carSlice";
 import { carData } from "../../teslaCarInfo";
 
 interface CartProps {
@@ -9,6 +12,8 @@ interface CartProps {
 
 const CartItem = (props: CartProps) => {
   const { product } = props;
+  const dispatch = useDispatch();
+
   return (
     <Container>
       <img
@@ -19,14 +24,20 @@ const CartItem = (props: CartProps) => {
         <p>{product.title}</p>
         <div className="flex">
           <p>
-            Quantity: <input
-            type="number"
-            value={product.quantity}
-            min={0}
-            max={3}
-          />
+            Quantity:
+            <input
+              type="number"
+              value={product.quantity}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(setQuantity(e.currentTarget.value))}
+              min={0}
+              max={3}
+            />
           </p>
-          <p>Remove</p>
+          <button
+            onClick={() => {
+              dispatch(removeFromCart(product.id))
+            }}
+          >Remove</button>
         </div>
       </div>
       <p>${product.price}.00</p>
@@ -57,12 +68,12 @@ const Container = styled.li`
     }
     >div{
       font-size: 18px;
-      >p:nth-of-type(2){
+      >button{
         padding-bottom: .5px;
         color: rgba(80, 80, 80);
         border-bottom: 1.5px solid black;
       }
-      >p:nth-of-type(2):hover{
+      >button:hover{
         padding-bottom: 0px;
         color: rgba(0, 0, 0);
         border-bottom: 2px solid black;
