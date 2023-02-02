@@ -28,9 +28,12 @@ const Detail = () => {
                     {product.title}
               </h1>
             {window.location.pathname !== "/cars/4" && window.location.pathname !== "/cars/3" ?
-                <p className="text-center text-xl text-white border-b hover:border-b-2 tracking-widest">
+                <a
+                  href="https://www.tesla.com/drive"
+                  target="_blank"
+                  className="text-center text-xl text-white border-b hover:border-b-2 tracking-widest">
                   Schedule a Demo Drive
-                </p>
+                </a>
               :
                 ""
               }
@@ -93,7 +96,7 @@ const Detail = () => {
                 </p>
               </div>
               <button
-                className="h-14 px-8 border-4 border-black text-lg hover:bg-slate-900 hover:text-white hover:shadow-2xl"
+                className="h-14 px-8 border-4 border-black text-lg hover:bg-black hover:text-white hover:shadow-2xl"
                 disabled={!product.inStock}
                 onClick={() => {
                   dispatch(addToCart(product.id));
