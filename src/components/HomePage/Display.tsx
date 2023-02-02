@@ -41,9 +41,13 @@ const Display = (props: DisplayProps) => {
       <Fade direction="up">
         <div style={{ paddingTop: "15vh", textAlign: "center" }}>
           <h1 className="text-6xl font-medium text-black">{props.title}</h1>
-          <p className="text-xl border-b-2 hover:border-b-4 border-slate-800">
+          <a
+            href="https://www.tesla.com/drive"
+            target="_blank"
+            className="text-xl border-b-2 hover:border-b-4 border-slate-800"
+          >
             Schedule a Demo Drive
-          </p>
+          </a>
         </div>
       </Fade>
       <Fade direction="up">
@@ -63,10 +67,14 @@ const Display = (props: DisplayProps) => {
       {props.id !== cars.length ? (
         <DownArrow
           onClick={() =>
-            props.homeRef?.current?.scrollTo({
-              behavior: "smooth",
-              top: cars[props.id].ref?.current!.offsetTop,
-            })
+            props.homeRef?.current &&
+              props.homeRef.current.scrollTo({
+                behavior: "smooth",
+                top: cars[props.id].ref!.current ?
+                    cars[props.id].ref!.current!.offsetTop
+                  :
+                    window.innerHeight * props.id
+              })
           }
           className="cursor mx-auto"
           src="images/down-arrow.svg"
