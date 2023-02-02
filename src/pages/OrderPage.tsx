@@ -23,7 +23,7 @@ const OrderPage = () => {
   const [secStep, setSecStep] = useState(false);
 
   useEffect(() => {
-    if (!user) {
+    if (!user.isLoggedIn) {
       nav('/login')
     }
   }, []);

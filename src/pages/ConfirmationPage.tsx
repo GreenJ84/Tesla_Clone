@@ -25,7 +25,7 @@ const ConfirmationPage = () => {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    if (!user) {
+    if (!user.isLoggedIn) {
       nav('/login')
     }
     else {

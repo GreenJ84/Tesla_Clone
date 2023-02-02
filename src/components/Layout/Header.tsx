@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { FaOpencart } from "react-icons/fa";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
@@ -35,7 +34,7 @@ const Header = (props: HeaderType) => {
   const user = useSelector((state: RootState) => state.user);
   const cars = useSelector(selectCars);
   const [menuStatus, setMenuStatus] = useState(false);
-  const cartData = useCartState();
+  const _cartData = useCartState();
 
   useEffect(() => {
     const sizeHandler = () => {
@@ -105,9 +104,9 @@ const Header = (props: HeaderType) => {
               className="invisible xl:visible flex relative top-1 right-2 xl:right-0"
             >
               <ShoppingCartIcon className="relative h-7 w-7" />
-              {cartData.length > 1 &&
+              {_cartData.length > 0 &&
                 <p className="absolute -top-1.5 -right-1.5 flex items-center justify-center bg-blue-600 text-white h-5 w-5 md:h-5 md:w-5 text-xs font-bold rounded-full">
-                  {cartData.length}
+                  {_cartData.length}
                 </p>
               }
             </Link>
@@ -168,12 +167,12 @@ const Header = (props: HeaderType) => {
               </li>
               <li
               onClick={() => {
-                dispatch(setLogout());
+                nav('/cart');
               }}
               >
-                <h1 className="flex items-center">Cart {cartData.length > 1 ? 
+                <h1 className="flex items-center">Cart {_cartData.length > 0 ? 
                     <span className="flex items-center justify-center ml-4 bg-blue-600 text-white h-6 w-6 text-xs font-bold rounded-full">
-                      {cartData.length}
+                      {_cartData.length}
                     </span>
                   :
                     ""
