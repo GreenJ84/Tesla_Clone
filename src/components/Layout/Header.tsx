@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { FaOpencart } from "react-icons/fa";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 import { RootState } from "../../app/Store/store";
 import { selectCars } from "../../app/Store/Car/carSlice";
@@ -81,35 +82,38 @@ const Header = (props: HeaderType) => {
       {/* Loggin, Logout, and Cart Menu */}
       <SideMenu>
         {user.isLoggedIn ? (
-          <>
-            <Link
-              to="/cart"
-              className="flex relative items-center"
-            >
-              <FaOpencart className="relative top-3 md:h-10 md:w-10 h-8 w-8" />
-              <p className="absolute -top-0.5 right-1 md:-top-1 md:right-2 flex items-center justify-center bg-red-600 text-white h-5 w-5 md:h-6 md:w-6 text-sm font-bold rounded-full">
-                {cartData.length}
-              </p>
-            </Link>
             <h1
-              className="text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-30 transition-colors mr-5 hover:shadow-2xl"
+              className="invisible xl:visible text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-20 transition-colors mr-5 hover:shadow-3xl"
               onClick={() => {
                 dispatch(setLogout());
               }}
             >
               Logout
             </h1>
-          </>
         ) : (
           <h1
-            className="hidden xl:inline-block text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-30 transition-colors mr-5 hover:shadow-2xl"
+            className="invisible xl:visible  text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-30 transition-colors mr-5 hover:shadow-2xl"
             onClick={() => nav("/login")}
           >
             Account
           </h1>
         )}
 
-        <p
+        {user.isLoggedIn &&
+            <Link
+              to="/cart"
+              className="invisible xl:visible flex relative top-1 right-2 xl:right-0"
+            >
+              <ShoppingCartIcon className="relative h-7 w-7" />
+              {cartData.length > 1 &&
+                <p className="absolute -top-1.5 -right-1.5 flex items-center justify-center bg-blue-600 text-white h-5 w-5 md:h-5 md:w-5 text-xs font-bold rounded-full">
+                  {cartData.length}
+                </p>
+              }
+            </Link>
+        }
+
+        <button
           style={{ cursor: "pointer", borderRadius: "5px" }}
           className={
             window.location.pathname === "/cars/1"
@@ -119,7 +123,7 @@ const Header = (props: HeaderType) => {
           onClick={() => setMenuStatus(true)}
         >
           Menu
-        </p>
+        </button>
       </SideMenu>
       <Cover show={menuStatus} />
       {/* Right side drop in Nav, under 800px  */}
@@ -148,6 +152,36 @@ const Header = (props: HeaderType) => {
               <h1> {car.title}</h1>
             </li>
           ))}
+          <li
+            onClick={() => nav("/login")}
+          >
+            <h1>Account</h1>
+          </li>
+          {user.isLoggedIn && (
+            <>
+              <li
+                  onClick={() => {
+                    dispatch(setLogout());
+                  }}
+                >
+                  <h1>Logout</h1>
+              </li>
+              <li
+              onClick={() => {
+                dispatch(setLogout());
+              }}
+              >
+                <h1 className="flex items-center">Cart {cartData.length > 1 ? 
+                    <span className="flex items-center justify-center ml-4 bg-blue-600 text-white h-6 w-6 text-xs font-bold rounded-full">
+                      {cartData.length}
+                    </span>
+                  :
+                    ""
+                  }
+                </h1>
+              </li>
+            </>
+          )}
         </ul>
       </SmallNav>
     </Container>

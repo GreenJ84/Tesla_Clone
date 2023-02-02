@@ -48,8 +48,8 @@ export const Cover = styled.div`
   width: 100vw;
   height: 100vh;
   z-index: -10;
-  background-color: rgba(0 , 0,0,.5);
-  filter: blur(50px);
+  background-color: rgba(0,0,0,.65);
+  filter: blur();
 `;
 
 export const SmallNav = styled.div`
@@ -60,7 +60,7 @@ export const SmallNav = styled.div`
   bottom: 0;
   right: 0;
   padding: 20px;
-  width: 380px;
+  width: 390px;
   background: white;
   list-style: none;
   text-align: start;
@@ -77,6 +77,7 @@ export const SmallNav = styled.div`
     padding-top: 30px;
     li {
         padding: 5px 0 5px 0;
+        margin-bottom: 8px;
         cursor: pointer;
         h1 {
           width: 320px;
