@@ -47,6 +47,11 @@ const Reg2 = (props: Reg2Props) => {
     };
   }, []);
 
+  const registerHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    register(e);
+  };
+
   return (
     <Container>
       <label
@@ -89,7 +94,7 @@ const Reg2 = (props: Reg2Props) => {
           setPassword(e.currentTarget.value)
         }
         className="w-[430px]"
-        pattern="/[A-Za-z!#$%&]+[1-9]+{8,}/g"
+        pattern="[A-Za-z!#$%&]+[1-9]+{8,}"
         required
       />
       <div>
@@ -121,7 +126,7 @@ const Reg2 = (props: Reg2Props) => {
       </div>
       {email && password && conPass ? (
         <button
-          onClick={() => register}
+          onClick={ registerHandler }
         >Create Account</button>
       ) : (
         <button disabled>Create Account</button>

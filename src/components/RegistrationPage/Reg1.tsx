@@ -38,6 +38,7 @@ const Reg1 = (props: StepProps) => {
           setFN(e.currentTarget.value);
         }}
         required
+        pattern="[A-Za-z]+{8,}"
       />
       <label htmlFor="last-name">Last Name</label>
       <input
@@ -48,6 +49,7 @@ const Reg1 = (props: StepProps) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
+        pattern="[A-Za-z]+{8,}"
       />
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
       <label htmlFor="CAPTCHA">Enter the characters in the image</label>

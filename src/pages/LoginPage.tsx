@@ -11,7 +11,7 @@ import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
 import { setLogin } from "../app/Store/User/userSlice";
 import { useDispatch } from "react-redux";
-import { appleProvider, AUTH, DB, facebookProvider, githubProvider, googleProvider, twitterProvider } from "../index";
+import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../index";
 import { doc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
@@ -23,8 +23,9 @@ const LoginPage = () => {
   const [secStep, setSecStep] = useState(false);
   const [error, setError] = useState("");
 
-  const login = async (e: BaseSyntheticEvent) => {
+  const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    console.log("login");
     signInWithEmailAndPassword(AUTH, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -95,7 +96,7 @@ const LoginPage = () => {
         setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
       });
   }
-  const githubLogin = async (e: BaseSyntheticEvent) => {
+  const githubLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     signInWithPopup(AUTH, githubProvider)
       .then((result) => {
@@ -154,7 +155,7 @@ const LoginPage = () => {
           ) : (
             <Login2
               password={[password, setPassword]}
-              login={() => login}
+              login={(e: React.MouseEvent<HTMLButtonElement>) => login(e)}
             />
           )}
         </form>

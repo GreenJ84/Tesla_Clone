@@ -1,6 +1,6 @@
 /** @format */
 
-import { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 
@@ -84,7 +84,7 @@ const RegistrationPage = () => {
               email={[email, setEmail]}
               password={[password, setPassword]}
               confPassword={[confPassword, setConfPassword]}
-              register={register}
+              register={(e: React.MouseEvent<HTMLButtonElement>) => register(e)}
             />
           )}
         </form>
