@@ -41,7 +41,7 @@ const Detail = () => {
             <DownArrow
           onClick={() => window.scrollTo({
                 behavior: 'smooth',
-                top: window.innerHeight
+                top: window.innerHeight/3-40
               })}
               className="absolute bottom-80 cursor mx-auto"
               src="/images/down-arrow.svg"
@@ -64,9 +64,11 @@ const Detail = () => {
                 <CarStat value={`${product.stats.drive}`} description="Dual Motor"/>
               }
             </div>
-            <button className="absolute bottom-32 py-1.5 px-40 text-2xl transition-colors ease-in-out duration-300 text-white border-white border-4 rounded-lg hover:bg-white hover:text-black">
-              Order Now
-            </button>
+            <a
+              href={`https://www.tesla.com/${product.title.toLowerCase().replace(" ","")}/design#overview`}
+              className="absolute bottom-32 py-1.5 px-40 text-2xl transition-colors ease-in-out duration-300 text-white border-white border-4 rounded-lg hover:bg-white hover:text-black">
+                Order Now
+            </a>
           </Container>
           {/* Product details */}
       <div className="relative flex flex-col w-3/4 md:w-5/6 2xl:w-2/3 mx-auto pt-10">
