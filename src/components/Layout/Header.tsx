@@ -140,12 +140,7 @@ const Header = (props: HeaderType) => {
             <li
               key={car.id}
               onClick={() => {
-                homeRef
-                  ? homeRef.current?.scrollTo({
-                      behavior: "smooth",
-                      top: car.ref?.current!.offsetTop,
-                    })
-                  : nav(`/cars/${car.id}`);
+                nav(`/cars/${car.id}`);
               }}
             >
               <h1> {car.title}</h1>
