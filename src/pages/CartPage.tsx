@@ -36,25 +36,31 @@ const CartPage = () => {
               ))}
             </>
           :
-            <>
-              <p>No items in Cart</p>
+            <EmptyCart>
+              <h3>No items in Cart</h3>
               <button
                 onClick={() => nav('/')}
               > Return Shopping </button>
-            </>
+            </EmptyCart>
           }
         </Cart>
         <OrderSummary subTot={ subTotal } />
       </Container>
       <Checkout>
-        <button
-          onClick={() => {
-            dispatch(setTotal(subTotal));
-            nav('/order')
-          }}
-        >
-          Checkout
-        </button>
+        {_products.length! > 0 ?
+          <button
+            onClick={() => {
+              dispatch(setTotal(subTotal));
+              nav('/order')
+            }}
+          >
+            Checkout
+          </button>
+        :
+          <button disabled>
+            Checkout
+          </button>
+        }
       </Checkout>
     </Body>
   );
@@ -97,6 +103,32 @@ const Cart = styled.div`
   }
 `;
 
+const EmptyCart = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h3{
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    margin: 20px 0 40px;
+  }
+  button{
+    padding: 10px 0;
+    margin-bottom: 40px;
+    width: 30%;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    color: white;
+    background-color: rgba(20, 65, 255, 0.8);
+    border-radius: 4px;
+  }
+  button:hover {
+    background-color: rgba(0, 35, 205, 0.8);
+  }
+`;
+
 const Checkout = styled.div`
   visibility: hidden;
   position: fixed;
@@ -121,6 +153,9 @@ const Checkout = styled.div`
   }
   button:hover {
     background-color: rgba(0, 35, 205, 0.8);
+  }
+  button:disabled {
+    background-color: rgba(0, 35, 205, 0.4);
   }
   bottom: 0;
   @media screen and (max-width: 11280px) {
