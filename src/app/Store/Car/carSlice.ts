@@ -47,7 +47,14 @@ export const carSlice = createSlice({
       let car = state.cart.find((item) => {
         return item.id === action.payload;
       });
-      if (car) return;
+      if (car) {
+        let [car] = state.cart.filter((item) => item.id === action.payload);
+        let [...cars] = state.cart.filter(
+          (item) => item.id !== action.payload);
+        car.quantity += 1;
+        state.cart = [...cars, car];
+        return;
+      };
       let [_car] = state.cars.filter((item) => item.id === action.payload);
       state.cart = [...state.cart, _car];
     },
