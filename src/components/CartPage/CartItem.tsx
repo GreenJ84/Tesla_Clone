@@ -28,7 +28,14 @@ const CartItem = (props: CartProps) => {
             <input
               type="number"
               value={product.quantity}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => dispatch(setQuantity(e.currentTarget.value))}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                dispatch(setQuantity(
+                  {
+                    id: product.id,
+                    quantity: parseInt(e.currentTarget.value)
+                  }
+                ))
+              }
               min={0}
               max={3}
             />
