@@ -47,7 +47,7 @@ const Order2 = (props: order2Props) => {
       <p>Order Summary({_products.length} items)</p>
       <ul>
       {_products.map((product) =>
-        <ListItem>
+        <ListItem key={product.id}>
           <img
             src={`/images/${product.backgroundImg}`}
             alt={product.title}
