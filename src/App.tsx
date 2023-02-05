@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage";
 import OrderPage from "./pages/OrderPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
+import AccountPage from "./pages/AccountPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,10 @@ function App() {
         path="/registration"
         element={<RegistrationPage />}
       />
+      <Route
+        path="/account"
+        element={<AccountPage />
+      }/>
       <Route
         path="/"
         element={<HomePage />}
