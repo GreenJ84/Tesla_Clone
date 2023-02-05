@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 import { RootState } from "../../app/Store/store";
 import { selectCars } from "../../app/Store/Car/carSlice";
