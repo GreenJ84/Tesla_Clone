@@ -23,7 +23,7 @@ const RegistrationPage = () => {
   const [secStep, setSecStep] = useState(false);
   const [error, setError] = useState("");
 
-  const register = async (e: BaseSyntheticEvent) => {
+  const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (password !== confPassword) {
       setError("Passwords are not a match");
