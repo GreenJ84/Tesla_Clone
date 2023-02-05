@@ -35,7 +35,7 @@ const Login2 = (props: Login2Props) => {
         }
         className="w-[430px]"
         required
-        pattern="[A-Za-z!#$%&]+[1-9]+{8,}"
+        pattern="([A-Za-z!#$%&]+[1-9]+){8,}"
       />
       {password ? (
         <Button onClick={buttonHandler}>Sign In</Button>
