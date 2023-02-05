@@ -12,11 +12,11 @@ import userReducer, { UserState } from "./User/userSlice";
 const persistConfig = {
   key: 'root',
   storage,
-  stateReconciler: autoMergeLevel2
+  stateReconciler: autoMergeLevel2,
 }
 
-const persistedUserReducer = persistReducer<UserState>(persistConfig, userReducer)
-const persistedCarReducer = persistReducer<CarState>(persistConfig, carReducer)
+const persistedUserReducer = persistReducer<UserState>({ ...persistConfig, blacklist: ['isLoggedIn'] }, userReducer)
+const persistedCarReducer = persistReducer<CarState>({ ...persistConfig, blacklist: ['cars'] }, carReducer)
 
 export const store = configureStore({
   reducer: {
