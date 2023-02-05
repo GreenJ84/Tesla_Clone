@@ -63,7 +63,11 @@ const Header = (props: HeaderType) => {
       <Nav className="flex gap-6 pt-2.5">
         {cars.map((car) => (
           <h1
-            className="cursor text-lg text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white hover:bg-gray-800 hover:bg-opacity-50 transition-colors hover:shadow-2xl"
+            className={ window.location.pathname === '/cars/1' ?
+              "cursor text-lg text-white bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white transition-colors hover:shadow-2xl hover:bg-[rgba(0,0,0)] duration-700"
+            :
+              "cursor text-lg text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white hover:bg-gray-800 hover:bg-opacity-50 transition-colors hover:shadow-2xl"
+            }
             onClick={() => {
               homeRef
                 ? homeRef.current?.scrollTo({
@@ -81,21 +85,29 @@ const Header = (props: HeaderType) => {
       {/* Loggin, Logout, and Cart Menu */}
       <SideMenu>
         {user.isLoggedIn ? (
-            <h1
-              className="invisible xl:visible text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-20 transition-colors mr-5 hover:shadow-3xl"
+            <button
+              className={ window.location.pathname === "/cars/1" ?
+                "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              :
+                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              }
               onClick={() => {
                 dispatch(setLogout());
               }}
             >
               Logout
-            </h1>
+            </button>
         ) : (
-          <h1
-            className="invisible xl:visible  text-black text-lg bg-transparent rounded-lg px-2.5 py-1.5 hover:text-black hover:bg-gray-500 cursor hover:bg-opacity-30 transition-colors mr-5 hover:shadow-2xl"
+          <button
+            className={ window.location.pathname === "/cars/1" ?
+              "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+            :
+              "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+            }
             onClick={() => nav("/login")}
           >
             Account
-          </h1>
+          </button>
         )}
 
         {user.isLoggedIn &&
@@ -103,9 +115,17 @@ const Header = (props: HeaderType) => {
               to="/cart"
               className="invisible xl:visible flex relative top-1 right-2 xl:right-0"
             >
-              <ShoppingCartIcon className="relative h-7 w-7" />
+              <button
+              className={ window.location.pathname === "/cars/1" ?
+                "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              :
+                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              }
+              >
+                Cart
+              </button>
               {_cartData.length > 0 &&
-                <p className="absolute -top-1.5 -right-1.5 flex items-center justify-center bg-blue-600 text-white h-5 w-5 md:h-5 md:w-5 text-xs font-bold rounded-full">
+                <p className="absolute -top-.5 right-3 flex items-center justify-center bg-blue-600 text-white h-5 w-5 md:h-5 md:w-5 text-xs font-bold rounded-full">
                   {_cartData.length}
                 </p>
               }
