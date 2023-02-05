@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserData } from "../app/Store/User/userSlice";
 import Header from "../components/Layout/Header";
+import SmallFooter from "../components/Layout/SmallFooter";
 import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
@@ -35,11 +36,13 @@ const OrderPage = () => {
       <Header />
       <Container>
         {secStep ? 
-          <p onClick={() => setSecStep(false)}>Back</p>
+          <>
+            <p onClick={() => setSecStep(false)}>Back</p>
+            <p>Step 2 of 2</p>
+          </>
         :
           ""
         }
-        <p>Step { secStep ? '2' : "1" } of 2</p>
         {!secStep ?
           <Order1
             fn={[firstName, setFirstName]}
@@ -71,4 +74,8 @@ const OrderPage = () => {
 
 export default OrderPage;
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+  width: 660px;
+  margin: 5vh auto 0;
+`;
