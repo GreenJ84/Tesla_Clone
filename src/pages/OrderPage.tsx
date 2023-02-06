@@ -1,11 +1,11 @@
 /** @format */
 
+import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useUserData } from "../app/Store/User/userSlice";
 import Header from "../components/Layout/Header";
-import SmallFooter from "../components/Layout/SmallFooter";
 import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
@@ -37,7 +37,7 @@ const OrderPage = () => {
       <Container>
         {secStep ? 
           <>
-            <p onClick={() => setSecStep(false)}>Back</p>
+            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6"/>Back</button>
             <p>Step 2 of 2</p>
           </>
         :
@@ -76,6 +76,24 @@ export default OrderPage;
 
 const Container = styled.div`
   position: relative;
-  width: 660px;
-  margin: 5vh auto 0;
+  width: 670px;
+  margin: 7vh auto 0;
+  >button{
+    position: relative;
+    right: 2px;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 24px;
+    color: rgba(80, 80, 80, .9);
+  }
+  >button:hover{
+    color: black;
+  }
+  >p{
+    font-size: 20px;
+    letter-spacing: 1.1px;
+    word-spacing: 1.4px;
+  }
 `;
