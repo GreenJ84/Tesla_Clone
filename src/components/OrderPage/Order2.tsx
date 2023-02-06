@@ -39,7 +39,8 @@ const Order2 = (props: order2Props) => {
       setCardModal(true)
   }
   const edit = (e: BaseSyntheticEvent) => {
-
+    e.preventDefault()
+    setStep()
   }
 
   return (
