@@ -67,7 +67,7 @@ const CartPage = () => {
 };
 
 export default CartPage;
-const Body = styled.div`
+export const Body = styled.div`
 @media screen and (min-width: 1280px) {
   padding: 0 40px;
 }
@@ -99,7 +99,6 @@ const Cart = styled.div`
     width: 640px;
     margin-right: 35px;
     border: none;
-
   }
 `;
 
@@ -158,7 +157,7 @@ const Checkout = styled.div`
     background-color: rgba(0, 35, 205, 0.4);
   }
   bottom: 0;
-  @media screen and (max-width: 11280px) {
+  @media screen and (max-width: 1280px) {
     visibility: visible;
   }
 `;
