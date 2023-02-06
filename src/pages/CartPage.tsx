@@ -14,10 +14,10 @@ import { setTotal } from "../app/Store/Car/carSlice";
 const CartPage = () => {
   const _products = useCartState();
   const dispatch = useDispatch();
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const subTotal = _products.reduce((acc, curr) => {
-    acc = curr.price * curr.quantity + acc;
+    acc += curr.price * curr.quantity;
     return acc;
   }, 0);
 
