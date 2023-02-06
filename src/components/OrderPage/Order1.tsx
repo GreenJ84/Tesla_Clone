@@ -51,7 +51,7 @@ const Order1 = (props: order1Props) => {
             name="firstName"
             type="text"
             value={shipAdd.firstName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>shipHandler("firstName", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>shipHandler("firstName", e)}
           />
           
           <label htmlFor="address">Address Line 1</label>
@@ -59,7 +59,7 @@ const Order1 = (props: order1Props) => {
             name="address1"
             type="text"
             value={shipAdd.address1}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address1",e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address1",e)}
           />
           
           <label htmlFor="zipCode">Zip Code</label>
@@ -67,7 +67,7 @@ const Order1 = (props: order1Props) => {
             name="zipCode"
             type="text"
             value={shipAdd.zip}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("zip", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("zip", e)}
           />
           
           <label htmlFor="state">State</label>
@@ -75,7 +75,7 @@ const Order1 = (props: order1Props) => {
             name="state"
             type="state"
             value={shipAdd.state}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("state", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("state", e)}
           />
         </div>
         <div>
@@ -84,7 +84,7 @@ const Order1 = (props: order1Props) => {
             name="lastName"
             type="text"
             value={shipAdd.lastName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("lastName", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("lastName", e)}
           />
           
           <label htmlFor="addess2">Address Line 2</label>
@@ -92,7 +92,7 @@ const Order1 = (props: order1Props) => {
             name="address2"
             type="text"
             value={shipAdd.address2}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address2", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address2", e)}
           />
           
           <label htmlFor="city">City</label>
@@ -100,7 +100,7 @@ const Order1 = (props: order1Props) => {
             name="city"
             type="text"
             value={shipAdd.city}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("city", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("city", e)}
           />
           
           <label htmlFor="phoneNumber">Mobile Phone Number</label>
@@ -108,7 +108,7 @@ const Order1 = (props: order1Props) => {
             name="phoneNumber"
             type="text"
             value={shipAdd.phone}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("phoneNumber", e.currentTarget.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("phone", e)}
           />
         </div>
       </Form>
@@ -132,7 +132,7 @@ const Order1 = (props: order1Props) => {
                 name="firstName"
                 type="text"
                 value={billAdd.firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("firstName", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("firstName", e)}
               />
             </div>
             <div>
@@ -141,7 +141,7 @@ const Order1 = (props: order1Props) => {
                 name="lastName"
                 type="text"
                 value={billAdd.lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => billHandler("lastName", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => billHandler("lastName", e)}
               />
             </div>
           </Form>
@@ -170,30 +170,32 @@ const Order1 = (props: order1Props) => {
                 Business</label>
             </div>
           </Form2>
-          <Form>
-            {radio && <>
+          {radio && <Form>
+            <div>
               <label htmlFor="companyName">Company Name</label>
               <input
                 name="companyName"
                 type="text"
                 value={billAdd.companyName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("companyName", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("companyName", e)}
               />
-            </>}
+            </div>
+          </Form>}
+          <Form>
             <div>
               <label htmlFor="country">Country/Region</label>
               <input
                 name="country"
                 type="text"
                 value={billAdd.country}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("country", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("country", e)}
               />
               <label htmlFor="address2">Address Line 2</label>
               <input
                 name="address2"
                 type="text"
                 value={billAdd.address2}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address2", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address2", e)}
               />
               
               <label htmlFor="state">State</label>
@@ -201,7 +203,7 @@ const Order1 = (props: order1Props) => {
                 name="state"
                 type="state"
                 value={billAdd.state}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("state", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("state", e)}
               />
             </div>
             <div>
@@ -210,7 +212,7 @@ const Order1 = (props: order1Props) => {
                 name="addess1"
                 type="text"
                 value={billAdd.address1}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address1", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address1", e)}
               />
               
               <label htmlFor="city">City</label>
@@ -218,14 +220,14 @@ const Order1 = (props: order1Props) => {
                 name="city"
                 type="text"
                 value={billAdd.city}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("city", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("city", e)}
               />
               <label htmlFor="zip">Zip Code</label>
               <input
                 name="zip"
                 type="text"
                 value={billAdd.zip}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("zip", e.currentTarget.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("zip", e)}
               />
             </div>
           </Form>
