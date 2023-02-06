@@ -13,6 +13,51 @@ const OrderPage = () => {
   const nav = useNavigate();
   const user = useUserData();
 
+  interface Address {
+    firstName: string
+    lastName: string
+    address1: string
+    address2: string
+    zip: string
+    city: string
+    state: string
+    phone: string
+  }
+
+  const [shipAdd, setShipAdd] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    zip: "",
+    city: "",
+    state: "",
+    phone: ""
+  });
+  const [billAdd, setBillAdd] = useState({
+    firstName: "",
+    lastName: "",
+    address1: "",
+    address2: "",
+    zip: "",
+    city: "",
+    state: "",
+    phone: ""
+  });
+
+  const shipHandler = (value: keyof Address, e: React.ChangeEvent<HTMLInputElement>) => {
+    let shipCopy = {...shipAdd};
+    shipCopy[value] = e.currentTarget.value;
+    setShipAdd(shipAdd => ({...shipCopy}))
+  }
+  const billShipSame = () => {
+    setBillAdd({...shipAdd})
+  }
+  const billHandler = (value: keyof Address, e: React.ChangeEvent<HTMLInputElement>) => {
+    let billCopy = {...billAdd};
+    billCopy[value] = e.currentTarget.value;
+    setBillAdd(billAdd => ({...billCopy}))
+  }
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
