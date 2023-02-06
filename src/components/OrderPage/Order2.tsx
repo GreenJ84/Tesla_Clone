@@ -82,7 +82,7 @@ const Order2 = (props: order2Props) => {
           <div>
             <h3>Shipping Address</h3>
             <button
-              onClick={(e: BaseSyntheticEvent) => edit}
+              onClick={(e: BaseSyntheticEvent) => edit(e)}
             >
               Edit
             </button>
@@ -98,7 +98,7 @@ const Order2 = (props: order2Props) => {
           <div>
             <h3>Billing Address</h3>
             <button
-              onClick={(e: BaseSyntheticEvent) => edit}
+              onClick={(e: BaseSyntheticEvent) => edit(e)}
             >
               Edit
             </button>
@@ -108,7 +108,7 @@ const Order2 = (props: order2Props) => {
           : ""}
           <p>{bill.firstName} { bill.lastName }</p>
           <p>{ bill.address1 }</p>
-          {bill.address2 ? <p>{bill.address2}</p> : <p></p>}
+          {bill.address2 ? <p>{bill.address2}</p> : ""}
           <p>{bill.city}, {bill.state} {bill.zip}</p>
           <p>{bill.country}</p>
         </Address>
