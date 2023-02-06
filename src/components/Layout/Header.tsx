@@ -88,7 +88,7 @@ const Header = (props: HeaderType) => {
               className={ window.location.pathname === "/cars/1" ?
                 "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
               :
-                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl duration-700 hover:bg-gray-800 hover:bg-opacity-50"
               }
               onClick={() => {
                 dispatch(setLogout());
@@ -101,7 +101,7 @@ const Header = (props: HeaderType) => {
             className={ window.location.pathname === "/cars/1" ?
               "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
             :
-              "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
             }
             onClick={() => nav("/login")}
           >
@@ -118,14 +118,17 @@ const Header = (props: HeaderType) => {
               className={ window.location.pathname === "/cars/1" ?
                 "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
               :
-                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-black cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
               }
               >
                 Cart
               </button>
               {_cartData.length > 0 &&
                 <p className="absolute -top-.5 right-3 flex items-center justify-center bg-blue-600 text-white h-5 w-5 md:h-5 md:w-5 text-xs font-bold rounded-full">
-                  {_cartData.length}
+                  {_cartData.reduce((acc, curr) => {
+                      acc += curr.quantity;
+                      return acc;
+                    }, 0)}
                 </p>
               }
             </Link>
@@ -136,7 +139,7 @@ const Header = (props: HeaderType) => {
           className={
             window.location.pathname === "/cars/1"
               ? "xl:bg-transparent bg-[rgba(80,80,80,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 px-6 py-2 text-lg text-white font-medium"
-              : "xl:bg-transparent bg-[rgba(0,0,0,.05)] hover:bg-[rgba(0,0,0,.2)] transition-colors duration-700 px-6 py-2 text-lg text-black font-medium"
+              : "xl:bg-transparent bg-[rgba(0,0,0,.05)]  hover:bg-gray-800 hover:bg-opacity-50 transition-colors duration-700 px-6 py-2 text-lg text- hover:text-white font-medium"
           }
           onClick={() => setMenuStatus(true)}
         >
@@ -166,7 +169,7 @@ const Header = (props: HeaderType) => {
             </li>
           ))}
           <li
-            onClick={() => nav("/login")}
+            onClick={ user.isLoggedIn ? () => nav("/account") : () => nav('/login')}
           >
             <h1>Account</h1>
           </li>
@@ -186,7 +189,10 @@ const Header = (props: HeaderType) => {
               >
                 <h1 className="flex items-center">Cart {_cartData.length > 0 ? 
                     <span className="flex items-center justify-center ml-4 bg-blue-600 text-white h-6 w-6 text-xs font-bold rounded-full">
-                      {_cartData.length}
+                    {_cartData.reduce((acc, curr) => {
+                      acc += curr.quantity;
+                      return acc;
+                    }, 0)}
                     </span>
                   :
                     ""
