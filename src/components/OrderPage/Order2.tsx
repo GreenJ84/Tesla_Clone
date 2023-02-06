@@ -3,15 +3,19 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore"
+
 import styled from "styled-components";
-import { setTotal } from "../../app/Store/Car/carSlice";
-import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
-import { useCartState } from "../../app/Utils/hooks/useCartState";
 import { Body } from "../../pages/CartPage";
-import { billAddress, shipAddress } from "../../pages/OrderPage";
 import CartItem from "../CartPage/CartItem";
 import CardModal from "./CardModal";
 import FinalOrder from "./FinalOrder";
+
+import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
+import { useCartState } from "../../app/Utils/hooks/useCartState";
+import { setTotal } from "../../app/Store/Car/carSlice";
+import { billAddress, shipAddress } from "../../pages/OrderPage";
+import { DB } from "../..";
 
 interface order2Props{
   ship: shipAddress
@@ -41,6 +45,24 @@ const Order2 = (props: order2Props) => {
   const edit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
     setStep()
+  }
+  const logOrder = async (e: BaseSyntheticEvent) => {
+    e.preventDefault()
+    let total = subTotal + getTax(subTotal)
+    try {
+      const docRef = await addDoc(collection(DB, "orders"), {
+        order: _products,
+        shipping: ship,
+        billing: bill,
+        total: total,
+      });
+      console.log("Saving Order");
+      dispatch(setTotal(total));
+      console.log("Order written with ID: ", docRef.id);
+      nav('/confirmation');
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
   }
 
   return (
@@ -113,9 +135,8 @@ const Order2 = (props: order2Props) => {
         {card ?
           <Button
             className="px-8"
-            onClick={() => {
-              dispatch(setTotal(subTotal + getTax(subTotal)));
-              nav('/confirmation');
+            onClick={(e: BaseSyntheticEvent) => {
+              logOrder(e)
             }}
           >
             Place Order
