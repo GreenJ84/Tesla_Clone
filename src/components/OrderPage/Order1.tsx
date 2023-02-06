@@ -3,11 +3,11 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../app/Utils/StyledComponents/LoginComponents";
-import { Address, billAddress } from "../../pages/OrderPage";
+import { billAddress, shipAddress } from "../../pages/OrderPage";
 
 
 interface order1Props{
-  ship: [Address, Function]
+  ship: [shipAddress, Function]
   bill: [billAddress, Function, Function]
   setStep: Function
 }
