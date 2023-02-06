@@ -8,23 +8,26 @@ import { useUserData } from "../app/Store/User/userSlice";
 import Header from "../components/Layout/Header";
 import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
+export interface Address {
+  firstName: string
+  lastName: string
+  address1: string
+  address2: string
+  zip: string
+  city: string
+  state: string
+  phone: string
+}
+export interface billAddress extends Address{
+  companyName: string
+  country: string
+}
 
 const OrderPage = () => {
   const nav = useNavigate();
   const user = useUserData();
 
-  interface Address {
-    firstName: string
-    lastName: string
-    address1: string
-    address2: string
-    zip: string
-    city: string
-    state: string
-    phone: string
-  }
-
-  const [shipAdd, setShipAdd] = useState({
+  const [shipAdd, setShipAdd] = useState<Address>({
     firstName: "",
     lastName: "",
     address1: "",
@@ -34,7 +37,9 @@ const OrderPage = () => {
     state: "",
     phone: ""
   });
-  const [billAdd, setBillAdd] = useState({
+  const [billAdd, setBillAdd] = useState<billAddress>({
+    companyName: "",
+    country: "",
     firstName: "",
     lastName: "",
     address1: "",
@@ -51,22 +56,13 @@ const OrderPage = () => {
     setShipAdd(shipAdd => ({...shipCopy}))
   }
   const billShipSame = () => {
-    setBillAdd({...shipAdd})
+    setBillAdd({ ...shipAdd, companyName: "", country: "USA"})
   }
-  const billHandler = (value: keyof Address, e: React.ChangeEvent<HTMLInputElement>) => {
+  const billHandler = (value: keyof billAddress, e: React.ChangeEvent<HTMLInputElement>) => {
     let billCopy = {...billAdd};
     billCopy[value] = e.currentTarget.value;
     setBillAdd(billAdd => ({...billCopy}))
   }
-
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [address, setAddress] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [zip, setZip] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [phone, setPhone] = useState("");
 
   const [secStep, setSecStep] = useState(false);
 
@@ -90,26 +86,15 @@ const OrderPage = () => {
         }
         {!secStep ?
           <Order1
-            fn={[firstName, setFirstName]}
-            ln={[lastName, setLastName]}
-            add={[address, setAddress]}
-            add2={[address2, setAddress2]}
-            zip={[zip, setZip]}
-            city={[city, setCity]}
-            state={[state, setState]}
-            phone={[phone, setPhone]}
+            ship={[shipAdd, shipHandler]}
+            bill={[billAdd, billHandler, billShipSame]}
             setStep={() => setSecStep(true)}
           />
           :
           <Order2
-          fn={firstName}
-          ln={lastName}
-          add={address}
-          add2={address2}
-          zip={zip}
-          city={city}
-          state={state}
-          phone={phone}
+          ship={shipAdd}
+          bill={billAdd}
+          setStep={() => setSecStep(false)}
           />
         }
       </Container>
