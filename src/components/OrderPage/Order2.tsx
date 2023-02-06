@@ -17,6 +17,12 @@ import { setTotal } from "../../app/Store/Car/carSlice";
 import { billAddress, shipAddress } from "../../pages/OrderPage";
 import { DB } from "../..";
 
+export interface Card {
+  name: string
+  number: string
+  exp: string
+  cvv: string
+}
 interface order2Props{
   ship: shipAddress
   bill: billAddress
@@ -26,6 +32,13 @@ interface order2Props{
 const Order2 = (props: order2Props) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
+
+  const [cardDet, setCardDet] = useState<Card>({
+    name: "",
+    number: "",
+    exp: "",
+    cvv: ""
+  })
   const [cardModal, setCardModal] = useState(false);
   const [card, setCard] = useState(false);
 
@@ -46,6 +59,11 @@ const Order2 = (props: order2Props) => {
     e.preventDefault()
     setStep()
   }
+  const cardHandler = (value: keyof Card, e: BaseSyntheticEvent) => {
+    let copy = { ...cardDet }
+    copy[value] = e.currentTarget.value;
+    setCardDet({...copy})
+  }
   const logOrder = async (e: BaseSyntheticEvent) => {
     e.preventDefault()
     let total = subTotal + getTax(subTotal)
@@ -54,6 +72,7 @@ const Order2 = (props: order2Props) => {
         order: _products,
         shipping: ship,
         billing: bill,
+        card: cardDet,
         total: total,
       });
       console.log("Saving Order");
@@ -66,15 +85,20 @@ const Order2 = (props: order2Props) => {
   }
 
   return (
+    <>
+    {cardModal ? 
+        <CardModal toggle={toggleCardModal} setCard={[cardDet, cardHandler] } />
+    :
+      ""}
     <Order2Body>
       <h1>Review and Pay</h1>
       <p>Order Summary ({_products.length} items)</p>
       <Container>
         <ul>
         {_products.map((product) =>
-          <li key={product.id}>
+          <span key={product.id}>
             <CartItem product={product} />
-          </li>
+          </span>
         )}
         </ul>
 
@@ -119,15 +143,10 @@ const Order2 = (props: order2Props) => {
 
         <FinalOrder subTot={subTotal} />
         <Button
-          
-          onClick={() => toggleCardModal}
+          onClick={() => toggleCardModal()}
         >
           Card
         </Button>
-        {cardModal ? 
-          <CardModal setCard={() => setCard(true) } />
-        :
-          ""}
         <p>
           Add Gift Card
         </p>
@@ -151,6 +170,7 @@ const Order2 = (props: order2Props) => {
           }
         </Container>
     </Order2Body>
+    </>
   );
 };
 
