@@ -155,7 +155,7 @@ const Order1 = (props: order1Props) => {
                 <input
                   type="radio"
                   name="accountType"
-                  checked={radio}
+                  defaultChecked={radio}
                   onClick={() => { toggleRadio(); console.log(radio) }}
                 />
                 Personal</label>
@@ -166,7 +166,7 @@ const Order1 = (props: order1Props) => {
                 <input
                   type="radio"
                   name="accountType"
-                  checked={!radio}
+                  defaultChecked={!radio}
                   onClick={() => { toggleRadio(); console.log(radio) }}
                 />
                 Business</label>
@@ -218,7 +218,7 @@ const Order1 = (props: order1Props) => {
       }
       <Button
         className="relative left-1 mt-8 !px-28"
-        onClick={() => setStep}
+        onClick={() => setStep()}
       >
         Next
       </Button>
