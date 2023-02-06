@@ -1,46 +1,44 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../../app/Utils/StyledComponents/LoginComponents";
+import { Address, billAddress } from "../../pages/OrderPage";
+
 
 interface order1Props{
-  fn: [string, Function]
-  ln: [string, Function]
-  add: [string, Function]
-  add2: [string, Function]
-  zip: [string, Function]
-  city: [string, Function]
-  state: [string, Function]
-  phone: [string, Function]
+  ship: [Address, Function]
+  bill: [billAddress, Function, Function]
   setStep: Function
 }
 
 const Order1 = (props: order1Props) => {
-  const [firstName, setFirstName] = props.fn;
-  const [lastName, setLastName] = props.ln;
-  const [address, setAddress] = props.add;
-  const [address2, setAddress2] = props.add2;
-  const [zip, setZip] = props.zip;
-  const [city, setCity] = props.city;
-  const [state, setState] = props.state;
-  const [phone, setPhone] = props.phone;
+  const [shipAdd, shipHandler] = props.ship;
+  const [billAdd, billHandler, billShipSame] = props.bill;
   const { setStep } = props;
 
   const [checked, setChecked] = useState(true);
-  const [radio, setRadio] = useState(true);
-
   const toggleChecked = () => {
     checked ?
-      setChecked(false)
+    setChecked(false)
     :
-      setChecked(true)
+    setChecked(true)
   }
+
+  const [radio, setRadio] = useState(true);
   const toggleRadio = () => {
     radio ?
       setRadio(false)
     :
       setRadio(true)
+  }
+
+  const submitAddress = (e: BaseSyntheticEvent) => {
+    e.preventDefault()
+    if (checked) {
+      billShipSame()
+    }
+    setStep()
   }
 
   return (
@@ -52,32 +50,32 @@ const Order1 = (props: order1Props) => {
           <input
             name="firstName"
             type="text"
-            value={firstName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setFirstName(e.currentTarget.value)}
+            value={shipAdd.firstName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>)=>shipHandler("firstName", e.currentTarget.value)}
           />
           
-          <label htmlFor="address">Address</label>
+          <label htmlFor="address">Address Line 1</label>
           <input
-            name="address"
+            name="address1"
             type="text"
-            value={address}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddress(e.currentTarget.value)}
+            value={shipAdd.address1}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address1",e.currentTarget.value)}
           />
           
           <label htmlFor="zipCode">Zip Code</label>
           <input
             name="zipCode"
             type="text"
-            value={zip}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setZip(e.currentTarget.value)}
+            value={shipAdd.zip}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("zip", e.currentTarget.value)}
           />
           
           <label htmlFor="state">State</label>
           <input
             name="state"
             type="state"
-            value={state}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setState(e.currentTarget.value)}
+            value={shipAdd.state}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("state", e.currentTarget.value)}
           />
         </div>
         <div>
@@ -85,32 +83,32 @@ const Order1 = (props: order1Props) => {
           <input
             name="lastName"
             type="text"
-            value={lastName}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLastName(e.currentTarget.value)}
+            value={shipAdd.lastName}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("lastName", e.currentTarget.value)}
           />
           
           <label htmlFor="addess2">Address Line 2</label>
           <input
-            name="addess2"
+            name="address2"
             type="text"
-            value={address2}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setAddress2(e.currentTarget.value)}
+            value={shipAdd.address2}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("address2", e.currentTarget.value)}
           />
           
           <label htmlFor="city">City</label>
           <input
             name="city"
             type="text"
-            value={city}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCity(e.currentTarget.value)}
+            value={shipAdd.city}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("city", e.currentTarget.value)}
           />
           
           <label htmlFor="phoneNumber">Mobile Phone Number</label>
           <input
             name="phoneNumber"
             type="text"
-            value={phone}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPhone(e.currentTarget.value)}
+            value={shipAdd.phone}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => shipHandler("phoneNumber", e.currentTarget.value)}
           />
         </div>
       </Form>
@@ -133,8 +131,8 @@ const Order1 = (props: order1Props) => {
               <input
                 name="firstName"
                 type="text"
-                value={firstName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>setFirstName(e.currentTarget.value)}
+                value={billAdd.firstName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("firstName", e.currentTarget.value)}
               />
             </div>
             <div>
@@ -142,8 +140,8 @@ const Order1 = (props: order1Props) => {
               <input
                 name="lastName"
                 type="text"
-                value={lastName}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLastName(e.currentTarget.value)}
+                value={billAdd.lastName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => billHandler("lastName", e.currentTarget.value)}
               />
             </div>
           </Form>
@@ -173,41 +171,61 @@ const Order1 = (props: order1Props) => {
             </div>
           </Form2>
           <Form>
+            {radio && <>
+              <label htmlFor="companyName">Company Name</label>
+              <input
+                name="companyName"
+                type="text"
+                value={billAdd.companyName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("companyName", e.currentTarget.value)}
+              />
+            </>}
             <div>
               <label htmlFor="country">Country/Region</label>
               <input
                 name="country"
                 type="text"
+                value={billAdd.country}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("country", e.currentTarget.value)}
               />
-              <label htmlFor="address">Address Line 2</label>
+              <label htmlFor="address2">Address Line 2</label>
               <input
-                name="address"
+                name="address2"
                 type="text"
+                value={billAdd.address2}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address2", e.currentTarget.value)}
               />
               
               <label htmlFor="state">State</label>
               <input
                 name="state"
                 type="state"
+                value={billAdd.state}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("state", e.currentTarget.value)}
               />
             </div>
             <div>
-              
-              <label htmlFor="addess2">Address Line 1</label>
+              <label htmlFor="addess1">Address Line 1</label>
               <input
-                name="addess2"
+                name="addess1"
                 type="text"
+                value={billAdd.address1}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("address1", e.currentTarget.value)}
               />
               
               <label htmlFor="city">City</label>
               <input
                 name="city"
                 type="text"
+                value={billAdd.city}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("city", e.currentTarget.value)}
               />
-              <label htmlFor="zipCode">Zip Code</label>
+              <label htmlFor="zip">Zip Code</label>
               <input
-                name="zipCode"
+                name="zip"
                 type="text"
+                value={billAdd.zip}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>)=>billHandler("zip", e.currentTarget.value)}
               />
             </div>
           </Form>
@@ -218,7 +236,7 @@ const Order1 = (props: order1Props) => {
       }
       <Button
         className="relative left-1 mt-8 !px-28"
-        onClick={() => setStep()}
+        onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
       >
         Next
       </Button>
