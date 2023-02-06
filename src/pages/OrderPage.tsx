@@ -99,9 +99,9 @@ const OrderPage = () => {
           />
           :
           <Order2
-          ship={shipAdd}
-          bill={billAdd}
-          setStep={() => setSecStep(false)}
+            ship={shipAdd}
+            bill={billAdd}
+            setStep={() => setSecStep(false)}
           />
         }
       </Container>

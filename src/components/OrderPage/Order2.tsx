@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { BaseSyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -8,19 +8,15 @@ import { setTotal } from "../../app/Store/Car/carSlice";
 import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
 import { useCartState } from "../../app/Utils/hooks/useCartState";
 import { Body } from "../../pages/CartPage";
+import { billAddress, shipAddress } from "../../pages/OrderPage";
 import CartItem from "../CartPage/CartItem";
 import CardModal from "./CardModal";
 import FinalOrder from "./FinalOrder";
 
 interface order2Props{
-  fn: string
-  ln: string
-  add: string
-  add2: string
-  zip: string
-  city: string
-  state: string
-  phone: string
+  ship: shipAddress
+  bill: billAddress
+  setStep: Function
 }
 
 const Order2 = (props: order2Props) => {
@@ -29,7 +25,7 @@ const Order2 = (props: order2Props) => {
   const [cardModal, setCardModal] = useState(false);
   const [card, setCard] = useState(false);
 
-  const { fn, ln, add, add2, zip, city, state, phone } = props;
+  const { ship, bill, setStep } = props;
   const _products = useCartState();
   const subTotal = useAppSelector((state) => state.car.total)
 
@@ -41,6 +37,9 @@ const Order2 = (props: order2Props) => {
       setCardModal(false)
       :
       setCardModal(true)
+  }
+  const edit = (e: BaseSyntheticEvent) => {
+
   }
 
   return (
@@ -59,28 +58,36 @@ const Order2 = (props: order2Props) => {
         <Address>
           <div>
             <h3>Shipping Address</h3>
-            <button>
+            <button
+              onClick={(e: BaseSyntheticEvent) => edit}
+            >
               Edit
             </button>
           </div>
-          <p>Jesse Greenough{fn} { ln }</p>
-          <p>19240 Aurora{ add }</p>
-          {add2 ? <p>{add2}</p> : <p>2-310</p>}
-          <p>Shoreline{city}, WA 98133{state} {zip}</p>
-          <p>425-599-3275{ phone }</p>
+          <p>{ship.firstName} { ship.lastName }</p>
+          <p>{ ship.address1 }</p>
+          {ship.address2 ? <p>{ship.address2}</p> : <p></p>}
+          <p>{ship.city}, {ship.state} {ship.zip}</p>
+          <p>{ ship.phone }</p>
         </Address>
 
         <Address>
-        <div>
+          <div>
             <h3>Billing Address</h3>
-            <button>
+            <button
+              onClick={(e: BaseSyntheticEvent) => edit}
+            >
               Edit
             </button>
           </div>
-          <p>Jesse Greenough{fn} { ln }</p>
-          <p>19240 Aurora{ add }</p>
-          {add2 ? <p>{add2}</p> : <p>2-310</p>}
-          <p>Shoreline{city}, WA 98133{state} {zip}</p>
+          {bill.companyName ?
+            <p>{ bill.companyName }</p>
+          : ""}
+          <p>{bill.firstName} { bill.lastName }</p>
+          <p>{ bill.address1 }</p>
+          {bill.address2 ? <p>{bill.address2}</p> : <p></p>}
+          <p>{bill.city}, {bill.state} {bill.zip}</p>
+          <p>{bill.country}</p>
         </Address>
 
         <p>
