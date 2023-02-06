@@ -16,6 +16,8 @@ export interface Address {
   zip: string
   city: string
   state: string
+}
+export interface shipAddress extends Address{
   phone: string
 }
 export interface billAddress extends Address{
@@ -27,7 +29,7 @@ const OrderPage = () => {
   const nav = useNavigate();
   const user = useUserData();
 
-  const [shipAdd, setShipAdd] = useState<Address>({
+  const [shipAdd, setShipAdd] = useState<shipAddress>({
     firstName: "",
     lastName: "",
     address1: "",
@@ -47,7 +49,6 @@ const OrderPage = () => {
     zip: "",
     city: "",
     state: "",
-    phone: ""
   });
 
   const shipHandler = (value: keyof Address, e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +57,13 @@ const OrderPage = () => {
     setShipAdd(shipAdd => ({...shipCopy}))
   }
   const billShipSame = () => {
-    setBillAdd({ ...shipAdd, companyName: "", country: "USA"})
+    let { phone, ...ship } = shipAdd;
+    setBillAdd(
+      {
+        ...ship,
+        companyName: "",
+        country: "USA"
+    })
   }
   const billHandler = (value: keyof billAddress, e: React.ChangeEvent<HTMLInputElement>) => {
     let billCopy = {...billAdd};
