@@ -32,6 +32,9 @@ export const store = configureStore({
           ...carsData.map((_, index) => {
             return `car.cars.${index}.ref`;
           }),
+          ...carsData.map((_, index) => {
+            return `car.cart.${index}.ref`;
+          }),
         "user.user"],
       },
       immutableCheck: false,
