@@ -3,7 +3,7 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore"
+import { collection, addDoc, serverTimestamp } from "firebase/firestore"
 
 import styled from "styled-components";
 import { Body } from "../../pages/CartPage";
@@ -69,13 +69,13 @@ const Order2 = (props: order2Props) => {
     e.preventDefault()
     let total = subTotal + getTax(subTotal)
     try {
-      const docRef = await addDoc(collection(DB, "orders"), {
-        user: user.user!.uid,
+      const docRef = await addDoc(collection(DB, `orders-${user.user!.uid}`), {
         order: _products,
         shipping: ship,
         billing: bill,
         card: cardDet,
         total: total,
+        timestamp: serverTimestamp()
       });
       console.log("Saving Order");
       dispatch(setTotal(total));
