@@ -3,7 +3,7 @@
 import { BaseSyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, OAuthProvider, signInWithEmailAndPassword, signInWithPopup, TwitterAuthProvider } from "firebase/auth";
+import { browserSessionPersistence, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, setPersistence, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
@@ -25,27 +25,37 @@ const LoginPage = () => {
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("login");
-    signInWithEmailAndPassword(AUTH, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setDoc(
-          doc(DB, "users", user.uid),
-          {
-              name: user.displayName,
-              email: user.email,
-          },
-          { merge: true }
-        );
-        dispatch(setLogin(user));
-        nav("/");
-      })
+    setPersistence(AUTH, browserSessionPersistence)
+      .then(() => {
+        return () => {
+            signInWithEmailAndPassword(AUTH, email, password)
+              .then((userCredential) => {
+                if (!userCredential.user) { return }
+                const user = userCredential.user;
+                setDoc(
+                  doc(DB, "users", user.uid),
+                  {
+                    name: user.displayName,
+                    email: user.email,
+                  },
+                  { merge: true }
+                );
+                dispatch(setLogin(user));
+                nav("/");
+              })
+              .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message.split(": ")[1];
+                setError(`Error ${errorCode}: ${errorMessage}`);
+              })
+          }}
+      )
       .catch((error) => {
+        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message.split(": ")[1];
-        console.log(`Error ${errorCode}: ${errorMessage}`);
         setError(`Error ${errorCode}: ${errorMessage}`);
-      });
+      })
   }
   const googleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
