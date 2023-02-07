@@ -13,9 +13,10 @@ import FinalOrder from "./FinalOrder";
 
 import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
 import { useCartState } from "../../app/Utils/hooks/useCartState";
-import { setTotal } from "../../app/Store/Car/carSlice";
+import { completeOrder, setTotal } from "../../app/Store/Car/carSlice";
 import { billAddress, shipAddress } from "../../pages/OrderPage";
 import { DB } from "../..";
+import { useUserData } from "../../app/Store/User/userSlice";
 
 export interface Card {
   name: string
@@ -32,6 +33,7 @@ interface order2Props{
 const Order2 = (props: order2Props) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
+  const user = useUserData();
 
   const [cardDet, setCardDet] = useState<Card>({
     name: "",
@@ -68,6 +70,7 @@ const Order2 = (props: order2Props) => {
     let total = subTotal + getTax(subTotal)
     try {
       const docRef = await addDoc(collection(DB, "orders"), {
+        user: user.user!.uid,
         order: _products,
         shipping: ship,
         billing: bill,
@@ -77,6 +80,7 @@ const Order2 = (props: order2Props) => {
       console.log("Saving Order");
       dispatch(setTotal(total));
       console.log("Order written with ID: ", docRef.id);
+      dispatch(completeOrder())
       nav('/confirmation');
     } catch (e) {
       console.error("Error adding document: ", e);
