@@ -9,6 +9,11 @@ interface cardProps{
   setCard: [Card, Function]
 }
 
+const todayDate = () => {
+  let date = new Date();
+  return `${date.getFullYear()}-${date.getMonth() < 10 ? `0${date.getMonth()}` : `${date.getMonth()}`}`;
+}
+
 const CardModal = (props: cardProps) => {
   const { toggle } = props;
   const [ card, setCard ] = props.setCard;
@@ -17,7 +22,7 @@ const CardModal = (props: cardProps) => {
       <div>
         <button
           className="absolute top-8 right-8"
-          onClick={(e: BaseSyntheticEvent) => toggle()}
+          onClick={(e: BaseSyntheticEvent) => toggle(e)}
         >
           <XMarkIcon className="h-8 w-8" />
         </button>
@@ -28,7 +33,7 @@ const CardModal = (props: cardProps) => {
           type="text"
           value={card.name}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-            setCard("name",e.currentTarget.value)
+            setCard("name", e)
           }
         />
 
@@ -38,7 +43,7 @@ const CardModal = (props: cardProps) => {
           type="text"
           value={card.number}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
-            setCard("number", e.currentTarget.value)
+            setCard("number", e)
           }
         />
 
@@ -48,8 +53,9 @@ const CardModal = (props: cardProps) => {
             <input
               name="expiration"
               type="month"
+              min={todayDate()}
               value={card.exp}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("exp", e.currentTarget.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("exp", e)}
             />
           </div>
           <div>
@@ -58,13 +64,13 @@ const CardModal = (props: cardProps) => {
               name="cvv"
               type="text"
               value={card.cvv}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("cvv", e.currentTarget.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("cvv", e)}
             />
           </div>
         </CardDetail>
         {card.name && card.number && card.exp && card.cvv ?
           <Button
-
+            onClick={(e: BaseSyntheticEvent) => toggle(e)}
           > Continue </Button>
         :
           <Button disabled> Continue </Button>}
