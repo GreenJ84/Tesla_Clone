@@ -40,7 +40,6 @@ const Order2 = (props: order2Props) => {
     cvv: ""
   })
   const [cardModal, setCardModal] = useState(false);
-  const [card, setCard] = useState(false);
 
   const { ship, bill, setStep } = props;
   const _products = useCartState();
@@ -151,7 +150,7 @@ const Order2 = (props: order2Props) => {
           Add Gift Card
         </p>
         <p> By continuing, I understand and agree to the General Terms and Conditions of Online Accessories Sales, <span>Terms of Use</span> and <span>Privacy Notice</span>.</p>
-        {card ?
+        {cardDet.name && cardDet.cvv && cardDet.exp && cardDet.number ?
           <Button
             className="px-8"
             onClick={(e: BaseSyntheticEvent) => {
