@@ -265,8 +265,8 @@ const Container = styled.div`
     }
     >input::before{
       position: relative;
-      top: 2px;
-      left: 7px;
+      top: -4px;
+      left: -4px;
       visibility: hidden;
       background: transparent;
       font-size: 16px;
