@@ -1,28 +1,61 @@
 /** @format */
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Confetti from "react-confetti";
 import useWindowSize from "react-use/lib/useWindowSize";
 import styled from "styled-components";
 
 import Header from "../components/Layout/Header";
 
-import { useAppSelector } from "../app/Utils/hooks/useAppSelector";
-import { useCartState } from "../app/Utils/hooks/useCartState";
 import { useUserData } from "../app/Store/User/userSlice";
 import { useNavigate } from "react-router-dom";
+import { DB } from "..";
+import { collection, CollectionReference, getDocs, limit, orderBy, query } from "firebase/firestore";
+import { carData } from "../teslaCarInfo";
+import { billAddress, shipAddress } from "./OrderPage";
+import { Card } from "../components/OrderPage/Order2";
+
+interface orderData {
+  order: carData[] | null,
+  shipping: shipAddress | null,
+  billing: billAddress | null,
+  card: Card | null,
+  total: number | null,
+}
 
 const ConfirmationPage = () => {
   const nav = useNavigate();
   const user = useUserData();
-  const orders = useCartState();
-  const total = useAppSelector((state) => state.car.total);
+  const [empty, setEmpty] = useState(false)
+  const [order, setOrder] = useState<orderData>({
+    order: null,
+    shipping: null,
+    billing: null,
+    card:null,
+    total: null,
+  });
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    if (!user.isLoggedIn) {
-      nav('/login')
+    if (!user) {
+      nav('/login');
     }
+    const getOrder = async () => {
+      const q = query(
+        collection(DB, `orders-${user.user!.uid}`) as CollectionReference<orderData>,
+        orderBy("timestamp"),
+        limit(1))
+
+      const queryRes = await getDocs(q);
+      if (queryRes.empty) {
+        setEmpty(true);
+        return;
+      }
+      queryRes.forEach((order) => {
+        setOrder(order.data())
+      })
+      }
+    getOrder();
   }, []);
 
 
@@ -35,29 +68,38 @@ const ConfirmationPage = () => {
       />
       <Header />
       <Container>
-        <h1>Order Placement Confirmed</h1>
+        {!empty && <h1>Order Placement Confirmed</h1>}
         <p>
-          Check the status of <span>recent orders</span>,{" "}
+          Check the status of 
+          <span>{!empty ? "recent " : ""}orders</span>,
           <span>manage returns</span>, and discover <span>similar product</span>
         </p>
 
-        <div>
-          <p>Order Number {}</p>
-          <p>Total Amount: {total}</p>
-        </div>
-        <div>
-          {orders.map((product) => (
-            <ListItem key={product.id}>
-              <img src="" alt=""/>
-              <div>
-                <h3>{product.title}</h3>
-                <h3>{product.price}</h3>
-              </div>
-              <p>{product.description}</p>
-              <p>{product.quantity}</p>
-            </ListItem>
-          ))}
-        </div>
+        {!empty ?
+          <>
+            <div>
+              <p>Order Number {}</p>
+              <p>Total Amount: {order.total}</p>
+            </div>
+            <div>
+              {order.order!.map((product) => (
+                <ListItem key={product.id}>
+                  <img src={product.backgroundImg} alt={ product.title} />
+                  <div>
+                    <h3>{product.title}</h3>
+                    <h3>{product.price}</h3>
+                  </div>
+                  <p>{product.description}</p>
+                  <p>{product.quantity}</p>
+                </ListItem>
+              ))}
+            </div>
+          </>
+        :
+          <div>
+            <p> No Orders have been placed with this account </p>
+          </div>
+        }
       </Container>
     </>
   );
@@ -65,6 +107,18 @@ const ConfirmationPage = () => {
 
 export default ConfirmationPage;
 
-const Container = styled.div``;
+const Container = styled.div`
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+  padding-top: 100px;
+  >h1{
+    font-size: 40px;
+    margin-bottom: 32px;
+  }
+  > p{
+
+  }
+`;
 
 const ListItem = styled.li``;
