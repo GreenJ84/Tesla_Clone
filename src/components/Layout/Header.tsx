@@ -21,7 +21,6 @@ import {
 } from "../../app/Utils/StyledComponents/HeaderComponents";
 
 interface HeaderType {
-  homeRef?: React.RefObject<HTMLDivElement>;
   bgColor?: string;
 }
 
@@ -29,7 +28,7 @@ const Header = (props: HeaderType) => {
   const nav = useNavigate();
   const dispatch = useDispatch();
 
-  const { homeRef, bgColor } = props;
+  const { bgColor } = props;
   const user = useSelector((state: RootState) => state.user);
   const cars = useSelector(selectCars);
   const [menuStatus, setMenuStatus] = useState(false);
@@ -68,12 +67,10 @@ const Header = (props: HeaderType) => {
               "cursor text-lg text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white hover:bg-gray-800 hover:bg-opacity-50 transition-colors hover:shadow-2xl"
             }
             onClick={() => {
-              homeRef
-                ? homeRef.current?.scrollTo({
-                    behavior: "smooth",
-                    top: car.ref?.current!.offsetTop,
-                  })
-                : nav(`/cars/${car.id}`);
+              window.scrollTo({
+                behavior: "smooth",
+                top: (car.id - 1) * (window.innerHeight),
+              });
             }}
             key={car.id}
           >
