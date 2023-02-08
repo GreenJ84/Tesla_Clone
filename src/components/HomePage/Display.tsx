@@ -13,7 +13,7 @@ import {
   ButtonWrap,
   Button,
   DownArrow,
-} from "../../app/Utils/StyledComponents/DisplayComponents";
+} from "./DisplayComponents";
 
 interface DisplayProps {
   id: number;
