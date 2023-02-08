@@ -56,6 +56,7 @@ export const carSlice = createSlice({
       }
       else {
         let [_car] = state.cars.filter((item) => item.id === action.payload);
+        _car.ref = null;
         state.cart = [...state.cart, _car];
       }
     },
