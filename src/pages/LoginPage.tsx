@@ -27,8 +27,7 @@ const LoginPage = () => {
     e.preventDefault();
     setPersistence(AUTH, browserSessionPersistence)
       .then(() => {
-        return () => {
-            signInWithEmailAndPassword(AUTH, email, password)
+        return signInWithEmailAndPassword(AUTH, email, password)
               .then((userCredential) => {
                 if (!userCredential.user) { return }
                 const user = userCredential.user;
@@ -48,7 +47,7 @@ const LoginPage = () => {
                 const errorMessage = error.message.split(": ")[1];
                 setError(`Error ${errorCode}: ${errorMessage}`);
               })
-          }}
+          }
       )
       .catch((error) => {
         // Handle Errors here.
