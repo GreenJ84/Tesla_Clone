@@ -24,8 +24,7 @@ export const LogRegHeader = () => {
       </Link>
       <SideMenu>
         <p
-          style={{ cursor: "pointer", borderRadius: "5px" }}
-          className="bg-transparent hover:bg-[rgba(220,220,220,.5)] transition-colors duration-700 pl-1 pr-3 py-4 mt-2 text-lg text-black font-semibold"
+          className="cursor bg-transparent hover:bg-[rgba(220,220,220,.5)] transition-colors duration-700 pl-1 pr-3 py-4 mt-2 text-lg text-black font-semibold rounded-[6px]"
         >
           <GlobeAltIcon className="inline w-9 h-7"/>en-US
         </p>
