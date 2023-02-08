@@ -3,7 +3,7 @@
 import React, { BaseSyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore"
+import { collection, serverTimestamp, doc, setDoc, getCountFromServer } from "firebase/firestore"
 
 import styled from "styled-components";
 import { Body } from "../../pages/CartPage";
@@ -17,6 +17,7 @@ import { completeOrder, setTotal } from "../../app/Store/Car/carSlice";
 import { billAddress, shipAddress } from "../../pages/OrderPage";
 import { DB } from "../..";
 import { useUserData } from "../../app/Store/User/userSlice";
+import { carData } from "../../teslaCarInfo";
 
 export interface Card {
   name: string
@@ -44,7 +45,7 @@ const Order2 = (props: order2Props) => {
   const [cardModal, setCardModal] = useState(false);
 
   const { ship, bill, setStep } = props;
-  const _products = useCartState();
+  const _products: carData[] = useCartState() ;
   const subTotal = useAppSelector((state) => state.car.total)
 
   const getTax = (value: number) => {
@@ -66,10 +67,16 @@ const Order2 = (props: order2Props) => {
     setCardDet({...copy})
   }
   const logOrder = async (e: BaseSyntheticEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     let total = subTotal + getTax(subTotal)
     try {
-      const docRef = await addDoc(collection(DB, `orders-${user.user!.uid}`), {
+      const userRef = user.user!.uid.slice(0, 8).toString().toLowerCase()
+      const count = await getCountFromServer(collection(DB, userRef, "account", "orders"))
+
+      const dataTag = `${userRef}-${count.data().count}`
+
+      await setDoc(doc(DB, userRef, "account", "orders", dataTag), {
+        tag: dataTag,
         order: _products,
         shipping: ship,
         billing: bill,
@@ -79,7 +86,6 @@ const Order2 = (props: order2Props) => {
       });
       console.log("Saving Order");
       dispatch(setTotal(total));
-      console.log("Order written with ID: ", docRef.id);
       dispatch(completeOrder())
       nav('/confirmation');
     } catch (e) {
