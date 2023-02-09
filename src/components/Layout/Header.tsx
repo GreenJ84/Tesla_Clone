@@ -140,7 +140,7 @@ const Header = (props: HeaderType) => {
           className={
             window.location.pathname === "/cars/1"
               ? "xl:bg-transparent bg-[rgba(80,80,80,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 px-6 py-2 text-sm md:text-lg 2xl:text-2xl text-white font-medium"
-              : "xl:bg-transparent bg-[rgba(0,0,0,.1)]  hover:bg-gray-800 hover:bg-opacity-50 transition-colors duration-700 px-4 py-[3px] sm:px-6 sm:py-2 text-sm md:text-lg 2xl:text-2xl hover:text-white font-medium"
+              : "xl:bg-transparent bg-[rgba(0,0,0,.1)]  hover:bg-gray-800 hover:bg-opacity-50 transition-colors duration-700 px-6 py-2 text-sm md:text-lg 2xl:text-2xl hover:text-white font-medium"
           }
           onClick={() => setMenuStatus(true)}
         >
