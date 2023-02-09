@@ -62,23 +62,18 @@ const Reg2 = (props: Reg2Props) => {
     let res = true;
     let error = { ...errors }
     if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)) {
-      console.log("setting fn error");
       error.email = "Email is the incorrect format (example: name@email.com)";
-      setErrors({...error})
       res = false;
     }
     if (!password.match(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}/g)) {
-      console.log("setting ln error");
       error.pass = "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
-      setErrors({...error})
       res = false;
     }
-    if (!conPass.match(password)) {
-      console.log("setting cap error");
+    if (!password.match(conPass)) {
       error.conPass = "Confirmation does not match";
-      setErrors({...error})
       res = false;
     }
+    setErrors({...error})
     return res
   }
 
