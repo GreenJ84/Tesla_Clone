@@ -87,7 +87,7 @@ const OrderPage = () => {
       <OrderPageContainer>
         {secStep ? 
           <>
-            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6 2xl:mb-4"/>Back</button>
+            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6"/>Back</button>
             <p className="2xl:mb-4">Step 2 of 2</p>
           </>
         :
