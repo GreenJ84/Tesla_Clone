@@ -1,19 +1,19 @@
 /** @format */
 
 import { useEffect, useState } from "react";
-import Confetti from "react-confetti";
+import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
+import { collection, CollectionReference, getDocs, limit, orderBy, query } from "firebase/firestore";
 import styled from "styled-components";
 
 import Header from "../components/Layout/Header";
-
-import { useUserData } from "../app/Store/User/userSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { DB } from "..";
-import { collection, CollectionReference, doc, getCountFromServer, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { carData } from "../teslaCarInfo";
 import { billAddress, shipAddress } from "./OrderPage";
 import { Card } from "../components/OrderPage/Order2";
+
+import { DB } from "..";
+import { useUserData } from "../app/Store/User/userSlice";
+import { carData } from "../teslaCarInfo";
 
 interface orderData {
   tag: string | null
@@ -70,7 +70,7 @@ const ConfirmationPage = () => {
         height={height - 20}
       />}
       <Header />
-      <Container>
+      <ConfirmationContainer>
         {!empty ?
           <h1>Order Placement Confirmed</h1>
         :
@@ -93,13 +93,13 @@ const ConfirmationPage = () => {
         {!empty ?
           <>
             <div>
-              <p>Items count: {order.order?.length}</p>
+              
               <p>Order identifier: {order.tag}</p>
               <p>Total Amount: {order.total}</p>
             </div>
             <div>
               {!empty && order.order?.map((product) => (
-                <ListItem key={product.id}>
+                <ConfirmationListItem key={product.id}>
                   <img src={`/images/${product.backgroundImg}`} alt={product.title} />
                   <div>
                     <div>
@@ -109,9 +109,19 @@ const ConfirmationPage = () => {
                     <p>{product.description}</p>
                     <p>Amount ordered: {product.quantity}</p>
                   </div>
-                </ListItem>
+                </ConfirmationListItem>
               ))}
             </div>
+            <p
+              className={"mt-8 tracking-wider"}
+            >
+              Items count:
+              <span
+                className={"!border-b-0 ml-4"}
+              >
+                {order.order?.length}
+            </span>
+            </p>
           </>
         :
           <div>
@@ -122,16 +132,17 @@ const ConfirmationPage = () => {
             </p>
           </div>
         }
-      </Container>
+      </ConfirmationContainer>
     </>
   );
 };
 
 export default ConfirmationPage;
 
-const Container = styled.div`
+export const ConfirmationContainer = styled.div`
   position: relative;
-  width: 800px;
+  width: 80vw;
+  max-width: 800px;
   margin: 0 auto;
   padding-top: 100px;
   >h1{
@@ -167,13 +178,17 @@ const Container = styled.div`
       letter-spacing: 1.1px;
     }
   }
+  >div:nth-of-type(2){
+    border-top: 1px solid rgba(200, 200, 200);
+    border-bottom: 1px solid rgba(200, 200, 200);
+  }
 `;
 
-const ListItem = styled.li`
+export const ConfirmationListItem = styled.li`
   display: flex;
   list-style: none;
   margin: 40px 0;
-  height: 200px;
+  min-height: 200px;
   align-items: center;
   >img{
     width: 160px;
@@ -199,5 +214,9 @@ const ListItem = styled.li`
       margin-bottom: 10px;
     }
   }
+@media only screen and (max-width: 800px){
+  >img{
+    align-self: start;
   }
+}
 `;
