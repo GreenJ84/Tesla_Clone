@@ -7,13 +7,13 @@ export interface StyledProps {
 }
 
 export const Container = styled.div`
+  border: 1px solid red;
   position: absolute;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  top: 5px;
-  left: 0;
-  right: 0;
+  top: 0;
+  min-width: 100vw;
   padding: 0 20px;
   min-height: 60px;
   z-index: 1;
