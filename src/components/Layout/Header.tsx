@@ -4,6 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import {
+  Close,
+  NavContainer,
+  Cover,
+  Nav,
+  SideMenu,
+  SmallNav,
+} from "../../app/Utils/StyledComponents/LayoutComponents";
+
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import { RootState } from "../../app/Store/store";
@@ -11,15 +20,7 @@ import { selectCars } from "../../app/Store/Car/carSlice";
 import { setLogout } from "../../app/Store/User/userSlice";
 import { useCartState } from "../../app/Utils/hooks/useCartState";
 
-import {
-  Close,
-  Container,
-  Cover,
-  Nav,
-  SideMenu,
-  SmallNav,
-} from "../../app/Utils/StyledComponents/HeaderComponents";
-
+  
 interface HeaderType {
   homeRef?: React.RefObject<HTMLDivElement>;
   bgColor?: string;
@@ -45,7 +46,7 @@ const Header = (props: HeaderType) => {
   });
 
   return (
-    <Container className={bgColor ? bgColor : ""}>
+    <NavContainer className={bgColor ? bgColor : ""}>
       {/* Tesla Logo Display */}
       <Link to="/">
         <img
@@ -63,15 +64,15 @@ const Header = (props: HeaderType) => {
         {cars.map((car) => (
           <h1
             className={ window.location.pathname === '/cars/1' ?
-              "cursor text-lg text-white bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white transition-colors hover:shadow-2xl hover:bg-[rgba(0,0,0)] duration-700"
+              "cursor text-lg 2xl:text-2xl text-white bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white transition-colors hover:shadow-2xl hover:bg-[rgba(0,0,0)] duration-700"
             :
-              "cursor text-lg text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white hover:bg-gray-800 hover:bg-opacity-50 transition-colors hover:shadow-2xl"
+              "cursor text-lg 2xl:text-2xl text-black bg-transparent rounded-lg px-2.5 py-1.5 hover:text-white hover:bg-gray-800 hover:bg-opacity-50 transition-colors hover:shadow-2xl"
             }
             onClick={() => {
               homeRef
                 ? homeRef.current?.scrollTo({
                     behavior: "smooth",
-                    top: car.ref?.current!.offsetTop,
+                    top: (car.id-1)*window.innerHeight,
                   })
                 : nav(`/cars/${car.id}`);
             }}
@@ -86,9 +87,9 @@ const Header = (props: HeaderType) => {
         {user.isLoggedIn ? (
             <button
               className={ window.location.pathname === "/cars/1" ?
-                "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+                "invisible xl:visible text-white text-lg 2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
               :
-                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl duration-700 hover:bg-gray-800 hover:bg-opacity-50"
+                "invisible xl:visible text-black text-lg 2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl duration-700 hover:bg-gray-800 hover:bg-opacity-50"
               }
               onClick={() => {
                 dispatch(setLogout());
@@ -99,9 +100,9 @@ const Header = (props: HeaderType) => {
         ) : (
           <button
             className={ window.location.pathname === "/cars/1" ?
-              "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+              "invisible xl:visible text-white text-lg 2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
             :
-              "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
+              "invisible xl:visible text-black text-lg  2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
             }
             onClick={() => nav("/login")}
           >
@@ -116,9 +117,9 @@ const Header = (props: HeaderType) => {
             >
               <button
               className={ window.location.pathname === "/cars/1" ?
-                "invisible xl:visible text-white text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
+                "invisible xl:visible text-white text-lg 2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl hover:bg-[rgba(0,0,0)] duration-700"
               :
-                "invisible xl:visible text-black text-lg font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
+                "invisible xl:visible text-black text-lg 2xl:text-2xl font-normal bg-transparent rounded-lg px-6 py-2 hover:text-white cursor transition-colors mr-5 hover:shadow-3xl  hover:bg-gray-800 hover:bg-opacity-50 duration-700"
               }
               >
                 Cart
@@ -138,8 +139,8 @@ const Header = (props: HeaderType) => {
           style={{ cursor: "pointer", borderRadius: "5px" }}
           className={
             window.location.pathname === "/cars/1"
-              ? "xl:bg-transparent bg-[rgba(80,80,80,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 px-6 py-2 text-lg text-white font-medium"
-              : "xl:bg-transparent bg-[rgba(0,0,0,.05)]  hover:bg-gray-800 hover:bg-opacity-50 transition-colors duration-700 px-6 py-2 text-lg text- hover:text-white font-medium"
+              ? "xl:bg-transparent bg-[rgba(80,80,80,.8)] hover:bg-[rgba(0,0,0)] transition-colors duration-700 px-6 py-2 text-sm md:text-lg 2xl:text-2xl text-white font-medium"
+              : "xl:bg-transparent bg-[rgba(0,0,0,.1)]  hover:bg-gray-800 hover:bg-opacity-50 transition-colors duration-700 px-6 py-2 text-sm md:text-lg 2xl:text-2xl hover:text-white font-medium"
           }
           onClick={() => setMenuStatus(true)}
         >
@@ -203,7 +204,7 @@ const Header = (props: HeaderType) => {
           )}
         </ul>
       </SmallNav>
-    </Container>
+    </NavContainer>
   );
 };
 

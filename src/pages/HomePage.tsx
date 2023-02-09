@@ -12,7 +12,7 @@ const HomePage = () => {
     <>
       <AdModal />
       <div style={{"position":"relative"}}>
-        <Header homeRef={homeRef} />
+        <Header />
         <HomeBody homeRef={homeRef} />
       </div>
     </>

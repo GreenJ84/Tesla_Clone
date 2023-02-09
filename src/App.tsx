@@ -31,42 +31,44 @@ function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/login"
-        element={<LoginPage />}
-      />
-      <Route
-        path="/registration"
-        element={<RegistrationPage />}
-      />
-      <Route
-        path="/account"
-        element={<AccountPage />
-      }/>
-      <Route
-        path="/"
-        element={<HomePage />}
-      />
-      <Route
-        path="/cars/:id"
-        element={<DisplayPage />}
-      />
-      <Route
-        path="/cart"
-        element={<CartPage />}
-      />
+    <div className="relative min-h-[100vh]">
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginPage />}
+        />
+        <Route
+          path="/registration"
+          element={<RegistrationPage />}
+        />
+        <Route
+          path="/account"
+          element={<AccountPage />
+        }/>
+        <Route
+          path="/"
+          element={<HomePage />}
+        />
+        <Route
+          path="/cars/:id"
+          element={<DisplayPage />}
+        />
+        <Route
+          path="/cart"
+          element={<CartPage />}
+        />
 
-      <Route
-        path="/order"
-        element={<OrderPage />}
-      />
+        <Route
+          path="/order"
+          element={<OrderPage />}
+        />
 
-      <Route
-        path="/confirmation"
-        element={<ConfirmationPage />}
-      />
-    </Routes>
+        <Route
+          path="/confirmation"
+          element={<ConfirmationPage />}
+        />
+      </Routes>
+    </div>
   );
 }
 

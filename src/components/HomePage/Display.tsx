@@ -13,7 +13,7 @@ import {
   ButtonWrap,
   Button,
   DownArrow,
-} from "../../app/Utils/StyledComponents/DisplayComponents";
+} from "./DisplayComponents";
 
 interface DisplayProps {
   id: number;
@@ -43,6 +43,7 @@ const Display = (props: DisplayProps) => {
           <h1 className="text-6xl font-medium text-black">{props.title}</h1>
           <a
             href="https://www.tesla.com/drive"
+            rel="noreferrer"
             target="_blank"
             className="text-xl border-b-2 hover:border-b-4 border-slate-800"
           >

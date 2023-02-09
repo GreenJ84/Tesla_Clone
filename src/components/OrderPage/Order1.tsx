@@ -1,8 +1,8 @@
 /** @format */
 
 import React, { BaseSyntheticEvent, useState } from "react";
-import styled from "styled-components";
 import { Button } from "../../app/Utils/StyledComponents/LoginComponents";
+import { Form, Form2, Order1Container } from "../../app/Utils/StyledComponents/OrderComponents";
 import { billAddress, shipAddress } from "../../pages/OrderPage";
 
 
@@ -42,7 +42,7 @@ const Order1 = (props: order1Props) => {
   }
 
   return (
-    <Container>
+    <Order1Container>
       <h1> Shipping </h1>
       <Form>
         <div>
@@ -236,134 +236,27 @@ const Order1 = (props: order1Props) => {
       :
         ""
       }
-      <Button
+      {checked && shipAdd.firstName && shipAdd.lastName && shipAdd.address1 && shipAdd.city && shipAdd.state && shipAdd.zip && shipAdd.phone ?
+        <Button
+          className="relative left-1 mt-8 !px-28"
+          onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
+        >
+          Next
+        </Button>
+      :
+      !checked && shipAdd.firstName && shipAdd.lastName && shipAdd.address1 && shipAdd.city && shipAdd.state && shipAdd.zip && shipAdd.phone && billAdd.firstName && billAdd.lastName && billAdd.address1 && billAdd.city && billAdd.state && billAdd.zip ?
+        <Button
+          className="relative left-1 mt-8 !px-28"
+          onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
+        >
+          Next
+        </Button>
+      :
+        <Button
         className="relative left-1 mt-8 !px-28"
-        onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
-      >
-        Next
-      </Button>
-    </Container>
+        disabled> Next </Button>}
+    </Order1Container>
   );
 };
 
 export default Order1;
-
-const Container = styled.div`
-  h1{
-    font-size: 56px;
-    font-weight: 500;
-    letter-spacing: 1.2px;
-  }
-  > div{
-    display: flex;
-    align-items: center;
-    >input{
-      margin-right: 10px;
-      border: 2.5px solid black;
-      border-radius: 3px;
-      appearance: none;
-    }
-    >input::before{
-      position: relative;
-      top: -4px;
-      left: -4px;
-      visibility: hidden;
-      background: transparent;
-      font-size: 16px;
-      font-weight: 600;
-      content: '✓';
-      color: black;
-    }
-    >input:checked::before{
-      visibility: visible;
-    }
-    > label{
-      font-size: 20px;
-      font-weight: 500;
-      color: rgba(90, 90, 90);
-    }
-  }
-  >h2:first-of-type{
-    margin-top: 36px;
-    margin-bottom: 8px;
-  }
-  >h2{
-    font-size: 32px;
-    font-weight: 550;
-  }
-`;
-
-const Form = styled.form`
-  display: flex;
-  justify-content: space-between;
-  input[type="radio"]{
-    position: relative;
-    margin-right: 4px;
-    width: 28px;
-    height: 28px;
-    border: 1.5px solid rgba(80, 80, 80);
-    border-radius: 50%;
-    appearance: none;
-  }
-  input[type="radio"]:checked::after{
-    content: "•";
-    position: absolute;
-    top: -37.5px;
-    left: -0.5px;
-    font-size: 60px;
-    color: rgba(50, 50, 50);
-  }
-  input[type="radio"] + label{
-    font-size: 20px;
-  }
-  >div{
-    width: 47.5%;
-    >label{
-      display: block;
-      font-size: 19px;
-      font-weight: 600;
-      color: rgba(110, 110, 110);
-      margin-bottom: 8px;
-    }
-    >input{
-      display: block;
-      background-color: rgba(200, 200, 200, .22);
-      border-radius: 5px;
-      width: 100%;
-      height: 50px;
-      margin-bottom: 28px;
-    }
-  }
-  `;
-  const Form2 = styled.form`
-  label{
-    display: flex;
-    align-items: center;
-    margin-top: 16px;
-    font-size: 20px;
-  }
-  div:last-of-type{
-    margin-bottom: 32px;
-  }
-  input[type="radio"]{
-    position: relative;
-    margin-right: 4px;
-    width: 28px;
-    height: 28px;
-    border: 1.5px solid rgba(80, 80, 80);
-    border-radius: 50%;
-    appearance: none;
-  }
-  input[type="radio"]:checked::after{
-    content: "•";
-    position: absolute;
-    top: -37.5px;
-    left: -0.5px;
-    font-size: 60px;
-    color: rgba(50, 50, 50);
-  }
-  input[type="radio"] + label{
-    font-size: 20px;
-  }
-  }
-  `;

@@ -1,30 +1,25 @@
-import React from 'react'
-import styled from 'styled-components';
+/** @format */
 
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid';
+import styled from "styled-components";
+
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 interface show {
-    state: boolean
-    set: Function
+  state: boolean;
+  set: Function;
 }
 
 const Show = (props: show) => {
   return (
-    <Container
-      onClick={() => props.set()}
-    >
-        {props.state ? 
-            <EyeIcon />
-        :
-            <EyeSlashIcon />
-        }
-    </Container>
-  )
-}
+    <ShowContainer onClick={() => props.set()}>
+      {props.state ? <EyeIcon /> : <EyeSlashIcon />}
+    </ShowContainer>
+  );
+};
 
 export default Show;
 
-const Container = styled.div`
+const ShowContainer = styled.div`
   position: absolute;
   width: 35px;
   height: 35px;
