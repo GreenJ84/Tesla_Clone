@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { BaseSyntheticEvent, useState } from "react";
+import React, { BaseSyntheticEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { collection, serverTimestamp, doc, setDoc, getCountFromServer } from "firebase/firestore"
@@ -42,6 +42,7 @@ const Order2 = (props: order2Props) => {
     cvv: ""
   })
   const [cardModal, setCardModal] = useState(false);
+  const [wide, setWide] = useState(false);
 
   const { ship, bill, setStep } = props;
   const _products: carData[] = useCartState() ;
@@ -50,21 +51,36 @@ const Order2 = (props: order2Props) => {
   const getTax = (value: number) => {
     return value * .103
   }
+
+  useEffect(() => {
+    const toggleSize = () => {
+      wide ?
+        setWide(false)
+      :
+        setWide(true)
+    }
+    window.addEventListener("resize", toggleSize)
+
+    return () => window.removeEventListener("resize", toggleSize)
+  }, [])
   const toggleCardModal = () => {
     cardModal ?
       setCardModal(false)
       :
       setCardModal(true)
   }
+
   const edit = (e: BaseSyntheticEvent) => {
     e.preventDefault()
     setStep()
   }
+
   const cardHandler = (value: keyof Card, e: BaseSyntheticEvent) => {
     let copy = { ...cardDet }
     copy[value] = e.currentTarget.value;
     setCardDet({...copy})
   }
+
   const logOrder = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
     let total = subTotal + getTax(subTotal)
@@ -100,82 +116,90 @@ const Order2 = (props: order2Props) => {
       ""}
     <Order2Body>
       <h1>Review and Pay</h1>
-      <p>Order Summary ({_products.length} items)</p>
+        {!wide ?
+          <p>Order Summary ({_products.length} items)</p>
+        : ""}
       <Order2Container>
-        <ul>
-        {_products.map((product) =>
-          <span key={product.id}>
-            <CartItem product={product} />
-          </span>
-        )}
-        </ul>
+        <div>
+          <ul>
+          {_products.map((product) =>
+            <span key={product.id}>
+              <CartItem product={product} />
+            </span>
+          )}
+          </ul>
+        </div>
+          <div >
+            {wide ?
+              <p className="!text-3xl !font-bold">Order Summary ({_products.length} items)</p>
+            : " "}
+          <Address>
+            <div>
+              <h3>Shipping Address</h3>
+              <button
+                onClick={(e: BaseSyntheticEvent) => edit(e)}
+              >
+                Edit
+              </button>
+            </div>
+            <p>{ship.firstName} { ship.lastName }</p>
+            <p>{ ship.address1 }</p>
+            {ship.address2 ? <p>{ship.address2}</p> : <p></p>}
+            <p>{ship.city}, {ship.state} {ship.zip}</p>
+            <p>{ ship.phone }</p>
+          </Address>
 
-        <Address>
-          <div>
-            <h3>Shipping Address</h3>
-            <button
-              onClick={(e: BaseSyntheticEvent) => edit(e)}
-            >
-              Edit
-            </button>
-          </div>
-          <p>{ship.firstName} { ship.lastName }</p>
-          <p>{ ship.address1 }</p>
-          {ship.address2 ? <p>{ship.address2}</p> : <p></p>}
-          <p>{ship.city}, {ship.state} {ship.zip}</p>
-          <p>{ ship.phone }</p>
-        </Address>
+          <Address>
+            <div>
+              <h3>Billing Address</h3>
+              <button
+                onClick={(e: BaseSyntheticEvent) => edit(e)}
+              >
+                Edit
+              </button>
+            </div>
+            {bill.companyName ?
+              <p>{ bill.companyName }</p>
+            : ""}
+            <p>{bill.firstName} { bill.lastName }</p>
+            <p>{ bill.address1 }</p>
+            {bill.address2 ? <p>{bill.address2}</p> : ""}
+            <p>{bill.city}, {bill.state} {bill.zip}</p>
+            <p>{bill.country}</p>
+          </Address>
 
-        <Address>
-          <div>
-            <h3>Billing Address</h3>
-            <button
-              onClick={(e: BaseSyntheticEvent) => edit(e)}
-            >
-              Edit
-            </button>
-          </div>
-          {bill.companyName ?
-            <p>{ bill.companyName }</p>
-          : ""}
-          <p>{bill.firstName} { bill.lastName }</p>
-          <p>{ bill.address1 }</p>
-          {bill.address2 ? <p>{bill.address2}</p> : ""}
-          <p>{bill.city}, {bill.state} {bill.zip}</p>
-          <p>{bill.country}</p>
-        </Address>
+          <p>
+            Add Promo Code
+          </p>
 
-        <p>
-          Add Promo Code
-        </p>
-
-        <FinalOrder subTot={subTotal} />
-        <OrderButton
-          onClick={() => toggleCardModal()}
-        >
-          Card
-        </OrderButton>
-        <p>
-          Add Gift Card
-        </p>
-        <p> By continuing, I understand and agree to the General Terms and Conditions of Online Accessories Sales, <span>Terms of Use</span> and <span>Privacy Notice</span>.</p>
-        {cardDet.name && cardDet.cvv && cardDet.exp && cardDet.number ?
+          <FinalOrder subTot={subTotal} />
           <OrderButton
-            className="px-8"
-            onClick={(e: BaseSyntheticEvent) => {
-              logOrder(e)
-            }}
+            onClick={() => toggleCardModal()}
           >
-            Place Order
+            Card
           </OrderButton>
-        :
-          <OrderButton
-            className="px-4"
-            disabled
-          >
-            Place Order
-          </OrderButton>
-          }
+          <p>
+            Add Gift Card
+          </p>
+          <p> By continuing, I understand and agree to the General Terms and Conditions of Online Accessories Sales, <span>Terms of Use</span> and <span>Privacy Notice</span>.</p>
+          {cardDet.name && cardDet.cvv && cardDet.exp && cardDet.number ?
+            <OrderButton
+              className="px-8"
+              onClick={(e: BaseSyntheticEvent) => {
+                logOrder(e)
+              }}
+            >
+              Place Order
+            </OrderButton>
+          :
+            <OrderButton
+              className="px-4"
+              disabled
+            >
+              Place Order
+            </OrderButton>
+            }
+          </div>
         </Order2Container>
     </Order2Body>
     </>
