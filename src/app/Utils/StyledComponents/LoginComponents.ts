@@ -40,6 +40,7 @@ input + div {
   position: relative;
   top: -36px;
   color: red;
+  line-height: 16px;
 }
 `;
 
