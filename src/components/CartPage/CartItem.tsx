@@ -2,7 +2,9 @@
 
 import React from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
+
+import { CartItemContainer } from "../../app/Utils/StyledComponents/OrderComponents";
+
 import { removeFromCart, setQuantity } from "../../app/Store/Car/carSlice";
 import { carData } from "../../teslaCarInfo";
 
@@ -53,54 +55,3 @@ const CartItem = (props: CartProps) => {
 };
 
 export default CartItem;
-
-export const CartItemContainer = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 158px;
-  >img{
-    height 100px;
-    width: 100px;
-  }
-  >div{
-    position: relative;
-    left: -16%;
-    top: -20px;
-    >p{
-      font-size: 22px;
-      font-weight: 500;
-      letter-spacing: 1.2px;
-      margin-bottom: 5px;
-    }
-    >div{
-      font-size: 18px;
-      >p>input{
-        background-color: rgba(240 , 240, 240);
-        padding: 0 0 0 5px;
-        margin-right: 10px;
-      }
-      >button{
-        padding-bottom: .5px;
-        color: rgba(80, 80, 80);
-        border-bottom: 1.5px solid black;
-      }
-      >button:hover{
-        padding-bottom: 0px;
-        color: rgba(0, 0, 0);
-        border-bottom: 2px solid black;
-      }
-    }
-  }
-  >p{
-    position: relative;
-    top: -38px;
-    font-size: 22px;
-    font-weight: 500;
-  }
-@media only screen and (max-width: 750px){
-  >div{
-    left: -10vw;
-  }
-}
-`;
