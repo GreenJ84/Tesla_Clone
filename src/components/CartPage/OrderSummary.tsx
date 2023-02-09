@@ -10,7 +10,7 @@ const OrderSummary = (props: { subTot: number }) => {
   const nav = useNavigate();
 
   return (
-    <Container>
+    <OrderSumaryContainer>
       <h1>Order Summary</h1>
       <div>
         <div>
@@ -27,18 +27,18 @@ const OrderSummary = (props: { subTot: number }) => {
       <button
         onClick={() => {
           dispatch(setTotal(props.subTot));
-          nav('/checkout');
+          nav('/order');
         }}
       >
         Checkout
       </button>
-    </Container>
+    </OrderSumaryContainer>
   );
 };
 
 export default OrderSummary;
 
-const Container = styled.div`
+export const OrderSumaryContainer = styled.div`
   h1{
     margin-top: 45px;
     margin-bottom: 20px;
