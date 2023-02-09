@@ -82,11 +82,11 @@ const OrderPage = () => {
   return (
     <>
       <Header />
-      <Container>
+      <OrderPageContainer>
         {secStep ? 
           <>
-            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6"/>Back</button>
-            <p>Step 2 of 2</p>
+            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6 2xl:mb-4"/>Back</button>
+            <p className="2xl:mb-4">Step 2 of 2</p>
           </>
         :
           ""
@@ -104,17 +104,18 @@ const OrderPage = () => {
             setStep={() => setSecStep(false)}
           />
         }
-      </Container>
+      </OrderPageContainer>
     </>
   );
 };
 
 export default OrderPage;
 
-const Container = styled.div`
+const OrderPageContainer = styled.div`
   position: relative;
   width: 670px;
-  margin: 7vh auto 0;
+  margin: 0 auto 0;
+  padding: 7vh 0 0;
   >button{
     position: relative;
     right: 2px;
@@ -133,4 +134,12 @@ const Container = styled.div`
     letter-spacing: 1.1px;
     word-spacing: 1.4px;
   }
+@media only screen and (max-width: 750px){
+  width: 80vw;
+  padding: 10vh 0 0;
+}
+  @media only screen and (min-width: 1600px){
+  width: 900px;
+  padding: 10vh 0 0;
+}
 `;
