@@ -4,24 +4,34 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
-import { collection, CollectionReference, getDocs, limit, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  CollectionReference,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+} from "firebase/firestore";
 
 import Header from "../components/Layout/Header";
 import { billAddress, shipAddress } from "./OrderPage";
 import { Card } from "../components/OrderPage/Order2";
-import { ConfirmationContainer, ConfirmationListItem } from "../app/Utils/StyledComponents/ConfirmationCOmponents";
+import {
+  ConfirmationContainer,
+  ConfirmationListItem,
+} from "../app/Utils/StyledComponents/ConfirmationComponents";
 
 import { DB } from "..";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
 
 interface orderData {
-  tag: string | null
-  order: carData[] | null,
-  shipping: shipAddress | null,
-  billing: billAddress | null,
-  card: Card | null,
-  total: number | null,
+  tag: string | null;
+  order: carData[] | null;
+  shipping: shipAddress | null;
+  billing: billAddress | null;
+  card: Card | null;
+  total: number | null;
 }
 
 const ConfirmationPage = () => {
@@ -33,105 +43,117 @@ const ConfirmationPage = () => {
     order: null,
     shipping: null,
     billing: null,
-    card:null,
+    card: null,
     total: null,
   });
   const { width, height } = useWindowSize();
 
   useEffect(() => {
     if (!user) {
-      nav('/login');
+      nav("/login");
     }
     const getOrder = async () => {
       const userRef = user.user!.uid.slice(0, 8).toString().toLowerCase();
 
       const q = query(
-        collection(DB, userRef, "account", "orders") as CollectionReference<orderData>,
+        collection(
+          DB,
+          userRef,
+          "account",
+          "orders"
+        ) as CollectionReference<orderData>,
         orderBy("timestamp", "desc"),
-        limit(1))
+        limit(1)
+      );
       const queryRes = await getDocs(q);
       if (queryRes.empty) {
         setEmpty(true);
         return;
       }
       queryRes.forEach((order) => {
-        setOrder(order.data())
-      })
-      }
+        setOrder(order.data());
+      });
+    };
     getOrder();
   }, []);
 
-
   return (
     <>
-      {!empty && <Confetti
-        className="overflow-y-hidden"
-        width={width - 20}
-        height={height - 20}
-      />}
+      {!empty && (
+        <Confetti
+          className="overflow-y-hidden"
+          width={width - 20}
+          height={height - 20}
+        />
+      )}
       <Header />
       <ConfirmationContainer>
-        {!empty ?
+        {!empty ? (
           <h1>Order Placement Confirmed</h1>
-        :
+        ) : (
           <h1>No Orders Placed ...yet</h1>
-        }
+        )}
         <p>
           Check the status of
           <Link to={"/account"}>
-            {!empty ? " recent " : " future "}<span>orders</span>
-          </Link>,{" "}
+            {!empty ? " recent " : " future "}
+            <span>orders</span>
+          </Link>
+          ,{" "}
           <Link to={"/account"}>
             manage <span>returns</span>
-          </Link>,
-          or discover{" "}
+          </Link>
+          , or discover{" "}
           <Link to={"/"}>
             new <span>products</span>
           </Link>
         </p>
 
-        {!empty ?
+        {!empty ? (
           <>
             <div>
-              
               <p>Order identifier: {order.tag}</p>
               <p>Total Amount: {order.total}</p>
             </div>
             <div>
-              {!empty && order.order?.map((product) => (
-                <ConfirmationListItem key={product.id}>
-                  <img src={`/images/${product.backgroundImg}`} alt={product.title} />
-                  <div>
+              {!empty &&
+                order.order?.map((product) => (
+                  <ConfirmationListItem key={product.id}>
+                    <img
+                      src={`/images/${product.backgroundImg}`}
+                      alt={product.title}
+                    />
                     <div>
-                      <h3>{product.title}</h3>
-                      <h3>${product.price}</h3>
+                      <div>
+                        <h3>{product.title}</h3>
+                        <h3>${product.price}</h3>
+                      </div>
+                      <p>{product.description}</p>
+                      <p>Amount ordered: {product.quantity}</p>
                     </div>
-                    <p>{product.description}</p>
-                    <p>Amount ordered: {product.quantity}</p>
-                  </div>
-                </ConfirmationListItem>
-              ))}
+                  </ConfirmationListItem>
+                ))}
             </div>
-            <p
-              className={"mt-8 tracking-wider"}
-            >
+            <p className={"mt-8 tracking-wider"}>
               Items count:
-              <span
-                className={"!border-b-0 ml-4"}
-              >
-                {order.order?.length}
-            </span>
+              <span className={"!border-b-0 ml-4"}>{order.order?.length}</span>
             </p>
           </>
-        :
+        ) : (
           <div>
-            <p> To get a confirmation you need to have to: <li>Complete an order for at least one
-              <Link to={"/"}>
-                {" "}<span>car</span>
-              </Link></li>
+            <p>
+              {" "}
+              To get a confirmation you need to have to:{" "}
+              <li>
+                Complete an order for at least one
+                <Link to={"/"}>
+                  {" "}
+                  <span>car</span>
+                </Link>
+              </li>
             </p>
           </div>
-        }
+        )}
       </ConfirmationContainer>
     </>
   );
