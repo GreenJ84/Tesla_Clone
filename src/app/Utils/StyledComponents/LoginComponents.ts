@@ -115,6 +115,9 @@ background-color: white;
 font-weight: 450;
 box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
 z-index: 10;
+@media only screen and (max-width: 800px){
+  left: -40px;
+}
 `;
 
 
