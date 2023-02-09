@@ -1,11 +1,11 @@
 /** @format */
 
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
+
+import { Reg2Container, RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
+import Show from "../Layout/Show";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-
-import Show from "../Layout/Show";
 
 interface Reg2Props {
   email: [string, Function];
@@ -53,7 +53,7 @@ const Reg2 = (props: Reg2Props) => {
   };
 
   return (
-    <Container>
+    <Reg2Container>
       <label
         htmlFor=""
         inputMode="email"
@@ -79,13 +79,13 @@ const Reg2 = (props: Reg2Props) => {
           id="pass"
           className="relative inline bottom-[3px] w-4 h-4 ml-1"
         />
-        <ToolTip
+        <RegToolTip
           id="passTip"
           className="invisible"
         >
           Password must be at least 8 characters and include at least one number
           and one letter
-        </ToolTip>
+        </RegToolTip>
       </label>
       <input
         type={showPass ? "text" : "password"}
@@ -131,61 +131,8 @@ const Reg2 = (props: Reg2Props) => {
       ) : (
         <button disabled>Create Account</button>
       )}
-    </Container>
+    </Reg2Container>
   );
 };
 
 export default Reg2;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  label {
-    color: rgba(100, 100, 100);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.3px;
-    margin-bottom: 8px;
-  }
-  input {
-    font-size: 18px;
-    font-weight: 500;
-    padding: 10px 0 10px 13px;
-    border-radius: 3px;
-    background-color: rgba(245, 245, 245);
-    margin-bottom: 30px;
-  }
-  div {
-    position: relative;
-    width: 1;
-    height: 0;
-  }
-  button {
-    padding: 10px 0;
-    font-size: 20px;
-    font-weight: 600;
-    letter-spacing: 1.2px;
-    color: white;
-    background-color: rgba(40, 65, 255, 0.8);
-    border-radius: 4px;
-  }
-  button:hover {
-    background-color: rgba(20, 35, 205, 0.8);
-  }
-  button:disabled {
-    background-color: rgba(0, 65, 205, 0.4);
-    cursor: not-allowed;
-  }
-`;
-
-const ToolTip = styled.span`
-  position: absolute;
-  bottom: -114px;
-  left: -140px;
-  width: 500px;
-  padding: 26px 30px;
-  background-color: white;
-  font-weight: 450;
-  box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
-  z-index: 10;
-`;
