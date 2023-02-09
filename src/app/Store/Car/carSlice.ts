@@ -63,6 +63,10 @@ export const carSlice = createSlice({
     removeFromCart: (state, action) => {
       let [..._car] = state.cart.filter((item) => item.id !== action.payload);
       state.cart = [..._car];
+      state.total = state.cart.reduce((acc, curr) => {
+        acc += curr.price * curr.quantity;
+        return acc;
+      }, 0);
     },
     completeOrder: (state) => {
       state.cart = [];
