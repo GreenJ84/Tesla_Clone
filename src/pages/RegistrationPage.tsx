@@ -1,14 +1,15 @@
 /** @format */
 
-import React, { BaseSyntheticEvent, useState } from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 
 import LogRegHeader from "../components/Layout/MinimalHeader";
 import LogRegFooter from "../components/Layout/SmallFooter";
 import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
-import { useNavigate } from "react-router-dom";
+import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
+
 import { AUTH } from "../index";
 
 const RegistrationPage = () => {
@@ -64,7 +65,7 @@ const RegistrationPage = () => {
   return (
     <>
       <LogRegHeader />
-      <Container>
+      <RegMainContainer>
         <p> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
         <form>
@@ -88,32 +89,10 @@ const RegistrationPage = () => {
             />
           )}
         </form>
-      </Container>
+      </RegMainContainer>
       <LogRegFooter />
     </>
   );
 };
 
 export default RegistrationPage;
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  top: 100px;
-  width: 430px;
-  margin: 0 auto;
-  p {
-    position: relative;
-    top: 12px;
-    font-weight: 600;
-    color: rgba(100, 100, 100);
-    margin-bottom: 15px;
-  }
-  h1 {
-    font-size: 44px;
-    font-weight: 550;
-    letter-spacing: 1.6px;
-    margin-bottom: 20px;
-  }
-`;
