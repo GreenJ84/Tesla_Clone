@@ -3,7 +3,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/OrderComponents";
+import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
 import { setTotal } from "../../app/Store/Car/carSlice";
 

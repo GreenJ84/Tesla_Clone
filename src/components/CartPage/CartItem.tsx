@@ -3,7 +3,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { CartItemContainer } from "../../app/Utils/StyledComponents/OrderComponents";
+import { CartItemContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
 import { removeFromCart, setQuantity } from "../../app/Store/Car/carSlice";
 import { carData } from "../../teslaCarInfo";

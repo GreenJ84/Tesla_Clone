@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import OrderSummary from "../components/CartPage/OrderSummary";
 import CartItem from "../components/CartPage/CartItem";
-import { Cart, CartContainer, Checkout, EmptyCart, OrderBody } from "../app/Utils/StyledComponents/OrderComponents";
+import { Cart, CartContainer, Checkout, EmptyCart, OrderBody } from "../app/Utils/StyledComponents/CartComponents";
 
 import { useCartState } from "../app/Utils/hooks/useCartState";
 import { setTotal } from "../app/Store/Car/carSlice";
