@@ -236,12 +236,25 @@ const Order1 = (props: order1Props) => {
       :
         ""
       }
-      <Button
+      {checked && shipAdd.firstName && shipAdd.lastName && shipAdd.address1 && shipAdd.city && shipAdd.state && shipAdd.zip && shipAdd.phone ?
+        <Button
+          className="relative left-1 mt-8 !px-28"
+          onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
+        >
+          Next
+        </Button>
+      :
+      !checked && shipAdd.firstName && shipAdd.lastName && shipAdd.address1 && shipAdd.city && shipAdd.state && shipAdd.zip && shipAdd.phone && billAdd.firstName && billAdd.lastName && billAdd.address1 && billAdd.city && billAdd.state && billAdd.zip ?
+        <Button
+          className="relative left-1 mt-8 !px-28"
+          onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
+        >
+          Next
+        </Button>
+      :
+        <Button
         className="relative left-1 mt-8 !px-28"
-        onClick={(e: BaseSyntheticEvent) => submitAddress(e)}
-      >
-        Next
-      </Button>
+        disabled> Next </Button>}
     </Order1Container>
   );
 };
