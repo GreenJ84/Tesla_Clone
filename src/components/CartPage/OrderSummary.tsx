@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
 import { setTotal } from "../../app/Store/Car/carSlice";
+import { useCommas } from "../../app/Utils/hooks/useCommas";
 
 const OrderSummary = (props: { subTot: number }) => {
   const dispatch = useDispatch()
@@ -23,7 +24,7 @@ const OrderSummary = (props: { subTot: number }) => {
         <div>
           <p>Free</p>
           <p>Calculated at checkout</p>
-          <p>${props.subTot}.00</p>
+          <p>${useCommas(props.subTot)}.00</p>
         </div>
       </div>
       <button

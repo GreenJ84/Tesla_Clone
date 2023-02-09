@@ -7,6 +7,7 @@ import { CartItemContainer } from "../../app/Utils/StyledComponents/CartComponen
 
 import { removeFromCart, setQuantity } from "../../app/Store/Car/carSlice";
 import { carData } from "../../teslaCarInfo";
+import { useCommas } from "../../app/Utils/hooks/useCommas";
 
 interface CartProps {
   product: carData;
@@ -57,7 +58,7 @@ const CartItem = (props: CartProps) => {
           >Remove</button>
         </div>
       </div>
-      <p>${product.price}.00</p>
+      <p>${useCommas(product.price)}.00</p>
     </CartItemContainer>
   );
 };
