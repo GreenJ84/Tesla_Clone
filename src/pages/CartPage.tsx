@@ -22,52 +22,56 @@ const CartPage = () => {
   }, 0);
 
   return (
-    <Body className="mx-auto">
+    <>
       <Header />
-      <h1 style={{ "maxWidth": "1400px","position":"relative" }} className="mt-32 xl:mt-20 mb-2 xl:mb-0 xl:mx-auto pb-8 border-b-[1.5px] xl:border-none text-3xl xl:text-5xl font-semibold"> Cart </h1>
-      <Container>
-        <Cart>
-          {_products.length > 0 ?
-            <>
-              {_products.map((product) => (
-                <span key={product.id}>
-                  <CartItem product={product} />
-                </span>
-              ))}
-            </>
+      <OrderBody className="py-2 mx-auto">
+        <h1
+          style={{ "maxWidth": "1400px", "position": "relative" }}
+          className="pt-32 xl:pt-32 mb-2 xl:mb-0 xl:mx-auto pb-8 border-b-[1.5px] xl:border-none text-3xl xl:text-5xl font-semibold"> Cart </h1>
+        <CartContainer>
+          <Cart>
+            {_products.length > 0 ?
+              <>
+                {_products.map((product) => (
+                  <span key={product.id}>
+                    <CartItem product={product} />
+                  </span>
+                ))}
+              </>
+            :
+              <EmptyCart>
+                <h3>No items in Cart</h3>
+                <button
+                  onClick={() => nav('/')}
+                > Return Shopping </button>
+              </EmptyCart>
+            }
+          </Cart>
+          <OrderSummary subTot={ subTotal } />
+        </CartContainer>
+        <Checkout>
+          {_products.length! > 0 ?
+            <button
+              onClick={() => {
+                dispatch(setTotal(subTotal));
+                nav('/order')
+              }}
+            >
+              Checkout
+            </button>
           :
-            <EmptyCart>
-              <h3>No items in Cart</h3>
-              <button
-                onClick={() => nav('/')}
-              > Return Shopping </button>
-            </EmptyCart>
+            <button disabled>
+              Checkout
+            </button>
           }
-        </Cart>
-        <OrderSummary subTot={ subTotal } />
-      </Container>
-      <Checkout>
-        {_products.length! > 0 ?
-          <button
-            onClick={() => {
-              dispatch(setTotal(subTotal));
-              nav('/order')
-            }}
-          >
-            Checkout
-          </button>
-        :
-          <button disabled>
-            Checkout
-          </button>
-        }
-      </Checkout>
-    </Body>
+        </Checkout>
+      </OrderBody>
+    </>
   );
 };
 
 export default CartPage;
-export const Body = styled.div`
+export const OrderBody = styled.div`
 @media screen and (min-width: 1280px) {
   padding: 0 40px;
 }
@@ -75,9 +79,12 @@ export const Body = styled.div`
   width: 700px;
   padding-bottom: 200px;
 }
+@media screen and (max-width: 750px) {
+  width: 90vw;
+}
 `;
 
-const Container = styled.div`
+export const CartContainer = styled.div`
   display: flex;
   margin-bottom: 200px;
   max-width: 1400px;
@@ -88,12 +95,9 @@ const Container = styled.div`
   @media screen and (max-width: 1280px) {
     flex-direction: column;
   }
-  @media screen and (max-width: 0px) {
-    flex-direction: row;
-  }
 `;
 
-const Cart = styled.div`
+export const Cart = styled.div`
   border-bottom: 1.5px solid rgba(225, 225, 225);
   @media screen and (min-width: 1280px) {
     width: 640px;
@@ -102,7 +106,7 @@ const Cart = styled.div`
   }
 `;
 
-const EmptyCart = styled.div`
+export const EmptyCart = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -128,7 +132,7 @@ const EmptyCart = styled.div`
   }
 `;
 
-const Checkout = styled.div`
+export const Checkout = styled.div`
   visibility: hidden;
   position: fixed;
   display: flex;
