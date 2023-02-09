@@ -1,5 +1,22 @@
 import styled from "styled-components";
 
+export const LoginMainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 90px;
+  width: 430px;
+  margin: 0 auto;
+  h1 {
+    font-size: 44px;
+    font-weight: 550;
+    letter-spacing: 1.6px;
+    margin-bottom: 20px;
+  }
+@media only screen and (min-width: 1400px){
+  width: 550px;
+}
+`;
+
 export const LoginContainer = styled.div`
 display: flex;
 flex-direction: column;
@@ -19,6 +36,7 @@ input {
   background-color: rgba(245, 245, 245);
   margin-bottom: 36px;
 `;
+
 
 export const Underline = styled.a`
 cursor: pointer;
@@ -44,6 +62,42 @@ text-align: center;
 }
 `;
 
+export const Revert = styled(Underline)`
+  width: 80px;
+  :after {
+    bottom: 0.5px;
+    width: 95%;
+  }
+`;
+
+
+export const Divide = styled.p`
+  font-size: 18px;
+  font-weight: 620;
+  color: rgba(90, 90, 90);
+  text-align: center;
+  letter-spacing: 1.4px;
+  margin-bottom: 64px;
+  :before,
+  :after {
+    content: "";
+    position: absolute;
+    bottom: 76px;
+    height: 0;
+    width: 30vw;
+    max-width: 160px;
+    border-bottom: 1.4px solid rgba(200, 200, 200, 0.5);
+    transition: width 0.3s ease;
+  }
+  :before {
+    left: 0px;
+  }
+  :after {
+    right: 0px;
+  }
+`;
+
+
 export const ToolTip = styled.span`
 position: absolute;
 bottom: -140px;
@@ -55,6 +109,7 @@ font-weight: 450;
 box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
 z-index: 10;
 `;
+
 
 export const ButtonBase = styled.button`
 padding: 10px 0;
