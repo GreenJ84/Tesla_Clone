@@ -31,7 +31,7 @@ function App() {
   }, []);
 
   return (
-    <body className="relative min-h-[100vh]">
+    <div className="relative min-h-[100vh]">
       <Routes>
         <Route
           path="/login"
@@ -68,7 +68,7 @@ function App() {
           element={<ConfirmationPage />}
         />
       </Routes>
-    </body>
+    </div>
   );
 }
 
