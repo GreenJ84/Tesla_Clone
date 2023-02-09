@@ -6,8 +6,35 @@ export interface StyledProps {
   show: boolean
 }
 
-export const Container = styled.div`
-  border: 1px solid red;
+export const AdModalContainer = styled.div`
+    position: sticky;
+    display: ${({ show }: StyledProps) => 
+    show ? "block" : "none"
+    };
+    top: 0;
+    width: 100vw;
+    height: 100px;
+    font-size: 22px;
+    text-align: center;
+    p{
+        position: relative;
+        width: 90vw;
+        margin: 0 auto;
+        top: -12px;
+        span{
+            cursor: pointer;
+            border-bottom: 1.5px solid black;
+        }
+        span:hover{
+            border-bottom: 3px solid black;
+        }
+    }
+@media only screen and (max-width: 750px){
+    font-size: 18px;
+}
+`;
+
+export const NavContainer = styled.div`
   position: absolute;
   display: flex;
   align-items: center;
