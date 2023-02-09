@@ -4,6 +4,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
+import {
+  Close,
+  NavContainer,
+  Cover,
+  Nav,
+  SideMenu,
+  SmallNav,
+} from "../../app/Utils/StyledComponents/LayoutComponents";
+
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import { RootState } from "../../app/Store/store";
@@ -11,15 +20,7 @@ import { selectCars } from "../../app/Store/Car/carSlice";
 import { setLogout } from "../../app/Store/User/userSlice";
 import { useCartState } from "../../app/Utils/hooks/useCartState";
 
-import {
-  Close,
-  Container,
-  Cover,
-  Nav,
-  SideMenu,
-  SmallNav,
-} from "../../app/Utils/StyledComponents/HeaderComponents";
-
+  
 interface HeaderType {
   homeRef?: React.RefObject<HTMLDivElement>;
   bgColor?: string;
@@ -45,7 +46,7 @@ const Header = (props: HeaderType) => {
   });
 
   return (
-    <Container className={bgColor ? bgColor : ""}>
+    <NavContainer className={bgColor ? bgColor : ""}>
       {/* Tesla Logo Display */}
       <Link to="/">
         <img
@@ -203,7 +204,7 @@ const Header = (props: HeaderType) => {
           )}
         </ul>
       </SmallNav>
-    </Container>
+    </NavContainer>
   );
 };
 
