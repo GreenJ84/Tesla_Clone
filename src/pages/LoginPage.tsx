@@ -2,18 +2,19 @@
 
 import { BaseSyntheticEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import { useDispatch } from "react-redux";
+
 import { browserSessionPersistence, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, setPersistence, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
 import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
+import { Button2, Divide, LoginMainContainer, Revert } from "../app/Utils/StyledComponents/LoginComponents";
+
 import { setLogin } from "../app/Store/User/userSlice";
-import { useDispatch } from "react-redux";
 import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../index";
-import { doc, setDoc } from "firebase/firestore";
-import { Underline } from "../app/Utils/StyledComponents/LoginComponents";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -182,71 +183,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-export const LoginMainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 90px;
-  width: 430px;
-  margin: 0 auto;
-  h1 {
-    font-size: 44px;
-    font-weight: 550;
-    letter-spacing: 1.6px;
-    margin-bottom: 20px;
-  }
-@media only screen and (min-width: 1400px){
-  width: 550px;
-}
-`;
-
-export const Revert = styled(Underline)`
-  width: 80px;
-  :after {
-    bottom: 0.5px;
-    width: 95%;
-  }
-`;
-
-export const Divide = styled.p`
-  font-size: 18px;
-  font-weight: 620;
-  color: rgba(90, 90, 90);
-  text-align: center;
-  letter-spacing: 1.4px;
-  margin-bottom: 64px;
-  :before,
-  :after {
-    content: "";
-    position: absolute;
-    bottom: 76px;
-    height: 0;
-    width: 30vw;
-    max-width: 160px;
-    border-bottom: 1.4px solid rgba(200, 200, 200, 0.5);
-    transition: width 0.3s ease;
-  }
-  :before {
-    left: 0px;
-  }
-  :after {
-    right: 0px;
-  }
-`;
-
-export const Button2 = styled.button`
-  padding: 10px 0;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 1.2px;
-  color: black;
-  background-color: rgba(220, 220, 220, 0.3);
-  border-radius: 4px;
-  :hover {
-    background-color: rgba(220, 220, 220, 0.5);
-  }
-@media only screen and (max-width: 550px){
-  width: 80vw;
-  margin: 0 auto;
-}
-`;
