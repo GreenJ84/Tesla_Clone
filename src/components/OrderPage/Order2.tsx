@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { collection, serverTimestamp, doc, setDoc, getCountFromServer } from "firebase/firestore"
 
 import styled from "styled-components";
-import { Body } from "../../pages/CartPage";
+import { OrderBody } from "../../app/Utils/StyledComponents/CartComponents";
 import CartItem from "../CartPage/CartItem";
 import CardModal from "./CardModal";
 import FinalOrder from "./FinalOrder";
@@ -102,7 +102,7 @@ const Order2 = (props: order2Props) => {
     <Order2Body>
       <h1>Review and Pay</h1>
       <p>Order Summary ({_products.length} items)</p>
-      <Container>
+      <Order2Container>
         <ul>
         {_products.map((product) =>
           <span key={product.id}>
@@ -177,7 +177,7 @@ const Order2 = (props: order2Props) => {
             Place Order
           </Button>
           }
-        </Container>
+        </Order2Container>
     </Order2Body>
     </>
   );
@@ -185,7 +185,7 @@ const Order2 = (props: order2Props) => {
 
 export default Order2;
 
-const Order2Body = styled(Body)`
+const Order2Body = styled(OrderBody)`
   >h1{
     position: relative;
     bottom: 16px;
@@ -198,7 +198,7 @@ const Order2Body = styled(Body)`
   }
 `;
 
-const Container = styled.div`
+const Order2Container = styled.div`
   display: flex;
   >ul{
     padding: 50px 0;

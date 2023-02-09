@@ -42,7 +42,7 @@ const Order1 = (props: order1Props) => {
   }
 
   return (
-    <Container>
+    <Order1Container>
       <h1> Shipping </h1>
       <Form>
         <div>
@@ -242,13 +242,13 @@ const Order1 = (props: order1Props) => {
       >
         Next
       </Button>
-    </Container>
+    </Order1Container>
   );
 };
 
 export default Order1;
 
-const Container = styled.div`
+const Order1Container = styled.div`
   h1{
     font-size: 56px;
     font-weight: 500;
@@ -291,6 +291,11 @@ const Container = styled.div`
     font-size: 32px;
     font-weight: 550;
   }
+@media only screen and (min-width: 1600px){
+  h1{
+    margin-bottom: 20px;
+  }
+}
 `;
 
 const Form = styled.form`
