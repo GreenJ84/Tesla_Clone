@@ -120,6 +120,7 @@ export const CartItemContainer = styled.li`
         background-color: rgba(240 , 240, 240);
         padding: 0 0 0 5px;
         margin-right: 10px;
+        max-width: 30px;
       }
       >button{
         padding-bottom: .5px;
