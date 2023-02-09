@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { OrderBody } from "./CartComponents";
 
 export const OrderPageContainer = styled.div`
   position: relative;
@@ -29,7 +28,7 @@ export const OrderPageContainer = styled.div`
   padding: 10vh 0 0;
 }
   @media only screen and (min-width: 1600px){
-  width: 900px;
+  width: 1100px;
   padding: 10vh 0 0;
 }
 `;
@@ -160,7 +159,12 @@ export const Form2 = styled.form`
   }
   `;
 
-export const Order2Body = styled(OrderBody)`
+export const Order2Body = styled.div`
+  padding-bottom: 100px;
+  postion: relative;
+  display: flex;
+  flex-direction: column;
+  width: 700px;
   >h1{
     position: relative;
     bottom: 16px;
@@ -171,48 +175,70 @@ export const Order2Body = styled(OrderBody)`
     font-size: 19px;
     letter-spacing: 1.05px;
   }
+@media screen and (min-width: 1600){
+  max-width: 1100px;
+}
+@media screen and (max-width: 7500px) {
+  max-width: 90vw;
+}
 `;
 
 export const Order2Container = styled.div`
   display: flex;
-  >ul{
-    padding: 50px 0;
-    margin-bottom: 70px;
-    border-bottom: 1px solid grey;
-  }
-  >p:first-of-type{
-    font-size: 19px;
-    font-weight: 500;
-    margin-bottom: 34px;
-    color: rgba(30,30,30)
-  }
-  >p:nth-of-type(2){
-    font-size: 18px;
-    font-weight: 350;
-    letter-spacing: 1.04px;
-    margin-bottom: 32px;
-  }
-  >p:nth-of-type(3){
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 30px;
-    letter-spacing: 1.04px;
-    word-spacing: 1.2px;
-    color: rgba(90, 90, 90);
-    >span{
-      color: inherit;
-      border-bottom: 1.5px solid black;
-      :hover{
-        border-bottom: 2px solid black;
-        color: black;
+  >div{
+    display: flex;
+    flex-direction: column;
+    >ul{
+      padding: 30px 0;
+      margin-bottom: 70px;
+      border-bottom: 1px solid grey;
+    }
+    >p:first-of-type{
+      font-size: 19px;
+      font-weight: 500;
+      margin-bottom: 34px;
+      color: rgba(30,30,30)
+    }
+    >p:nth-of-type(2){
+      font-size: 18px;
+      font-weight: 350;
+      letter-spacing: 1.04px;
+      margin-bottom: 32px;
+    }
+    >p:nth-of-type(3){
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 30px;
+      letter-spacing: 1.04px;
+      word-spacing: 1.2px;
+      color: rgba(90, 90, 90);
+      >span{
+        color: inherit;
+        border-bottom: 1.5px solid black;
+        :hover{
+          border-bottom: 2px solid black;
+          color: black;
+        }
       }
     }
-    
   }
-  @media screen and (min-width: 1280px) {
-
+@media screen and (min-width: 1600px) {
+  justify-content: space-between;
+  >div>ul{
+    border-bottom: none;
   }
-  @media screen and (max-width: 1280px) {
+  >div:first-of-type{
+    min-width: 700px;
+    margin-right: 80px;
+  }
+  >div:nth-of-type(2){
+    min-width: 500px;
+    padding: 20px 25px;
+    border-radius: 5px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+  }
+}
+@media screen and (max-width: 1600px) {
     flex-direction: column;
   }
 `;
