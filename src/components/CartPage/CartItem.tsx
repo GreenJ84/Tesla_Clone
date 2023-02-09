@@ -27,20 +27,28 @@ const CartItem = (props: CartProps) => {
         <div className="flex">
           <p>
             Quantity:
-            <input
+            {window.location.pathname === "/orders" ? 
+              <input
+                type="number"
+                value={product.quantity}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  dispatch(setQuantity(
+                    {
+                      id: product.id,
+                      quantity: parseInt(e.currentTarget.value)
+                    }
+                  ))
+                }
+                min={0}
+                max={3}
+              />
+            :
+              <input
               type="number"
               value={product.quantity}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                dispatch(setQuantity(
-                  {
-                    id: product.id,
-                    quantity: parseInt(e.currentTarget.value)
-                  }
-                ))
-              }
-              min={0}
-              max={3}
+              readOnly
             />
+            }
           </p>
           <button
             onClick={() => {
