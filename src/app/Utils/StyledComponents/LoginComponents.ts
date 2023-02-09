@@ -32,7 +32,7 @@ input {
   font-size: 18px;
   font-weight: 500;
   padding: 10px 0 10px 13px;
-  border-radius: 3px;
+  border-radius: 4px;
   background-color: rgba(245, 245, 245);
   margin-bottom: 36px;
 `;
