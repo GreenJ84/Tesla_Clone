@@ -15,7 +15,7 @@ const CartItem = (props: CartProps) => {
   const dispatch = useDispatch();
 
   return (
-    <Container>
+    <CartItemContainer>
       <img
         src={`/images/${product.backgroundImg}`}
         alt={product.title}
@@ -48,13 +48,13 @@ const CartItem = (props: CartProps) => {
         </div>
       </div>
       <p>${product.price}.00</p>
-    </Container>
+    </CartItemContainer>
   );
 };
 
 export default CartItem;
 
-const Container = styled.li`
+export const CartItemContainer = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -65,7 +65,7 @@ const Container = styled.li`
   }
   >div{
     position: relative;
-    left: -80px;
+    left: -16%;
     top: -20px;
     >p{
       font-size: 22px;
@@ -75,6 +75,11 @@ const Container = styled.li`
     }
     >div{
       font-size: 18px;
+      >p>input{
+        background-color: rgba(240 , 240, 240);
+        padding: 0 0 0 5px;
+        margin-right: 10px;
+      }
       >button{
         padding-bottom: .5px;
         color: rgba(80, 80, 80);
@@ -93,4 +98,9 @@ const Container = styled.li`
     font-size: 22px;
     font-weight: 500;
   }
+@media only screen and (max-width: 750px){
+  >div{
+    left: -10vw;
+  }
+}
 `;
