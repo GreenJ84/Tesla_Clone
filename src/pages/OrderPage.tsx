@@ -3,11 +3,13 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/solid";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
-import { useUserData } from "../app/Store/User/userSlice";
+
+import { OrderPageContainer } from "../app/Utils/StyledComponents/OrderComponents";
 import Header from "../components/Layout/Header";
 import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
+
+import { useUserData } from "../app/Store/User/userSlice";
 export interface Address {
   firstName: string
   lastName: string
@@ -110,36 +112,3 @@ const OrderPage = () => {
 };
 
 export default OrderPage;
-
-const OrderPageContainer = styled.div`
-  position: relative;
-  width: 670px;
-  margin: 0 auto 0;
-  padding: 7vh 0 0;
-  >button{
-    position: relative;
-    right: 2px;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-    font-weight: 500;
-    margin-bottom: 24px;
-    color: rgba(80, 80, 80, .9);
-  }
-  >button:hover{
-    color: black;
-  }
-  >p{
-    font-size: 20px;
-    letter-spacing: 1.1px;
-    word-spacing: 1.4px;
-  }
-@media only screen and (max-width: 750px){
-  width: 80vw;
-  padding: 10vh 0 0;
-}
-  @media only screen and (min-width: 1600px){
-  width: 900px;
-  padding: 10vh 0 0;
-}
-`;
