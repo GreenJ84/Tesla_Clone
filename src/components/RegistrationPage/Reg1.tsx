@@ -105,7 +105,7 @@ const Reg1 = (props: StepProps) => {
         onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
           e.currentTarget.style.border = "2px solid red";
         }}
-        className={cap ? "border invalid:border-red-500" : ""}
+        className={confirmCap ? "border invalid:border-red-500" : ""}
         required
         pattern={cap}
       />
