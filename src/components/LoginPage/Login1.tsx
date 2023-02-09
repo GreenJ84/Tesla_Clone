@@ -1,10 +1,9 @@
 /** @format */
 
 import React, { useEffect } from "react";
-import styled from "styled-components";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { Button, ToolTip, Underline } from "../../app/Utils/StyledComponents/LoginComponents";
+import { Button, LoginContainer, ToolTip, Underline } from "../../app/Utils/StyledComponents/LoginComponents";
 
 interface Login1Props {
   email: [string, Function];
@@ -39,7 +38,7 @@ const Login1 = (props: Login1Props) => {
   }, []);
 
   return (
-    <Container>
+    <LoginContainer>
       <label
         htmlFor=""
         className="relative"
@@ -81,28 +80,8 @@ const Login1 = (props: Login1Props) => {
           Trouble Signing In?
         </Underline>
       </div>
-    </Container>
+    </LoginContainer>
   );
 };
 
 export default Login1;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  label {
-    color: rgba(100, 100, 100);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.3px;
-    margin-bottom: 8px;
-  }
-  input {
-    font-size: 18px;
-    font-weight: 500;
-    padding: 10px 0 10px 13px;
-    border-radius: 3px;
-    background-color: rgba(245, 245, 245);
-    margin-bottom: 36px;
-  }
-`;
