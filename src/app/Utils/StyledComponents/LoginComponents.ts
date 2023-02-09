@@ -35,6 +35,12 @@ input {
   border-radius: 4px;
   background-color: rgba(245, 245, 245);
   margin-bottom: 36px;
+}
+input + div {
+  position: relative;
+  top: -36px;
+  color: red;
+}
 `;
 
 
