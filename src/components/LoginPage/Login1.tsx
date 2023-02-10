@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { Button, LoginContainer, ToolTip, Underline } from "../../app/Utils/StyledComponents/LoginComponents";
@@ -11,11 +11,16 @@ interface Login1Props {
 }
 
 const Login1 = (props: Login1Props) => {
+  const [error, setError] = useState("");
   const [email, setEmail] = props.email;
   const { setStep } = props;
 
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!email.match("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")) {
+      setError(`Invalid email format, please check again and re-enter.`);
+      return;
+    }
     setStep();
   };
 
@@ -66,6 +71,12 @@ const Login1 = (props: Login1Props) => {
         pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         required
       />
+      {error ?
+          <div>
+            {error}<br/>
+            {"example: <username>@<provider>.com"}
+          </div>
+        : "" }
       {email ? (
         <Button onClick={buttonHandler}>Next</Button>
       ) : (
