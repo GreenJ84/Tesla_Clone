@@ -4,6 +4,8 @@ export const LoginMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 90px;
+  padding-bottom: 100px;
+  min-height: 100vh;
   width: 430px;
   margin: 0 auto;
   h1 {
@@ -35,6 +37,13 @@ input {
   border-radius: 4px;
   background-color: rgba(245, 245, 245);
   margin-bottom: 36px;
+}
+input + div {
+  position: relative;
+  top: -36px;
+  color: red;
+  line-height: 16px;
+}
 `;
 
 
@@ -108,6 +117,9 @@ background-color: white;
 font-weight: 450;
 box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
 z-index: 10;
+@media only screen and (max-width: 800px){
+  left: -40px;
+}
 `;
 
 

@@ -28,7 +28,7 @@ const CartItem = (props: CartProps) => {
         <div className="flex">
           <p>
             Quantity:
-            {window.location.pathname === "/orders" ? 
+            {window.location.pathname !== "/order" ? 
               <input
                 type="number"
                 value={product.quantity}

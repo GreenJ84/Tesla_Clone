@@ -10,6 +10,7 @@ import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
 import { useUserData } from "../app/Store/User/userSlice";
+import SmallFooter from "../components/Layout/SmallFooter";
 export interface Address {
   firstName: string
   lastName: string
@@ -87,7 +88,7 @@ const OrderPage = () => {
       <OrderPageContainer>
         {secStep ? 
           <>
-            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6 2xl:mb-4"/>Back</button>
+            <button onClick={() => setSecStep(false)}> <ChevronLeftIcon className="relative right-1 w-6 h-6"/>Back</button>
             <p className="2xl:mb-4">Step 2 of 2</p>
           </>
         :
@@ -107,6 +108,7 @@ const OrderPage = () => {
           />
         }
       </OrderPageContainer>
+      <SmallFooter/>
     </>
   );
 };

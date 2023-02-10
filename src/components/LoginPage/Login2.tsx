@@ -1,21 +1,24 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import { Button, LoginContainer, Underline } from "../../app/Utils/StyledComponents/LoginComponents";
 
 interface Login2Props {
   password: [string, Function];
   login: Function;
+  error: string;
 }
 
 const Login2 = (props: Login2Props) => {
   const [password, setPassword] = props.password;
-  const { login } = props;
+  const { login, error } = props;
 
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     login(e);
   };
+
+
 
   return (
     <LoginContainer>
@@ -36,6 +39,7 @@ const Login2 = (props: Login2Props) => {
         required
         pattern="([A-Za-z!#$%&]+[1-9]+){8,}"
       />
+      {error ? <div>{error}</div> : ""}
       {password ? (
         <Button onClick={buttonHandler}>Sign In</Button>
       ) : (

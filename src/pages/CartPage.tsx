@@ -10,6 +10,7 @@ import { Cart, CartContainer, Checkout, EmptyCart, OrderBody } from "../app/Util
 
 import { useCartState } from "../app/Utils/hooks/useCartState";
 import { setTotal } from "../app/Store/Car/carSlice";
+import SmallFooter from "../components/Layout/SmallFooter";
 
 const CartPage = () => {
   const _products = useCartState();
@@ -66,6 +67,7 @@ const CartPage = () => {
           }
         </Checkout>
       </OrderBody>
+      <SmallFooter />
     </>
   );
 };

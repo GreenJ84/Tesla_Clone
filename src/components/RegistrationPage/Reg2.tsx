@@ -19,6 +19,11 @@ const Reg2 = (props: Reg2Props) => {
   const [password, setPassword] = props.password;
   const [conPass, setConPass] = props.confPassword;
   const register = props.register;
+  const [errors, setErrors] = useState({
+    email: "",
+    pass: "",
+    conPass: ""
+  })
 
   const [showPass, setShowPass] = useState(false);
   const [showCon, setShowCon] = useState(false);
@@ -47,10 +52,30 @@ const Reg2 = (props: Reg2Props) => {
     };
   }, []);
 
-  const registerHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const registerHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!formValid()){ return }
     register(e);
   };
+
+  const formValid = () => {
+    let res = true;
+    let error = { ...errors }
+    if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)) {
+      error.email = "Email is the incorrect format (example: name@email.com)";
+      res = false;
+    }
+    if (!password.match(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}/g)) {
+      error.pass = "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
+      res = false;
+    }
+    if (!password.match(conPass)) {
+      error.conPass = "Confirmation does not match";
+      res = false;
+    }
+    setErrors({...error})
+    return res
+  }
 
   return (
     <Reg2Container>
@@ -66,10 +91,10 @@ const Reg2 = (props: Reg2Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setEmail(e.currentTarget.value)
         }
-        pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         required
       />
-
+      <div>{ errors.email }</div>
       <label
         htmlFor=""
         className="relative"
@@ -93,10 +118,11 @@ const Reg2 = (props: Reg2Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPassword(e.currentTarget.value)
         }
-        className="w-[430px]"
-        pattern="[A-Za-z!#$%&]+[1-9]+{8,}"
+        className={password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"}
+        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}"
         required
       />
+      <div>{ errors.pass }</div>
       <div>
         {password && (
           <Show
@@ -113,9 +139,11 @@ const Reg2 = (props: Reg2Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setConPass(e.currentTarget.value)
         }
+        className={conPass ? "border invalid:border-red-500" : ""}
         pattern={password}
         required
       />
+      <div>{ errors.conPass }</div>
       <div>
         {conPass && (
           <Show
@@ -126,7 +154,8 @@ const Reg2 = (props: Reg2Props) => {
       </div>
       {email && password && conPass ? (
         <button
-          onClick={ registerHandler }
+          type="submit"
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => registerHandler(e) }
         >Create Account</button>
       ) : (
         <button disabled>Create Account</button>

@@ -24,6 +24,7 @@ import {
 import { DB } from "..";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
+import SmallFooter from "../components/Layout/SmallFooter";
 
 interface orderData {
   tag: string | null;
@@ -155,6 +156,7 @@ const ConfirmationPage = () => {
           </div>
         )}
       </ConfirmationContainer>
+      <SmallFooter />
     </>
   );
 };

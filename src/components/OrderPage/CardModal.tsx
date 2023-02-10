@@ -120,7 +120,7 @@ const Container = styled.div`
       color: rgba(80, 80, 80);
       margin-bottom: 9px;
     }
-    >input{
+    input{
       height: 50px;
       background-color: rgba(80, 80, 80, .07);
       border-radius: 5px;
@@ -139,7 +139,7 @@ const CardDetail = styled.div`
     display: flex;
     flex-direction: column;
     width: 30%;
-    >input{
+    input{
       height: 50px;
       background-color: rgba(80, 80, 80, .07);
       border-radius: 5px;

@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
 
-import LogRegHeader from "../components/Layout/MinimalHeader";
-import LogRegFooter from "../components/Layout/SmallFooter";
+import MinimalHeader from "../components/Layout/MinimalHeader";
+import SmallFooter from "../components/Layout/SmallFooter";
 import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
 import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
@@ -64,7 +64,7 @@ const RegistrationPage = () => {
 
   return (
     <>
-      <LogRegHeader />
+      <MinimalHeader />
       <RegMainContainer>
         <p> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
@@ -90,7 +90,7 @@ const RegistrationPage = () => {
           )}
         </form>
       </RegMainContainer>
-      <LogRegFooter />
+      <SmallFooter />
     </>
   );
 };

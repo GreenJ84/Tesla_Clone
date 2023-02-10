@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const OrderBody = styled.div`
+min-height: 100vh;
+padding-bottom: 100px;
 @media screen and (min-width: 1280px) {
   padding: 0 40px;
 }
@@ -72,6 +74,7 @@ export const Checkout = styled.div`
   padding: 20px 0;
   background-color: white;
   box-shadow: 0 0 10px rgba(200, 200, 200);
+  z-index: 1000;
   button {
     padding: 10px 0;
     width: 640px;

@@ -21,15 +21,51 @@ const Reg1 = (props: StepProps) => {
   const [captcha, setCaptcha] = useCaptcha();
   const [cap, setCap] = useState(captcha);
   const [confirmCap, setConfirmCap] = useState("");
+  const [errors, setErrors] = useState({
+    fnE: "",
+    lnE: "",
+    capE: ""
+  })
 
-  const stepHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const stepHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setStep();
+    if (!formValid()) {
+      console.log("invalid");
+      return;
+    }
+    else { 
+      console.log("valid");
+      setStep();
+    }
   };
+
+  const formValid = () => {
+    let res = true;
+    let error = { ...errors }
+    if (!fN.match(/[A-Za-z]{2,}/g)) {
+      console.log("setting fn error");
+      error.fnE = "Name must be longer then 2 characters";
+      setErrors({...error})
+      res = false;
+    }
+    if (!lN.match(/[A-Za-z]{2,}/g)) {
+      console.log("setting ln error");
+      error.lnE = "Name must be longer then 2 characters";
+      setErrors({...error})
+      res = false;
+    }
+    if (!confirmCap.match(cap)) {
+      console.log("setting cap error");
+      error.capE = "Captch does not match";
+      setErrors({...error})
+      res = false;
+    }
+    return res
+  }
 
   return (
     <Reg1Container>
-      <label htmlFor="first-name">First Name / Username</label>
+      <label htmlFor="first-name">First Name</label>
       <input
         name="first-name"
         placeholder=""
@@ -39,19 +75,23 @@ const Reg1 = (props: StepProps) => {
           setFN(e.currentTarget.value);
         }}
         required
-        pattern="[A-Za-z]+{8,}"
+        className={fN ? "border invalid:border-red-500" : ""}
+        pattern="[A-Za-z]{3,}"
       />
+      <div>{ errors.fnE }</div>
       <label htmlFor="last-name">Last Name</label>
       <input
-        placeholder="Not necessary w/ username"
         name="last-name"
         type="text"
         value={lN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
-        pattern="[A-Za-z]+{8,}"
+        className={lN ? "border invalid:border-red-500" : ""}
+        required
+        pattern="[A-Za-z]{3,}"
       />
+      <div>{ errors.lnE }</div>
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
       <label htmlFor="CAPTCHA">Enter the characters in the image</label>
       <input
@@ -61,20 +101,24 @@ const Reg1 = (props: StepProps) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setConfirmCap(e.currentTarget.value);
         }}
-        pattern={cap}
         title="Incorrect image characters"
         onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
           e.currentTarget.style.border = "2px solid red";
         }}
+        className={confirmCap ? "border invalid:border-red-500" : ""}
         required
+        pattern={cap}
       />
+      <div>{ errors.capE }</div>
       <p>
         By continuing, I understand and agree to Tesla's{" "}
         <span>Privacy Notice</span> and <span>Terms of Use</span> for creating a
         Tesla Account
       </p>
       {fN && lN && confirmCap ? (
-        <button onClick={stepHandler}>Next</button>
+        <button
+          type="submit"
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => stepHandler(e)}>Next</button>
       ) : (
         <button disabled>Next</button>
       )}
