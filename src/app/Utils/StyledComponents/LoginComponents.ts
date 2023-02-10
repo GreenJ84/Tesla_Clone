@@ -4,6 +4,8 @@ export const LoginMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding-top: 90px;
+  padding-bottom: 100px;
+  min-height: 100vh;
   width: 430px;
   margin: 0 auto;
   h1 {
