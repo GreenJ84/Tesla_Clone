@@ -17,11 +17,11 @@ import { setLogin } from "../app/Store/User/userSlice";
 import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../index";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const nav = useNavigate();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [secStep, setSecStep] = useState(false);
   const [error, setError] = useState("");
 
