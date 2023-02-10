@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components';
 import NavList from './NavList';
 
-const SideMenu = () => {
+const SideMenu = (props: {toggle: Function}) => {
   return (
     <SideMenuContainer>
-        <NavList wide={false}/>
+      <NavList toggle={ props.toggle()} wide={false}/>
     </SideMenuContainer>
   )
 }

@@ -4,13 +4,13 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { setLogout } from "../../app/Store/User/userSlice";
 
-const NavList = (props: {wide: boolean}) => {
+const NavList = (props: {wide: boolean, toggle: Function}) => {
     const dispatch = useDispatch();
     const nav = useNavigate();
 
     return (
         <NavListContainer wide={props.wide}>
-            <li onClick={() => nav("/account")}>
+            <li onClick={() => props.toggle()}>
                 <HomeIcon className={ ActiveIcon } />
                 Dashboard</li>
             <li>

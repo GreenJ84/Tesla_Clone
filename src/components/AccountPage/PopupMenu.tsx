@@ -1,24 +1,17 @@
 import React from 'react'
 import styled from 'styled-components';
 import { XMarkIcon } from '@heroicons/react/24/solid';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router';
 import NavList, { IconStyle } from './NavList';
 
-interface AccountPopup {
-    toggle: Function
-}
-
-const PopupMenu = (props: AccountPopup) => {
-    const { toggle } = props;
+const PopupMenu = (props: {toggle: Function}) => {
 
   return (
       <PopupMenuContainer>
         <XMarkIcon 
-            onClick={toggle()}
+            onClick={props.toggle()}
             className={ CloseIcon } 
         />
-        <NavList wide={true}/>
+          <NavList toggle={props.toggle()} wide={true}/>
       </PopupMenuContainer>
   )
 }
