@@ -84,11 +84,11 @@ export default Account;
 
 const AccountContainer = styled.div`
     display: flex;
-    ${(props: { wide: boolean }) => props.wide ? "padding-top: 140px;" : ""}
+    ${(props: { wide: boolean }) => props.wide ? "padding-top: 140px;" : ""};
 `;
 const AccountMain = styled.div`
     max-width: 900px;
-    ${(props: { wide: boolean }) => props.wide ? "padding: 0px 0 0 30px;" : "padding: 86px 0 0 30px;"}
+    ${(props: { wide: boolean }) => props.wide ? "padding: 0px 0 100px 30px;" : "padding: 86px 0 100px 30px;"}
     >h1{
         font-size: 46px;
         font-weight: 500;
