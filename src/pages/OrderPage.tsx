@@ -10,6 +10,7 @@ import Order1 from "../components/OrderPage/Order1";
 import Order2 from "../components/OrderPage/Order2";
 
 import { useUserData } from "../app/Store/User/userSlice";
+import SmallFooter from "../components/Layout/SmallFooter";
 export interface Address {
   firstName: string
   lastName: string
@@ -107,6 +108,7 @@ const OrderPage = () => {
           />
         }
       </OrderPageContainer>
+      <SmallFooter/>
     </>
   );
 };
