@@ -117,6 +117,8 @@ export const Form = styled.form`
     }
     >input{
       display: block;
+      font-size: 18px;
+      font-weight: 500;
       background-color: rgba(200, 200, 200, .22);
       border-radius: 5px;
       width: 100%;
