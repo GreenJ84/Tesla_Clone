@@ -40,7 +40,7 @@ const Account = () => {
     return <>
         <AccountContainer wide={wide}>
             { wide ? 
-                <SideMenu />
+                <SideMenu toggle = { () => toggleMenu } />
             : 
                 menu ? <PopupMenu toggle = { () => toggleMenu } />: ""
             }
