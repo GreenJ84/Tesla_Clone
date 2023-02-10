@@ -27,6 +27,7 @@ const LoginPage = () => {
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setError("");
     setPersistence(AUTH, browserSessionPersistence)
       .then(() => {
         return signInWithEmailAndPassword(AUTH, email, password)
@@ -45,21 +46,20 @@ const LoginPage = () => {
                 nav("/");
               })
               .catch((error) => {
-                const errorCode = error.code;
                 const errorMessage = error.message.split(": ")[1];
-                setError(`Error ${errorCode}: ${errorMessage}`);
+                setError(`${errorMessage}`);
               })
           }
       )
       .catch((error) => {
         // Handle Errors here.
-        const errorCode = error.code;
         const errorMessage = error.message.split(": ")[1];
-        setError(`Error ${errorCode}: ${errorMessage}`);
+        setError(`${errorMessage}`);
       })
   }
   const googleLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+    setError("");
     signInWithPopup(AUTH, googleProvider)
     .then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -70,19 +70,19 @@ const LoginPage = () => {
       nav("/");
     }).catch((error) => {
       // Handle Errors here.
-      const errorCode = error.code;
       const errorMessage = error.message.split(": ")[1];
       // The email of the user's account used.
       const email = error.customData.email;
       // The AuthCredential type that was used.
       const credential = GoogleAuthProvider.credentialFromError(error);
 
-      console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-      setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+      console.log(`Error ${credential} (${email}): ${errorMessage}`);
+      setError(`Error ${credential} (${email}): ${errorMessage}`);
     });
   }
   const facebookLogin = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
+    setError("");
     signInWithPopup(AUTH, facebookProvider)
       .then((result) => {
         // The signed-in user info.
@@ -103,12 +103,13 @@ const LoginPage = () => {
         // The AuthCredential type that was used.
         const credential = FacebookAuthProvider.credentialFromError(error);
         
-        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        console.log(`Error ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${credential} (${email}): ${errorMessage}`);
       });
   }
   const githubLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setError("");
     signInWithPopup(AUTH, githubProvider)
       .then((result) => {
         // The signed-in user info.
@@ -129,8 +130,8 @@ const LoginPage = () => {
         // The AuthCredential type that was used.
         const credential = GithubAuthProvider.credentialFromError(error);
         
-        console.log(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${errorCode} with ${credential} (${email}): ${errorMessage}`);
+        console.log(`Error ${credential} (${email}): ${errorMessage}`);
+        setError(`Error ${credential} (${email}): ${errorMessage}`);
       });
   }
 
@@ -154,10 +155,6 @@ const LoginPage = () => {
           ""
         )}
         <form>
-          {error ? 
-            <span>{ error }</span>
-          :
-            ""}
           {!secStep ? (
             <Login1
               email={[email, setEmail]}
@@ -167,6 +164,7 @@ const LoginPage = () => {
             <Login2
               password={[password, setPassword]}
               login={(e: React.MouseEvent<HTMLButtonElement>) => login(e)}
+              error={error}
             />
           )}
         </form>
