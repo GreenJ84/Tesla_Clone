@@ -7,6 +7,8 @@ A recreation of the stunning user experience provided by Tesla.
 - User, product, and in-progress cart information are stored and persisted through a Redux state container. 
 - The application manages authentication and data storage in the cloud through Firebase services.
 
+![Tesla GClone](https://github.com/GreenJ84/Tesla_Clone/raw/main/public/images/TeslaGclone.png)
+
 # Run locally
 
 **1.**  [Clone](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository) this project repo.
