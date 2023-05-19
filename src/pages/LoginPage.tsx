@@ -1,10 +1,10 @@
 /** @format */
 
-import { BaseSyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { browserSessionPersistence, FacebookAuthProvider, GithubAuthProvider, GoogleAuthProvider, setPersistence, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
@@ -14,7 +14,8 @@ import Login2 from "../components/LoginPage/Login2";
 import { Button2, Divide, LoginMainContainer, Revert } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
-import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../firebase";
+import { AUTH, DB } from "../firebase";
+import AltLogin from "../components/LoginPage/AltLogin";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [secStep, setSecStep] = useState(false);
+  const [altLogin, setAltLogin] = useState(false);
   const [error, setError] = useState("");
 
   const login = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,83 +59,6 @@ const LoginPage = () => {
         setError(`${errorMessage}`);
       })
   }
-  const googleLogin = async (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    setError("");
-    signInWithPopup(AUTH, googleProvider)
-    .then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      if (!credential) return;
-
-      const user = result.user;
-      dispatch(setLogin(user));
-      nav("/");
-    }).catch((error) => {
-      // Handle Errors here.
-      const errorMessage = error.message.split(": ")[1];
-      // The email of the user's account used.
-      const email = error.customData.email;
-      // The AuthCredential type that was used.
-      const credential = GoogleAuthProvider.credentialFromError(error);
-
-      console.log(`Error ${credential} (${email}): ${errorMessage}`);
-      setError(`Error ${credential} (${email}): ${errorMessage}`);
-    });
-  }
-  const facebookLogin = async (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    setError("");
-    signInWithPopup(AUTH, facebookProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        if (!credential) return;
-
-        dispatch(setLogin(user))
-        nav('/');
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = FacebookAuthProvider.credentialFromError(error);
-        
-        console.log(`Error ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${credential} (${email}): ${errorMessage}`);
-      });
-  }
-  const githubLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setError("");
-    signInWithPopup(AUTH, githubProvider)
-      .then((result) => {
-        // The signed-in user info.
-        const user = result.user;
-        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-        const credential = GithubAuthProvider.credentialFromResult(result);
-        if (!credential) return;
-
-        dispatch(setLogin(user))
-        nav('/');
-      })
-      .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GithubAuthProvider.credentialFromError(error);
-        
-        console.log(`Error ${credential} (${email}): ${errorMessage}`);
-        setError(`Error ${credential} (${email}): ${errorMessage}`);
-      });
-  }
 
   return (
     <>
@@ -154,6 +79,7 @@ const LoginPage = () => {
         ) : (
           ""
         )}
+
         <form>
           {!secStep ? (
             <Login1
@@ -168,10 +94,14 @@ const LoginPage = () => {
             />
           )}
         </form>
+
         <div className="relative">
           <Divide> Or </Divide>
         </div>
-        <Button2>Alternate Sign-In</Button2>
+        {!altLogin ?
+          <Button2 onClick={() => {setAltLogin(true)}}>Alternate Sign-In</Button2> :
+          <AltLogin />
+        }
         <br />
         <Button2 onClick={() => nav("/registration")}>Create Account</Button2>
       </LoginMainContainer>
