@@ -14,8 +14,8 @@ export const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 export const googleProvider = new GoogleAuthProvider();
-export const facebookProvider = new TwitterAuthProvider();
-export const twitterProvider = new FacebookAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();
+export const twitterProvider = new TwitterAuthProvider();
 export const githubProvider = new GithubAuthProvider();
 // https://firebase.google.com/docs/web/setup#available-libraries
 
