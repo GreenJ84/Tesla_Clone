@@ -43,8 +43,8 @@ function App() {
         />
         <Route
           path="/account"
-          element={<AccountPage />
-        }/>
+          element={<AccountPage />}
+        />
         <Route
           path="/"
           element={<HomePage />}
@@ -57,12 +57,10 @@ function App() {
           path="/cart"
           element={<CartPage />}
         />
-
         <Route
           path="/order"
           element={<OrderPage />}
         />
-
         <Route
           path="/confirmation"
           element={<ConfirmationPage />}
