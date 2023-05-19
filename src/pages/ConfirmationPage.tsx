@@ -21,7 +21,7 @@ import {
   ConfirmationListItem,
 } from "../app/Utils/StyledComponents/ConfirmationComponents";
 
-import { DB } from "..";
+import { DB } from "../firebase";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
 import SmallFooter from "../components/Layout/SmallFooter";

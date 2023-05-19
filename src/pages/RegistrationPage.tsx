@@ -10,7 +10,7 @@ import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
 import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
 
-import { AUTH } from "../index";
+import { AUTH } from "../firebase";
 
 const RegistrationPage = () => {
   const nav = useNavigate();

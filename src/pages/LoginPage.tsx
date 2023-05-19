@@ -14,7 +14,7 @@ import Login2 from "../components/LoginPage/Login2";
 import { Button2, Divide, LoginMainContainer, Revert } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
-import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../index";
+import { AUTH, DB, facebookProvider, githubProvider, googleProvider } from "../firebase";
 
 const LoginPage = () => {
   const dispatch = useDispatch();

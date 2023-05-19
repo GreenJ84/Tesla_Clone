@@ -14,7 +14,7 @@ import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
 import { useCartState } from "../../app/Utils/hooks/useCartState";
 import { completeOrder, setTotal } from "../../app/Store/Car/carSlice";
 import { billAddress, shipAddress } from "../../pages/OrderPage";
-import { DB } from "../..";
+import { DB } from "../../firebase";
 import { useUserData } from "../../app/Store/User/userSlice";
 import { carData } from "../../teslaCarInfo";
 

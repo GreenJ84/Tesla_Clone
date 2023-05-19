@@ -2,17 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, TwitterAuthProvider, GithubAuthProvider } from "firebase/auth";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 export const firebaseConfig = {
-    apiKey: process.env.API_KEY,
-    authDomain: process.env.AUTH_DOMAIN,
+    apiKey: "AIzaSyCYjBCaFh6cbvKYvu6s4sGJl3KLk4NVArw",
+    authDomain: "tesla-gclone.firebaseapp.com",
     projectId: "tesla-gclone",
-    storageBucket: process.env.STORAGE_BUCKET,
-    messagingSenderId: process.env.MESSAGING_ID,
-    appId: process.env.APP_ID,
+    storageBucket: "tesla-gclone.appspot.com",
+    messagingSenderId: "248739858073",
+    appId: "1:248739858073:web:12b0ab828326283f4cda08",
 };
 export const app = initializeApp(firebaseConfig);
 
