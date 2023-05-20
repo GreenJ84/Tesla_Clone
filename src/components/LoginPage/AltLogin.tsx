@@ -14,6 +14,9 @@ import {
   fetchSignInMethodsForEmail,
   OAuthCredential,
   AuthCredential,
+  AuthProvider,
+  signInWithEmailAndPassword,
+  linkWithCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -25,6 +28,7 @@ import {
   githubProvider,
   googleProvider,
 } from "../../firebase/firebase";
+import Login2 from "./Login2";
 
 interface existingAccount {
   email: string;
@@ -41,7 +45,10 @@ const AltLogin = () => {
   ]);
   const [error, setError] = useState("");
 
-  const altSignIn = (provider: any) => {
+  // Normal Alternate Sign in with Error Handling
+  const altSignIn = (e: React.MouseEvent<HTMLButtonElement>, provider: any) => {
+    e.preventDefault();
+    setError("");
     setPersistence(AUTH, browserSessionPersistence).then(() => {
       return signInWithPopup(AUTH, provider)
         .then((result) => {
@@ -91,12 +98,7 @@ const AltLogin = () => {
                 { credential, email, method: methods[0] },
               ]);
               console.error(
-                `Error: Account exists with different credential pon ${methods[0]}`
-              );
-              setError(
-                `Error${
-                  credential ? `with ${credential.providerId}` : ""
-                }: ${errorMessage}`
+                `Error: Account exists with ${email} on ${methods[0] === "password" ? "password" : "email"}.`
               );
             });
             return;
@@ -119,51 +121,91 @@ const AltLogin = () => {
     });
   };
 
-  const googleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  // Existing Account Sign In linking
+  const [password, setPassword] = useState("");
+  const existingLogin = (e: React.MouseEvent, provider?: AuthProvider) => {
     e.preventDefault();
     setError("");
-    altSignIn(googleProvider);
-  };
-  const facebookLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setError("");
-    altSignIn(facebookProvider);
-  };
-
-  const githubLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setError("");
-    altSignIn(githubProvider);
+    setPersistence(AUTH, browserSessionPersistence).then(() => {
+      return accountExist[1].method === "password" ? 
+        signInWithEmailAndPassword(AUTH, accountExist[1].email, password)
+          .then((result) => {
+              return linkWithCredential(result.user, accountExist[1].credential as AuthCredential);
+            })
+      : 
+        signInWithPopup(AUTH, provider!)
+          .then((result) => { 
+            return linkWithCredential(result.user, accountExist[1].credential as AuthCredential)
+          })
+      ;
+    });
+        
   };
 
   return (
     <div id="alt-signIn">
-      <p>Login with a Provider below</p>
+      {!accountExist[0] ? (
+        <p>Login with a Provider below</p>
+      ) : (
+        <p>
+          Existing login credentials found
+          <br/>
+          Please login{" "}
+          {accountExist[1].method === "password"
+            ? "with the password you created on this site"
+            : "throught the provider link below"}{" "}
+          for the account with email: <b>{accountExist[1].email}</b>
+        </p>
+      )}
       {error ? <div>{error}</div> : ""}
-      {!accountExist[0] && (
+
+      {/* If there is no existing Acct errors or if an account exists with a provider listed */}
+      {!accountExist[0] || accountExist[1].method !== "password" ? (
         <div>
-          <button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              googleLogin(e);
-            }}
-          >
-            Google
-          </button>
-          <button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              facebookLogin(e);
-            }}
-          >
-            Facebook
-          </button>
-          <button
-            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-              githubLogin(e);
-            }}
-          >
-            GitHub
-          </button>
+          {(!accountExist[0] || accountExist[1].method !== "google.com") && (
+            <button
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                accountExist[0]
+                  ? altSignIn(e, googleProvider)
+                  : existingLogin(e);
+              }}
+            >
+              Google
+            </button>
+          )}
+          {(!accountExist[0] || accountExist[1].method !== "facebook.com") && (
+            <button
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                accountExist[0]
+                  ? altSignIn(e, facebookProvider)
+                  : existingLogin(e);
+              }}
+            >
+              Facebook
+            </button>
+          )}
+          {(!accountExist[0] || accountExist[1].method !== "github.com") && (
+            <button
+              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                accountExist[0]
+                  ? altSignIn(e, githubProvider)
+                  : existingLogin(e);
+              }}
+            >
+              GitHub
+            </button>
+          )}
         </div>
+      ) : (
+        <>
+          <Login2
+            password={[password, setPassword]}
+            login={(e: React.MouseEvent<HTMLLIElement>) => {
+              existingLogin(e);
+            }}
+            error={ error }
+          />
+        </>
       )}
     </div>
   );
