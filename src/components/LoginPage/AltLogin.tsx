@@ -11,6 +11,9 @@ import {
   GoogleAuthProvider,
   setPersistence,
   signInWithPopup,
+  fetchSignInMethodsForEmail,
+  OAuthCredential,
+  AuthCredential,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 
@@ -21,30 +24,47 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "../../firebase";
+} from "../../firebase/firebase";
+
+interface existingAccount {
+  email: string;
+  credential: AuthCredential | null;
+  method: string;
+}
 
 const AltLogin = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const [accountExist, setAccountExist] = useState<[boolean, existingAccount]>([
+    false,
+    { credential: null, email: "", method: "" },
+  ]);
   const [error, setError] = useState("");
 
   const altSignIn = (provider: any) => {
     setPersistence(AUTH, browserSessionPersistence).then(() => {
       return signInWithPopup(AUTH, provider)
         .then((result) => {
-          const credential = () => {
-            switch (provider) {
-              case facebookProvider:
-                return FacebookAuthProvider.credentialFromResult(result);
-              case githubProvider:
-                return GithubAuthProvider.credentialFromResult(result);
-              case googleProvider:
-                return GoogleAuthProvider.credentialFromResult(result);
-              default:
-                return null;
-            }
-          };
-          if (!credential) return;
+          let credential: OAuthCredential | null;
+          switch (provider) {
+            case facebookProvider:
+              credential = FacebookAuthProvider.credentialFromResult(result);
+              break;
+            case githubProvider:
+              credential = GithubAuthProvider.credentialFromResult(result);
+              break;
+            case googleProvider:
+              credential = GoogleAuthProvider.credentialFromResult(result);
+              break;
+            default:
+              credential = null;
+          }
+          if (credential == null) {
+            setError(
+              "No User credential returned from your registered login provider."
+            );
+            return;
+          }
 
           const user = result.user;
           setDoc(
@@ -59,6 +79,28 @@ const AltLogin = () => {
           nav("/");
         })
         .catch((error) => {
+          if (error.code === "auth/account-exists-with-different-credential") {
+            // The pending provider credential.
+            const credential: AuthCredential = error.credential;
+            // The provider account's email address.
+            const email: string = error.email;
+            // Update the existing account's info.
+            fetchSignInMethodsForEmail(AUTH, email).then((methods) => {
+              setAccountExist([
+                true,
+                { credential, email, method: methods[0] },
+              ]);
+              console.error(
+                `Error: Account exists with different credential pon ${methods[0]}`
+              );
+              setError(
+                `Error${
+                  credential ? `with ${credential.providerId}` : ""
+                }: ${errorMessage}`
+              );
+            });
+            return;
+          }
           // Handle Errors here.
           const errorCode = error.code;
           const errorMessage = error.message.split(": ")[1];
@@ -70,7 +112,9 @@ const AltLogin = () => {
           console.error(
             `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
           );
-          setError(`Error${credential ? ` ${credential}` : ""}: ${errorMessage}`);
+          setError(
+            `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
+          );
         });
     });
   };
@@ -93,30 +137,34 @@ const AltLogin = () => {
   };
 
   return (
-    <div>
-      <p> Login with a Provider below</p>
+    <div id="alt-signIn">
+      <p>Login with a Provider below</p>
       {error ? <div>{error}</div> : ""}
-      <button
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          googleLogin(e);
-        }}
-      >
-        Google
-      </button>
-      <button
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          facebookLogin(e);
-        }}
-      >
-        Facebook
-      </button>
-      <button
-        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-          githubLogin(e);
-        }}
-      >
-        GitHub
-      </button>
+      {!accountExist[0] && (
+        <div>
+          <button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              googleLogin(e);
+            }}
+          >
+            Google
+          </button>
+          <button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              facebookLogin(e);
+            }}
+          >
+            Facebook
+          </button>
+          <button
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+              githubLogin(e);
+            }}
+          >
+            GitHub
+          </button>
+        </div>
+      )}
     </div>
   );
 };
