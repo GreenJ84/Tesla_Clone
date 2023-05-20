@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const Container = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -53,8 +53,8 @@ export const DownArrow = styled.img`
   width: 100px;
   animation: animateDown infinite 1.5s;
   overflow-x: hidden;
-@media only screen and (max-width: 744px){
+  @media only screen and (max-width: 744px) {
     height: 40px;
     width: 80px;
-}
+  }
 `;
