@@ -34,7 +34,7 @@ export const AdModalContainer = styled.div`
 }
 `;
 
-export const NavContainer = styled.div`
+export const NavContainer = styled.header`
   position: absolute;
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@ export const NavContainer = styled.div`
   z-index: 1;
 `;
 
-export const Nav = styled.div`
+export const Nav = styled.nav`
   display: flex; 
   justify-content: center;
   align-items: center;
@@ -55,7 +55,7 @@ export const Nav = styled.div`
   }
 `;
 
-export const SideMenu = styled.div`
+export const SideMenu = styled.nav`
   display: flex;
   align-items: center;
   a {
@@ -79,7 +79,7 @@ export const Cover = styled.div`
   filter: blur();
 `;
 
-export const SmallNav = styled.div`
+export const SmallNav = styled.nav`
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -121,7 +121,7 @@ export const SmallNav = styled.div`
   }
 `;
 
-export const Close = styled.div`
+export const Close = styled.button`
   display: flex;
   justify-content: flex-end;
 `;
