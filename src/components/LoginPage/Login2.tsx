@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { Button, LoginContainer, Underline } from "../../app/Utils/StyledComponents/LoginComponents";
 
 interface Login2Props {
