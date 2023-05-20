@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useRef } from "react";
+import React, { BaseSyntheticEvent, useRef } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -14,15 +14,24 @@ const HomePage = () => {
   const homeRef = useRef<HTMLDivElement>(null);
   const cars = useSelector(selectCars);
 
+  const slideIntoView = (e: BaseSyntheticEvent, idx: number) => {
+    e.preventDefault();
+    homeRef.current?.children[idx].scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <AdModal />
       <div style={{ position: "relative" }}>
-        <Header homeRef={homeRef} />
+        <Header
+          slide={slideIntoView}
+        />
         <Container ref={homeRef}>
           {cars.map((car) => (
             <Display
+              key={car.id}
               id={car.id}
+              slide={slideIntoView}
               title={car.title}
               backgroundImg={car.backgroundImg}
             />
