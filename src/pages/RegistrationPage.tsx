@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
@@ -10,7 +14,7 @@ import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
 import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
 
-import { AUTH } from "../firebase";
+import { AUTH } from "../firebase/firebase";
 
 const RegistrationPage = () => {
   const nav = useNavigate();
@@ -37,30 +41,33 @@ const RegistrationPage = () => {
         if (!auth.currentUser) return;
         sendEmailVerification(auth.currentUser);
         // eslint-disable-next-line no-restricted-globals
-        confirm(`A verification email has been sent to ${auth.currentUser.email}`);
+        confirm(
+          `A verification email has been sent to ${auth.currentUser.email}`
+        );
 
         updateProfile(auth.currentUser, {
           displayName: `${firstName}
-            ${lastName ? ` ${lastName}` : ""}`
+            ${lastName ? ` ${lastName}` : ""}`,
         })
           .then(() => {
-            console.log('Profile updated');
+            console.log("Profile updated");
           })
-          .catch(err =>
-            console.log("User update error has occured\n", err
-            ));
+          .catch((err) => console.log("User update error has occured\n", err));
         // redirect for app sign
-        nav('/login');
+        nav("/login");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message.split(": ")[1];
-        
-        console.log("A registration error has occured\n", `Error ${errorCode}: ${errorMessage}`)
+
+        console.log(
+          "A registration error has occured\n",
+          `Error ${errorCode}: ${errorMessage}`
+        );
         setError(errorMessage);
         setSecStep(false);
       });
-  }
+  };
 
   return (
     <>
@@ -69,11 +76,7 @@ const RegistrationPage = () => {
         <p> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
         <form>
-          {error ?
-            <span>{ error }</span>
-          : 
-            ""
-          }
+          {error ? <span>{error}</span> : ""}
           {!secStep ? (
             <Reg1
               firstName={[firstName, setFirstName]}

@@ -1,6 +1,6 @@
 /** @format */
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
@@ -21,7 +21,7 @@ import {
   ConfirmationListItem,
 } from "../app/Utils/StyledComponents/ConfirmationComponents";
 
-import { DB } from "../firebase";
+import { DB } from "../firebase/firebase";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
 import SmallFooter from "../components/Layout/SmallFooter";
