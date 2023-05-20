@@ -1,6 +1,6 @@
 /** @format */
 
-import { useRef } from "react";
+import React, { useRef } from "react";
 import Header from "../components/Layout/Header";
 import HomeBody from "../components/HomePage/HomeBody";
 import AdModal from "../components/Layout/AdModal";
@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <>
       <AdModal />
-      <div style={{"position":"relative"}}>
+      <div style={{ position: "relative" }}>
         <Header />
         <HomeBody homeRef={homeRef} />
       </div>
