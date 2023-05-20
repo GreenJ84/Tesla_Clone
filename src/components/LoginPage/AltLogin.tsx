@@ -117,6 +117,7 @@ const AltLogin = () => {
           setError(
             `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
           );
+          return;
         });
     });
   };
@@ -131,15 +132,48 @@ const AltLogin = () => {
         signInWithEmailAndPassword(AUTH, accountExist[1].email, password)
           .then((result) => {
               return linkWithCredential(result.user, accountExist[1].credential as AuthCredential);
-            })
+          })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message.split(": ")[1];
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = error.credential;
+  
+            console.error(
+              `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
+            );
+            setError(
+              `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
+            );
+            return;
+          })
       : 
         signInWithPopup(AUTH, provider!)
           .then((result) => { 
             return linkWithCredential(result.user, accountExist[1].credential as AuthCredential)
           })
+          .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message.split(": ")[1];
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = error.credential;
+  
+            console.error(
+              `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
+            );
+            setError(
+              `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
+            );
+            return;
+          });
       ;
     });
-        
   };
 
   return (
@@ -153,7 +187,7 @@ const AltLogin = () => {
           Please login{" "}
           {accountExist[1].method === "password"
             ? "with the password you created on this site"
-            : "throught the provider link below"}{" "}
+            : "throught the provider registered through the link below "}
           for the account with email: <b>{accountExist[1].email}</b>
         </p>
       )}
@@ -167,7 +201,7 @@ const AltLogin = () => {
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
                   ? altSignIn(e, googleProvider)
-                  : existingLogin(e);
+                  : existingLogin(e, googleProvider);
               }}
             >
               Google
@@ -178,7 +212,7 @@ const AltLogin = () => {
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
                   ? altSignIn(e, facebookProvider)
-                  : existingLogin(e);
+                  : existingLogin(e, facebookProvider);
               }}
             >
               Facebook
@@ -189,7 +223,7 @@ const AltLogin = () => {
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
                   ? altSignIn(e, githubProvider)
-                  : existingLogin(e);
+                  : existingLogin(e, githubProvider);
               }}
             >
               GitHub
