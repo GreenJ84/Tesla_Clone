@@ -34,27 +34,24 @@ const RegistrationPage = () => {
       setError("Passwords are not a match");
       return;
     }
-    const auth = AUTH;
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(AUTH, email, password)
       .then(() => {
-        // firebase authenticated and signed in
-        if (!auth.currentUser) return;
-        sendEmailVerification(auth.currentUser);
-        // eslint-disable-next-line no-restricted-globals
-        confirm(
-          `A verification email has been sent to ${auth.currentUser.email}`
+        // firebase authenticated and signed in confirmation
+        if (!AUTH.currentUser) return;
+        sendEmailVerification(AUTH.currentUser);
+        alert(
+          `A verification email has been sent to ${AUTH.currentUser.email}`
         );
 
-        updateProfile(auth.currentUser, {
-          displayName: `${firstName}
-            ${lastName ? ` ${lastName}` : ""}`,
+        updateProfile(AUTH.currentUser, {
+          displayName: `${firstName} ${lastName}`,
         })
           .then(() => {
             console.log("Profile updated");
           })
           .catch((err) => console.log("User update error has occured\n", err));
-        // redirect for app sign
-        nav("/login");
+
+        nav("/");
       })
       .catch((error) => {
         const errorCode = error.code;
