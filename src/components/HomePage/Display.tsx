@@ -21,9 +21,7 @@ const Display = (props: DisplayProps) => {
   const cars = useAppSelector(selectCars);
 
   return (
-    <Container
-      bgImage={props.backgroundImg}
-    >
+    <Container bgImage={props.backgroundImg}>
       <Fade direction="up">
         <div style={{ paddingTop: "15vh", textAlign: "center" }}>
           <h1 className="text-6xl font-medium text-black">{props.title}</h1>
