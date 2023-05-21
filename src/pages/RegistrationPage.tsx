@@ -124,6 +124,8 @@ const RegistrationPage = () => {
             }}
           />
         )}
+        <br />
+        <Button2 onClick={() => nav("/login")}>Already Registered?</Button2>
       </RegMainContainer>
       <SmallFooter />
     </>
