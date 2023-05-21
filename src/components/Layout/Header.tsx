@@ -50,6 +50,7 @@ const Header = (props: HeaderType) => {
         setMenuStatus([true, menuStatus[1]]);
       }
     };
+    sizeHandler();
     window.addEventListener("resize", sizeHandler);
     return () => window.removeEventListener("resize", sizeHandler);
   // eslint-disable-next-line
