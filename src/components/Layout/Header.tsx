@@ -51,6 +51,8 @@ const Header = (props: HeaderType) => {
       }
     };
     window.addEventListener("resize", sizeHandler);
+    return () => window.removeEventListener("resize", sizeHandler);
+  // eslint-disable-next-line
   }, []);
 
   return (
