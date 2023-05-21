@@ -12,7 +12,7 @@ const AdModal = () => {
         <Close>
           <XMarkIcon
             style={{ cursor: "pointer" }}
-            className="absolute top-2 right-2 h-6 w-6 mt-2 mr-2"
+            className="h-6 w-6"
             onClick={() => setModalStatus(false)}
           />
         </Close>

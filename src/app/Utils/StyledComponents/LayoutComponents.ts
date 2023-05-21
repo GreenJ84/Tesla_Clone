@@ -118,6 +118,12 @@ export const SmallNav = styled.nav`
 `;
 
 export const Close = styled.button`
+  position: absolute;
+  top: 6px;
+  right: 6px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
 `;
