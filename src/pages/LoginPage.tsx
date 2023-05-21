@@ -9,12 +9,14 @@ import {
   setPersistence,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { AUTH } from "../firebase/firebase";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
 import Login1 from "../components/LoginPage/Login1";
 import Login2 from "../components/LoginPage/Login2";
+import AltLogin from "../components/LoginPage/AltLogin";
+
 import {
   Button2,
   Divide,
@@ -23,8 +25,6 @@ import {
 } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
-import { AUTH, DB } from "../firebase/firebase";
-import AltLogin from "../components/LoginPage/AltLogin";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -43,19 +43,7 @@ const LoginPage = () => {
       .then(() => {
         return signInWithEmailAndPassword(AUTH, email, password)
           .then((userCredential) => {
-            if (!userCredential.user) {
-              return;
-            }
-            const user = userCredential.user;
-            setDoc(
-              doc(DB, "users", user.uid),
-              {
-                name: user.displayName,
-                email: user.email,
-              },
-              { merge: true }
-            );
-            dispatch(setLogin(user));
+            dispatch(setLogin(userCredential.user));
             nav("/");
             return;
           })
@@ -102,7 +90,7 @@ const LoginPage = () => {
           )}
         </form>
 
-        <div className="relative">
+        <div className="relative mt-10 mb-10">
           <Divide> Or </Divide>
         </div>
         {!altLogin ? (
@@ -114,7 +102,11 @@ const LoginPage = () => {
             Alternate Sign-In
           </Button2>
         ) : (
-          <AltLogin />
+          <AltLogin
+            close={() => {
+              setAltLogin(false);
+            }}
+          />
         )}
         <br />
         <Button2 onClick={() => nav("/registration")}>Create Account</Button2>

@@ -1,3 +1,5 @@
+/** @format */
+
 import styled from "styled-components";
 
 export const LoginMainContainer = styled.div`
@@ -14,61 +16,63 @@ export const LoginMainContainer = styled.div`
     letter-spacing: 1.6px;
     margin-bottom: 20px;
   }
-@media only screen and (min-width: 1400px){
-  width: 550px;
-}
+  @media only screen and (min-width: 1400px) {
+    width: 550px;
+  }
 `;
 
-export const LoginContainer = styled.div`
-display: flex;
-flex-direction: column;
-label {
-  color: rgba(100, 100, 100);
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 1.3px;
-  margin-bottom: 8px;
-}
-input {
-  width: 100%;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 10px 0 10px 13px;
-  border-radius: 4px;
-  background-color: rgba(245, 245, 245);
-  margin-bottom: 36px;
-}
-input + div {
-  position: relative;
-  top: -36px;
-  color: red;
-  line-height: 16px;
-}
+export const LoginContainer = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  border: none;
+  padding: 0;
+  margin: 0;
+  label {
+    color: rgba(100, 100, 100);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 1.3px;
+    margin-bottom: 8px;
+  }
+  input {
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 0 10px 13px;
+    border-radius: 4px;
+    background-color: rgba(245, 245, 245);
+    margin-bottom: 36px;
+  }
+  input + div {
+    position: relative;
+    top: -36px;
+    color: red;
+    line-height: 16px;
+  }
 `;
-
 
 export const Underline = styled.a`
-cursor: pointer;
-display: block;
-margin: auto;
-width: 190px;
-font-size: 19px;
-letter-spacing: 1.4px;
-text-align: center;
-:after {
-  content: "";
-  position: absolute;
-  bottom: 0.5px;
-  left: 50%;
-  transform: translateX(-50%);
-  height: 0;
+  cursor: pointer;
+  display: block;
+  margin: auto;
   width: 190px;
-  border-bottom: 1.4px solid black;
-  transition: width 0.3s ease;
-}
-:hover:after {
-  border-bottom: 3px solid black;
-}
+  font-size: 19px;
+  letter-spacing: 1.4px;
+  text-align: center;
+  :after {
+    content: "";
+    position: absolute;
+    bottom: 0.5px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 0;
+    width: 190px;
+    border-bottom: 1.4px solid black;
+    transition: width 0.3s ease;
+  }
+  :hover:after {
+    border-bottom: 3px solid black;
+  }
 `;
 
 export const Revert = styled(Underline)`
@@ -79,19 +83,19 @@ export const Revert = styled(Underline)`
   }
 `;
 
-
 export const Divide = styled.p`
+  position: relative;
+  font-size: 18px;
   font-size: 18px;
   font-weight: 620;
   color: rgba(90, 90, 90);
   text-align: center;
   letter-spacing: 1.4px;
-  margin-bottom: 64px;
   :before,
   :after {
     content: "";
     position: absolute;
-    bottom: 76px;
+    bottom: 12px;
     height: 0;
     width: 30vw;
     max-width: 160px;
@@ -106,46 +110,44 @@ export const Divide = styled.p`
   }
 `;
 
-
 export const ToolTip = styled.span`
-position: absolute;
-bottom: -140px;
-left: -140px;
-width: 500px;
-padding: 26px 30px;
-background-color: white;
-font-weight: 450;
-box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
-z-index: 10;
-@media only screen and (max-width: 800px){
-  left: -40px;
-}
+  position: absolute;
+  bottom: -140px;
+  left: -140px;
+  width: 500px;
+  padding: 26px 30px;
+  background-color: white;
+  font-weight: 450;
+  box-shadow: 0px 10px 20px rgba(20, 20, 20, 0.2);
+  z-index: 10;
+  @media only screen and (max-width: 800px) {
+    left: -40px;
+  }
 `;
 
-
 export const ButtonBase = styled.button`
-padding: 10px 0;
-font-size: 20px;
-font-weight: 600;
-letter-spacing: 1.2px;
-border-radius: 4px;
-@media only screen and (max-width: 550px){
-  width: 80vw;
-  margin: 0 auto;
-}
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  border-radius: 4px;
+  @media only screen and (max-width: 550px) {
+    width: 80vw;
+    margin: 0 auto;
+  }
 `;
 
 export const Button = styled(ButtonBase)`
-margin-bottom: 28px;
-color: white;
-background-color: rgba(40, 65, 255, 0.8);
-:hover {
-  background-color: rgba(20, 35, 205, 0.8);
-}
-:disabled {
-  background-color: rgba(0, 65, 205, 0.4);
-  cursor: not-allowed;
-}
+  margin-bottom: 28px;
+  color: white;
+  background-color: rgba(40, 65, 255, 0.8);
+  :hover {
+    background-color: rgba(20, 35, 205, 0.8);
+  }
+  :disabled {
+    background-color: rgba(0, 65, 205, 0.4);
+    cursor: not-allowed;
+  }
 `;
 
 export const Button2 = styled(ButtonBase)`
