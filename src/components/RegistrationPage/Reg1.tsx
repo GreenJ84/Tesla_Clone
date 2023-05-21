@@ -24,77 +24,86 @@ const Reg1 = (props: StepProps) => {
   const [errors, setErrors] = useState({
     fnE: "",
     lnE: "",
-    capE: ""
-  })
+    capE: "",
+  });
 
   const stepHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!formValid()) {
-      console.log("invalid");
       return;
-    }
-    else { 
-      console.log("valid");
+    } else {
       setStep();
     }
   };
 
   const formValid = () => {
     let res = true;
-    let error = { ...errors }
+    let error = { ...errors };
     if (!fN.match(/[A-Za-z]{2,}/g)) {
-      console.log("setting fn error");
       error.fnE = "Name must be longer then 2 characters";
-      setErrors({...error})
       res = false;
+    } else {
+      error.fnE = "";
     }
     if (!lN.match(/[A-Za-z]{2,}/g)) {
-      console.log("setting ln error");
       error.lnE = "Name must be longer then 2 characters";
-      setErrors({...error})
       res = false;
+    } else {
+      error.lnE = "";
     }
     if (!confirmCap.match(cap)) {
-      console.log("setting cap error");
       error.capE = "Captch does not match";
-      setErrors({...error})
       res = false;
+    } else {
+      error.capE = "";
     }
-    return res
-  }
+    setErrors({ ...error });
+    return res;
+  };
 
   return (
     <Reg1Container>
       <label htmlFor="first-name">First Name</label>
       <input
+        id="first-name"
+        className={fN ? "border invalid:border-red-500" : ""}
         name="first-name"
-        placeholder=""
+        aria-describedby="first-name-error"
         type="text"
+        placeholder="Ex. John"
         value={fN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setFN(e.currentTarget.value);
         }}
+        pattern="[A-Za-z]{2,}"
+        autoComplete="given-name"
         required
-        className={fN ? "border invalid:border-red-500" : ""}
-        pattern="[A-Za-z]{3,}"
       />
-      <div>{ errors.fnE }</div>
+      <div id="first-name-error">{errors.fnE}</div>
+
       <label htmlFor="last-name">Last Name</label>
       <input
+        id="last-name"
+        className={lN ? "border invalid:border-red-500" : ""}
+        aria-describedby="last-name-error"
         name="last-name"
         type="text"
+        placeholder="Ex. Smith"
         value={lN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
-        className={lN ? "border invalid:border-red-500" : ""}
+        pattern="[A-Za-z]{2,}"
+        autoComplete="family-name"
         required
-        pattern="[A-Za-z]{3,}"
       />
-      <div>{ errors.lnE }</div>
+      <div id="last-name-error">{errors.lnE}</div>
+
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
+
       <label htmlFor="CAPTCHA">Enter the characters in the image</label>
       <input
+        id="CAPTCHA"
         name="CAPTCHA"
         type="text"
         value={confirmCap}
@@ -108,8 +117,10 @@ const Reg1 = (props: StepProps) => {
         className={confirmCap ? "border invalid:border-red-500" : ""}
         required
         pattern={cap}
+        aria-describedby="captcha-error"
       />
-      <div>{ errors.capE }</div>
+      <div id="captcha-error">{errors.capE}</div>
+
       <p>
         By continuing, I understand and agree to Tesla's{" "}
         <span>Privacy Notice</span> and <span>Terms of Use</span> for creating a
@@ -118,13 +129,21 @@ const Reg1 = (props: StepProps) => {
       {fN && lN && confirmCap ? (
         <button
           type="submit"
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => stepHandler(e)}>Next</button>
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => stepHandler(e)}
+        >
+          Next
+        </button>
       ) : (
-        <button disabled>Next</button>
+        <button
+          aria-label="Registration terms invalid"
+          aria-disabled="true"
+          disabled
+        >
+          Next
+        </button>
       )}
     </Reg1Container>
   );
 };
 
 export default Reg1;
-
