@@ -13,10 +13,9 @@ interface StepProps {
   setStep: Function;
 }
 
-const Reg1 = (props: StepProps) => {
-  const [fN, setFN] = props.firstName;
-  const [lN, setLN] = props.lastName;
-  const { setStep } = props;
+const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
+  const [fN, setFN] = firstName;
+  const [lN, setLN] = lastName;
 
   const [captcha, setCaptcha] = useCaptcha();
   const [cap, setCap] = useState(captcha);
@@ -27,99 +26,126 @@ const Reg1 = (props: StepProps) => {
     capE: "",
   });
 
-  const stepHandler = (e: React.FormEvent<HTMLButtonElement>) => {
+  const formValid = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formValid()) {
-      return;
-    } else {
-      setStep();
-    }
-  };
-
-  const formValid = () => {
-    let res = true;
+    let noErrors = true;
     let error = { ...errors };
     if (!fN.match(/[A-Za-z]{2,}/g)) {
       error.fnE = "Name must be longer then 2 characters";
-      res = false;
+      noErrors = false;
     } else {
       error.fnE = "";
     }
     if (!lN.match(/[A-Za-z]{2,}/g)) {
       error.lnE = "Name must be longer then 2 characters";
-      res = false;
+      noErrors = false;
     } else {
       error.lnE = "";
     }
     if (!confirmCap.match(cap)) {
       error.capE = "Captch does not match";
-      res = false;
+      noErrors = false;
     } else {
       error.capE = "";
     }
     setErrors({ ...error });
-    return res;
+
+    if (noErrors) {
+      setStep();
+    } else {
+      return;
+    }
   };
 
   return (
     <Reg1Container>
-      <label htmlFor="first-name">First Name</label>
+      <label htmlFor="first-name">
+        First Name<span aria-hidden="true">*</span>
+      </label>
       <input
         id="first-name"
-        className={fN ? "border invalid:border-red-500" : ""}
         name="first-name"
+        aria-label="First Name"
         aria-describedby="first-name-error"
+        className={fN ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
         placeholder="Ex. John"
         value={fN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setFN(e.currentTarget.value);
         }}
         pattern="[A-Za-z]{2,}"
+        aria-invalid={fN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
         autoComplete="given-name"
         required
+        aria-required="true"
       />
-      <div id="first-name-error">{errors.fnE}</div>
+      <div
+        id="first-name-error"
+        role="alert"
+      >
+        {errors.fnE}
+      </div>
 
-      <label htmlFor="last-name">Last Name</label>
+      <label htmlFor="last-name">
+        Last Name<span aria-hidden="true">*</span>
+      </label>
       <input
         id="last-name"
-        className={lN ? "border invalid:border-red-500" : ""}
-        aria-describedby="last-name-error"
         name="last-name"
+        aria-label="Last Name"
+        aria-describedby="last-name-error"
+        className={lN ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
         placeholder="Ex. Smith"
         value={lN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
         pattern="[A-Za-z]{2,}"
+        aria-invalid={lN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
         autoComplete="family-name"
         required
+        aria-required="true"
       />
-      <div id="last-name-error">{errors.lnE}</div>
+      <div
+        id="last-name-error"
+        role="alert"
+      >
+        {errors.lnE}
+      </div>
 
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
 
-      <label htmlFor="CAPTCHA">Enter the characters in the image</label>
+      <label htmlFor="CAPTCHA">
+        Enter the characters in the image<span aria-hidden="true">*</span>
+      </label>
       <input
         id="CAPTCHA"
         name="CAPTCHA"
+        aria-label="Human confirmation Captcha"
+        aria-describedby="captcha-error"
+        title="Incorrect image characters"
+        className={confirmCap ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
         value={confirmCap}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setConfirmCap(e.currentTarget.value);
         }}
-        title="Incorrect image characters"
-        onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
-          e.currentTarget.style.border = "2px solid red";
-        }}
-        className={confirmCap ? "border invalid:border-red-500" : ""}
-        required
         pattern={cap}
-        aria-describedby="captcha-error"
+        aria-invalid={confirmCap.match(cap) ? "false" : "true"}
+        required
+        aria-required="true"
       />
-      <div id="captcha-error">{errors.capE}</div>
+      <div
+        id="captcha-error"
+        role="alert"
+      >
+        {errors.capE}
+      </div>
 
       <p>
         By continuing, I understand and agree to Tesla's{" "}
@@ -129,13 +155,12 @@ const Reg1 = (props: StepProps) => {
       {fN && lN && confirmCap ? (
         <button
           type="submit"
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => stepHandler(e)}
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => formValid(e)}
         >
           Next
         </button>
       ) : (
         <button
-          aria-label="Registration terms invalid"
           aria-disabled="true"
           disabled
         >
