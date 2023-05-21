@@ -40,5 +40,6 @@ const Container = styled.div`
     top: 14px;
     font-size: 28px;
     letter-spacing: 5px;
+    user-select: none;
   }
 `;
