@@ -18,9 +18,6 @@ import {
   signInWithEmailAndPassword,
   linkWithCredential,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-
-import { setLogin } from "../../app/Store/User/userSlice";
 import {
   AUTH,
   DB,
@@ -28,7 +25,14 @@ import {
   githubProvider,
   googleProvider,
 } from "../../firebase/firebase";
+import { doc, setDoc } from "firebase/firestore";
+
+import { XMarkIcon } from "@heroicons/react/24/solid";
+
+import { Close } from "../../app/Utils/StyledComponents/LayoutComponents";
 import Login2 from "./Login2";
+
+import { setLogin } from "../../app/Store/User/userSlice";
 
 interface existingAccount {
   email: string;
@@ -36,7 +40,7 @@ interface existingAccount {
   method: string;
 }
 
-const AltLogin = () => {
+const AltLogin = ({ close }: { close: Function }) => {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [accountExist, setAccountExist] = useState<[boolean, existingAccount]>([
@@ -98,7 +102,9 @@ const AltLogin = () => {
                 { credential, email, method: methods[0] },
               ]);
               console.error(
-                `Error: Account exists with ${email} on ${methods[0] === "password" ? "password" : "email"}.`
+                `Error: Account exists with ${email} on ${
+                  methods[0] === "password" ? "password" : "email"
+                }.`
               );
             });
             return;
@@ -127,63 +133,79 @@ const AltLogin = () => {
   const existingLogin = (e: React.MouseEvent, provider?: AuthProvider) => {
     e.preventDefault();
     setError("");
+    if (!accountExist[0]) {
+      return;
+    }
     setPersistence(AUTH, browserSessionPersistence).then(() => {
-      return accountExist[1].method === "password" ? 
-        signInWithEmailAndPassword(AUTH, accountExist[1].email, password)
-          .then((result) => {
-              return linkWithCredential(result.user, accountExist[1].credential as AuthCredential);
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message.split(": ")[1];
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = error.credential;
-  
-            console.error(
-              `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
-            );
-            setError(
-              `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
-            );
-            return;
-          })
-      : 
-        signInWithPopup(AUTH, provider!)
-          .then((result) => { 
-            return linkWithCredential(result.user, accountExist[1].credential as AuthCredential)
-          })
-          .catch((error) => {
-            // Handle Errors here.
-            const errorCode = error.code;
-            const errorMessage = error.message.split(": ")[1];
-            // The email of the user's account used.
-            const email = error.customData.email;
-            // The AuthCredential type that was used.
-            const credential = error.credential;
-  
-            console.error(
-              `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
-            );
-            setError(
-              `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
-            );
-            return;
-          });
-      ;
+      return accountExist[1].method === "password"
+        ? signInWithEmailAndPassword(AUTH, accountExist[1].email, password)
+            .then((result) => {
+              return linkWithCredential(
+                result.user,
+                accountExist[1].credential as AuthCredential
+              );
+            })
+            .catch((error) => {
+              // Handle Errors here.
+              const errorCode = error.code;
+              const errorMessage = error.message.split(": ")[1];
+              // The email of the user's account used.
+              const email = error.customData.email;
+              // The AuthCredential type that was used.
+              const credential = error.credential;
+
+              console.error(
+                `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
+              );
+              setError(
+                `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
+              );
+              return;
+            })
+        : signInWithPopup(AUTH, provider!)
+            .then((result) => {
+              return linkWithCredential(
+                result.user,
+                accountExist[1].credential as AuthCredential
+              );
+            })
+            .catch((error) => {
+              // Handle Errors here.
+              const errorCode = error.code;
+              const errorMessage = error.message.split(": ")[1];
+              // The email of the user's account used.
+              const email = error.customData.email;
+              // The AuthCredential type that was used.
+              const credential = error.credential;
+
+              console.error(
+                `Error ${errorCode} with ${credential} for ${email}: ${errorMessage}`
+              );
+              setError(
+                `Error${credential ? ` ${credential}` : ""}: ${errorMessage}`
+              );
+              return;
+            });
     });
   };
 
   return (
-    <div id="alt-signIn">
+    <div
+      id="alt-signIn"
+      className="relative pt-4"
+    >
+      <Close onClick={() => close()}>
+        <XMarkIcon
+          style={{ cursor: "pointer" }}
+          className="h-4 w-4"
+        />
+      </Close>
       {!accountExist[0] ? (
         <p>Login with a Provider below</p>
       ) : (
         <p>
           Existing login credentials found
-          <br/>
+          <br />
           Please login{" "}
           {accountExist[1].method === "password"
             ? "with the password you created on this site"
@@ -193,10 +215,11 @@ const AltLogin = () => {
       )}
       {error ? <div>{error}</div> : ""}
 
-      {/* If there is no existing Acct errors or if an account exists with a provider listed */}
+      {/* Render all If there is no existing Acct errors*/}
+      {/* Render the provider link for the existing account listed if not password */}
       {!accountExist[0] || accountExist[1].method !== "password" ? (
         <div>
-          {(!accountExist[0] || accountExist[1].method !== "google.com") && (
+          {(!accountExist[0] || accountExist[1].method === "google.com") && (
             <button
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
@@ -207,7 +230,7 @@ const AltLogin = () => {
               Google
             </button>
           )}
-          {(!accountExist[0] || accountExist[1].method !== "facebook.com") && (
+          {(!accountExist[0] || accountExist[1].method === "facebook.com") && (
             <button
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
@@ -218,7 +241,7 @@ const AltLogin = () => {
               Facebook
             </button>
           )}
-          {(!accountExist[0] || accountExist[1].method !== "github.com") && (
+          {(!accountExist[0] || accountExist[1].method === "github.com") && (
             <button
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 accountExist[0]
@@ -237,7 +260,7 @@ const AltLogin = () => {
             login={(e: React.MouseEvent<HTMLLIElement>) => {
               existingLogin(e);
             }}
-            error={ error }
+            error={error}
           />
         </>
       )}
