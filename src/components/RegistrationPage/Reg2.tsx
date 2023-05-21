@@ -2,16 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Reg2Container, RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
-import Show from "../Layout/Show";
-
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+
+import {
+  Reg2Container,
+  RegToolTip,
+} from "../../app/Utils/StyledComponents/RegisrationComponents";
+import Show from "../Layout/Show";
 
 interface Reg2Props {
   email: [string, Function];
   password: [string, Function];
   confPassword: [string, Function];
-  register: Function
+  register: Function;
 }
 
 const Reg2 = (props: Reg2Props) => {
@@ -22,8 +25,8 @@ const Reg2 = (props: Reg2Props) => {
   const [errors, setErrors] = useState({
     email: "",
     pass: "",
-    conPass: ""
-  })
+    conPass: "",
+  });
 
   const [showPass, setShowPass] = useState(false);
   const [showCon, setShowCon] = useState(false);
@@ -54,50 +57,60 @@ const Reg2 = (props: Reg2Props) => {
 
   const registerHandler = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formValid()){ return }
+    if (!formValid()) {
+      return;
+    }
     register(e);
   };
 
   const formValid = () => {
     let res = true;
-    let error = { ...errors }
+    let error = { ...errors };
     if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)) {
       error.email = "Email is the incorrect format (example: name@email.com)";
       res = false;
     }
     if (!password.match(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}/g)) {
-      error.pass = "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
+      error.pass =
+        "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
       res = false;
     }
     if (!password.match(conPass)) {
       error.conPass = "Confirmation does not match";
       res = false;
     }
-    setErrors({...error})
-    return res
-  }
+    setErrors({ ...error });
+    return res;
+  };
 
   return (
     <Reg2Container>
       <label
-        htmlFor=""
+        htmlFor="email"
         inputMode="email"
       >
         Email
       </label>
       <input
+        id="email"
+        aria-describedby="email-error"
+        name="email"
+        placeholder="Ex. example.email@gmail.com"
         type="email"
         value={email}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setEmail(e.currentTarget.value)
         }
         pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        autoComplete="email"
         required
       />
-      <div>{ errors.email }</div>
+      <div id="email-error">{errors.email}</div>
+
       <label
-        htmlFor=""
+        htmlFor="password"
         className="relative"
+        inputMode="text"
       >
         Password
         <InformationCircleIcon
@@ -113,27 +126,34 @@ const Reg2 = (props: Reg2Props) => {
         </RegToolTip>
       </label>
       <input
+        id="password"
+        aria-describedby="pass-error"
+        name="password"
+        placeholder="Ex. not!aBadpasword99x84!"
         type={showPass ? "text" : "password"}
         value={password}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPassword(e.currentTarget.value)
         }
-        className={password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"}
-        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}"
+        className={`relative ${
+          password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"
+        }`}
+        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}"
         required
       />
-      <div>{ errors.pass }</div>
-      <div>
-        {password && (
-          <Show
-            state={showPass}
-            set={showPassHandler}
-          />
-        )}
-      </div>
+      {password && (
+        <Show
+          state={showPass}
+          set={showPassHandler}
+        />
+      )}
+      <div id="pass-error">{errors.pass}</div>
 
-      <label htmlFor="">Confirm Password</label>
+      <label htmlFor="con-pass">Confirm Password</label>
       <input
+        id="con-pass"
+        aria-describedby="con-pass-error"
+        name="con-pass"
         type={showCon ? "text" : "password"}
         value={conPass}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -143,22 +163,32 @@ const Reg2 = (props: Reg2Props) => {
         pattern={password}
         required
       />
-      <div>{ errors.conPass }</div>
-      <div>
-        {conPass && (
-          <Show
-            state={showCon}
-            set={showConHandler}
-          />
-        )}
-      </div>
+      {conPass && (
+        <Show
+          state={showCon}
+          set={showConHandler}
+        />
+      )}
+      <div id="con-pass-error">{errors.conPass}</div>
+
       {email && password && conPass ? (
         <button
           type="submit"
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => registerHandler(e) }
-        >Create Account</button>
+          aria-label="Create Account"
+          onClick={(e: React.FormEvent<HTMLButtonElement>) =>
+            registerHandler(e)
+          }
+        >
+          Create Account
+        </button>
       ) : (
-        <button disabled>Create Account</button>
+        <button
+          disabled
+          aria-disabled="true"
+          aria-label="Create Account"
+        >
+          Create Account
+        </button>
       )}
     </Reg2Container>
   );
