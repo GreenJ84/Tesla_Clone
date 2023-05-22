@@ -3,12 +3,13 @@
 import React, { useEffect, useState } from "react";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+
 import {
   Button,
   LoginContainer,
-  ToolTip,
   Underline,
 } from "../../app/Utils/StyledComponents/LoginComponents";
+import { RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
 
 interface Login1Props {
   email: [string, Function];
@@ -16,9 +17,9 @@ interface Login1Props {
 }
 
 const Login1 = (props: Login1Props) => {
-  const [error, setError] = useState("");
   const [email, setEmail] = props.email;
   const { setStep } = props;
+  const [error, setError] = useState("");
 
   const buttonHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,46 +51,74 @@ const Login1 = (props: Login1Props) => {
   return (
     <LoginContainer>
       <label
-        htmlFor=""
+        htmlFor="email"
         className="relative"
       >
-        Email
+        Email<span aria-hidden="true">*</span>
         <InformationCircleIcon
           id="email"
           className="relative inline bottom-[3px] w-4 h-4 ml-1"
         />
-        <ToolTip
+        <RegToolTip
           id="emailTip"
           className="invisible"
         >
-          If your account is linked to an email you no longer have access to,
-          sign into your account and update your email under account settings
-        </ToolTip>
+          Must be your valid Email address under any domain.
+        </RegToolTip>
       </label>
       <input
+        id="email"
+        name="email"
+        aria-label="Email for Registration"
+        aria-describedby="email-error"
         type="email"
+        inputMode="email"
         value={email}
+        placeholder="Ex. example.email@gmail.com"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setEmail(e.currentTarget.value)
         }
         className="w-[430px]"
         pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        aria-invalid={
+          email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)
+            ? "false"
+            : "true"
+        }
+        autoComplete="email"
         required
+        aria-required="true"
       />
-      {error ? (
-        <div>
+      {error && (
+        <div
+          id="email-error"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
           {error}
         </div>
-      ) : (
-        ""
       )}
       {email ? (
-        <Button onClick={buttonHandler}>Next</Button>
+        <Button
+          type="button"
+          aria-label="Progress to next Login steps"
+          onClick={buttonHandler}
+        >
+          Next
+        </Button>
       ) : (
-        <Button disabled>Next</Button>
+        <Button
+          aria-disabled="true"
+          aria-label="Progression requirements not met"
+          disabled
+        >
+          Next
+        </Button>
       )}
       <div className="relative mb-[76px]">
         <Underline
+          aria-label="OffSite Login help page"
           href="https://www.tesla.com/support/account-support?redirect=no"
           rel="noreferrer"
           target="_blank"
