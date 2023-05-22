@@ -38,21 +38,31 @@ const Reg2 = (props: Reg2Props) => {
     showCon ? setShowCon(false) : setShowCon(true);
   };
 
+  const displayTip = (el: HTMLElement) => {
+    el.style.visibility = "visible";
+    console.log(el);
+  };
+  const hideTip = (el: HTMLElement) => {
+    el.style.visibility = "hidden";
+  };
   useEffect(() => {
-    let hover = document.getElementById("pass")!;
-    let tip = document.getElementById("passTip")!;
+    let emailHover = document.getElementById("email-hover")!;
+    let emailTip = document.getElementById("email-tip")!;
 
-    const displayTip = () => {
-      tip.style.visibility = "visible";
-    };
-    const hideTip = () => {
-      tip.style.visibility = "hidden";
-    };
-    hover.addEventListener("mouseover", displayTip);
-    hover.addEventListener("mouseout", hideTip);
+    emailHover.addEventListener("mouseover", () => displayTip(emailTip));
+    emailHover.addEventListener("mouseout", () => hideTip(emailTip));
+
+    let passHover = document.getElementById("pass-hover")!;
+    let passTip = document.getElementById("pass-tip")!;
+    passHover.addEventListener("mouseover", () => displayTip(passTip));
+    passHover.addEventListener("mouseout", () => hideTip(passTip));
+
     return () => {
-      hover.removeEventListener("mouseover", displayTip);
-      hover.removeEventListener("mouseout", hideTip);
+      passHover.removeEventListener("mouseover", () => displayTip(passTip));
+      passHover.removeEventListener("mouseout", () => hideTip(passTip));
+
+      emailHover.removeEventListener("mouseover", () => displayTip(emailTip));
+      emailHover.removeEventListener("mouseout", () => hideTip(emailTip));
     };
   }, []);
 
@@ -84,8 +94,21 @@ const Reg2 = (props: Reg2Props) => {
 
   return (
     <Reg2Container>
-      <label htmlFor="email">
+      <label
+        htmlFor="email"
+        className="relative"
+      >
         Email<span aria-hidden="true">*</span>
+        <InformationCircleIcon
+          id="email-hover"
+          className="relative inline bottom-[3px] w-4 h-4 ml-1"
+        />
+        <RegToolTip
+          id="email-tip"
+          className="relative"
+        >
+          Must be your valid Email address under any domain.
+        </RegToolTip>
       </label>
       <input
         id="email"
@@ -109,14 +132,14 @@ const Reg2 = (props: Reg2Props) => {
         required
         aria-required="true"
       />
-      <div
+      {errors.email && <div
         id="email-error"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
       >
         {errors.email}
-      </div>
+      </div>}
 
       <label
         htmlFor="password"
@@ -124,11 +147,11 @@ const Reg2 = (props: Reg2Props) => {
       >
         Password<span aria-hidden="true">*</span>
         <InformationCircleIcon
-          id="pass"
+          id="pass-hover"
           className="relative inline bottom-[3px] w-4 h-4 ml-1"
         />
         <RegToolTip
-          id="passTip"
+          id="pass-tip"
           className="invisible"
         >
           Password must be at least 8 characters and include at least one number
