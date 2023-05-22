@@ -67,4 +67,5 @@ export const Reg2Container = styled(RegSubContainer)`
 
 export const RegToolTip = styled(ToolTip)`
   bottom: -114px;
+  z-index: 30;
 `;

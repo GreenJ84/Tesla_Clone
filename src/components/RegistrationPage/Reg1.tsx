@@ -165,8 +165,8 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
       </p>
       {fN && lN && confirmCap ? (
         <button
-          type="submit"
-          aria-label="Progress to next Registration steps"
+          type="button"
+          aria-label="Progress to next Registration step"
           onClick={(e: React.FormEvent<HTMLButtonElement>) => formValid(e)}
         >
           Next
