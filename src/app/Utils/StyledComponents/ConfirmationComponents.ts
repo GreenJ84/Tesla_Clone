@@ -41,9 +41,20 @@ export const ConfirmationContainer = styled.main`
       letter-spacing: 1.1px;
     }
   }
-  > div:nth-of-type(2) {
+  > ul {
     border-top: 1px solid rgba(200, 200, 200);
     border-bottom: 1px solid rgba(200, 200, 200);
+  }
+  > div.noOrder {
+    position: relative;
+    top: 20vh;
+    text-align: center;
+    > h2 {
+      font-size: 32px;
+    }
+    > p{
+
+    }
   }
 `;
 
