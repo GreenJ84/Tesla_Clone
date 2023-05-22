@@ -22,6 +22,7 @@ import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationCompo
 import { Button2, Divide } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
+import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 const RegistrationPage = () => {
   const dispatch = useDispatch();
@@ -85,11 +86,34 @@ const RegistrationPage = () => {
   return (
     <>
       <MinimalHeader />
+
+      {altLogin && (
+        <AltLogin
+          close={() => {
+            setAltLogin(false);
+          }}
+        />
+      )}
+      <Cover
+        show={altLogin}
+        onClick={() => {
+          setAltLogin(false);
+        }}
+      />
+
       <RegMainContainer>
-        <p> Step {!secStep ? "1" : "2"} of 2</p>
+        <p aria-label="Form progress"> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
         <form>
-          {error ? <span>{error}</span> : ""}
+          {error && (
+            <span
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              {error}
+            </span>
+          )}
           {!secStep ? (
             <Reg1
               firstName={[firstName, setFirstName]}
@@ -109,23 +133,21 @@ const RegistrationPage = () => {
         <div className="relative mt-10 mb-10">
           <Divide> Or </Divide>
         </div>
-        {!altLogin ? (
-          <Button2
-            onClick={() => {
-              setAltLogin(true);
-            }}
-          >
-            Alternate Sign-In
-          </Button2>
-        ) : (
-          <AltLogin
-            close={() => {
-              setAltLogin(false);
-            }}
-          />
-        )}
+        <Button2
+          aria-label="Open Alternate Login Providers"
+          onClick={() => {
+            setAltLogin(true);
+          }}
+        >
+          Alternate Sign-In
+        </Button2>
         <br />
-        <Button2 onClick={() => nav("/login")}>Already Registered?</Button2>
+        <Button2
+          aria-label="Navigate to Login page"
+          onClick={() => nav("/login")}
+        >
+          Already Registered?
+        </Button2>
       </RegMainContainer>
       <SmallFooter />
     </>
