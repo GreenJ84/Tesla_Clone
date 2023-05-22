@@ -196,7 +196,7 @@ const AltLogin = ({ close }: { close: Function }) => {
     e: React.MouseEvent<HTMLButtonElement>,
     provider: AuthProvider
   ) => {
-    accountExist[0] ? altSignIn(e, provider) : existingLogin(e, provider);
+    accountExist[0] ? existingLogin(e, provider) : altSignIn(e, provider);
   };
 
   return (
