@@ -37,11 +37,9 @@ const Detail = () => {
       >
         <div className="flex flex-col items-center absolute top-52 lg:top-64 2xl:top-72">
           <h1
-            className={
-              product.title !== "Model 3"
-                ? "text-6xl xl:text-7xl font-semibold tracking-wider text-gray-900 mb-.5"
-                : "text-6xl xl:text-7xl font-semibold tracking-wider text-white mb-.5"
-            }
+            className={`text-6xl xl:text-7xl font-semibold tracking-wider mb-.5
+              ${product.title !== "Model 3" ? "text-gray-900" : "text-white"}
+            `}
           >
             {product.title}
           </h1>
@@ -49,7 +47,9 @@ const Detail = () => {
             arial-label="Offsite Car ride scheduling link"
             href="https://www.tesla.com/drive"
             target="_blank"
-            className="text-center text-xl text-white border-b hover:border-b-2 tracking-widest"
+            className={`text-center text-xl border-b hover:border-b-2 tracking-widest ${
+              product.title !== "Model 3" ? "text-gray-900 border-gray-800" : "text-white border-white"
+            }`}
             rel="noreferrer"
           >
             Schedule a Demo Drive
@@ -163,7 +163,7 @@ const Detail = () => {
             </p>
           </div>
           <button
-            className="h-14 px-8 border-4 border-black text-lg hover:bg-black hover:text-white hover:shadow-2xl"
+            className={`h-14 px-8 border-4 border-black text-lg ${product.inStock && "hover:bg-black hover:text-white hover:shadow-2xl"}`}
             disabled={!product.inStock}
             onClick={() => {
               dispatch(addToCart(product.id));

@@ -30,13 +30,13 @@ export const CarStatContainer = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    h1{
+    h2{
         color: white;
         font-size: 36px;
         font-weight: 600;
-        text-shadow: 0px 0px 8px rgba(10,10,10);
+        text-shadow: 0px 1px 18px rgba(10,10,10);
     }
-    h2{
+    p{
         margin-top: 6px;
         color: lightgrey;
         font-size: 18px;
