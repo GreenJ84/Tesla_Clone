@@ -3,15 +3,7 @@
 import styled from "styled-components";
 import { LoginContainer, LoginMainContainer, ToolTip } from "./LoginComponents";
 
-export const RegMainContainer = styled(LoginMainContainer)`
-  p {
-    position: relative;
-    top: 12px;
-    font-weight: 600;
-    color: rgba(100, 100, 100);
-    margin-bottom: 15px;
-  }
-`;
+export const RegMainContainer = styled(LoginMainContainer)``;
 
 const RegSubContainer = styled(LoginContainer)`
   > p {

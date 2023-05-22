@@ -10,6 +10,14 @@ export const LoginMainContainer = styled.div`
   min-height: 100vh;
   width: 430px;
   margin: 0 auto;
+  > p {
+    position: relative;
+    top: 12px;
+    text-align: right;
+    font-weight: 600;
+    color: rgba(100, 100, 100);
+    margin-bottom: 15px;
+  }
   h1 {
     font-size: 44px;
     font-weight: 550;
