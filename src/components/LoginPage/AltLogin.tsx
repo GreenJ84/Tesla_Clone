@@ -28,7 +28,10 @@ import {
 import { doc, setDoc } from "firebase/firestore";
 
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { BsFacebook, BsGithub } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
+import { AltLoginModal } from "../../app/Utils/StyledComponents/LoginComponents";
 import { Close } from "../../app/Utils/StyledComponents/LayoutComponents";
 import Login2 from "./Login2";
 
@@ -189,72 +192,85 @@ const AltLogin = ({ close }: { close: Function }) => {
     });
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>, provider: AuthProvider) => { 
+    accountExist[0]
+      ? altSignIn(e, provider)
+      : existingLogin(e, provider);
+  }
+
   return (
-    <div
+    <AltLoginModal
+      role="dialog"
       id="alt-signIn"
-      className="relative pt-4"
+      aria-modal="true"
+      aria-labelledby="altLog-title"
+      aria-describedby="altLog-description"
     >
       <Close onClick={() => close()}>
         <XMarkIcon
           style={{ cursor: "pointer" }}
-          className="h-4 w-4"
+          className="h-8 w-8"
+          aria-label="Close"
         />
       </Close>
+      <h2 id="altLog-title">Alternate Provider Login</h2>
       {!accountExist[0] ? (
-        <p>Login with a Provider below</p>
+        <p id="altLog-description">Available Providers</p>
       ) : (
-        <p>
+        <p id="altLog-description">
           Existing login credentials found
+          <br />
           <br />
           Please login{" "}
           {accountExist[1].method === "password"
-            ? "with the password you created on this site"
-            : "throught the provider registered through the link below "}
+            ? "with the password you created on this site "
+            : "through the provider link below "}
           for the account with email: <b>{accountExist[1].email}</b>
         </p>
       )}
-      {error ? <div>{error}</div> : ""}
+      {error && <div role="alert" aria-live="assertive" aria-atomic="true">{error}</div>}
 
       {/* Render all If there is no existing Acct errors*/}
       {/* Render the provider link for the existing account listed if not password */}
       {!accountExist[0] || accountExist[1].method !== "password" ? (
-        <div>
+        <div aria-label="Alternate Login Provider Access Buttons">
           {(!accountExist[0] || accountExist[1].method === "google.com") && (
             <button
+              aria-label="Google Login Pop-Up Button"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                accountExist[0]
-                  ? altSignIn(e, googleProvider)
-                  : existingLogin(e, googleProvider);
+                handleClick(e, googleProvider);
               }}
             >
-              Google
+              <FcGoogle className="h-16 w-16"/>
+              <span>Google</span>
             </button>
           )}
           {(!accountExist[0] || accountExist[1].method === "facebook.com") && (
             <button
+              aria-label="Facebook Login Pop-Up Button"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                accountExist[0]
-                  ? altSignIn(e, facebookProvider)
-                  : existingLogin(e, facebookProvider);
+                handleClick(e, facebookProvider);
+
               }}
             >
-              Facebook
+              <BsFacebook className="h-16 w-16"/>
+              <span>Facebook</span>
             </button>
           )}
           {(!accountExist[0] || accountExist[1].method === "github.com") && (
             <button
+              aria-label="GitHub Login Pop-Up Button"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                accountExist[0]
-                  ? altSignIn(e, githubProvider)
-                  : existingLogin(e, githubProvider);
+                handleClick(e, githubProvider);
               }}
             >
-              GitHub
+              <BsGithub className="h-16 w-16" />
+              <span>GitHub</span>
             </button>
           )}
         </div>
       ) : (
-        <>
+        <form>
           <Login2
             password={[password, setPassword]}
             login={(e: React.MouseEvent<HTMLLIElement>) => {
@@ -262,9 +278,9 @@ const AltLogin = ({ close }: { close: Function }) => {
             }}
             error={error}
           />
-        </>
+        </form>
       )}
-    </div>
+    </AltLoginModal>
   );
 };
 
