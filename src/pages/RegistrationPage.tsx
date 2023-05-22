@@ -19,7 +19,11 @@ import Reg2 from "../components/RegistrationPage/Reg2";
 import AltLogin from "../components/LoginPage/AltLogin";
 
 import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
-import { Button2, Divide } from "../app/Utils/StyledComponents/LoginComponents";
+import {
+  Button2,
+  Divide,
+  Revert,
+} from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
 import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
@@ -104,6 +108,23 @@ const RegistrationPage = () => {
       <RegMainContainer>
         <p aria-label="Form progress"> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
+        {secStep && (
+          <div className="flex justify-between mb-6">
+            <h4 className="text-lg">
+              {firstName} {lastName}
+            </h4>
+            <div className="relative">
+              <Revert
+                role="button"
+                aria-label="Go back to first step"
+                onClick={() => setSecStep(false)}
+              >
+                Change
+              </Revert>
+            </div>
+          </div>
+        )}
+
         <form>
           {error && (
             <span
