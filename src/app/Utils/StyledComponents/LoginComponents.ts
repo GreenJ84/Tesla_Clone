@@ -75,6 +75,64 @@ export const Underline = styled.a`
   }
 `;
 
+export const AltLoginModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 20;
+  border-radius: 10px;
+  background-color: rgba(250, 250, 250);
+  box-shadow: inset 0 0 10px 2px rgba(0, 0, 0, 0.5);
+  h2 {
+    position: relative;
+    top: 10px;
+    font-size: clamp(22px, 2.6vw, 36px);
+    font-weight: 600;
+  }
+  p{
+    position: relative;
+    font-size: clamp(16px, 2vw, 26px);
+    width: 70%;
+    text-align: center;
+  }
+  div{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+
+    button{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      height: 12vh;
+      width: 25%;
+      border-radius: 10px;
+    }
+    button:hover{
+      background-color: rgba(100, 100, 100, .2);
+      border: 1.4px solid rgba(100, 100, 100, .7);
+      box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.6);
+      padding: 12.5px;
+    }
+  }
+  form{
+    position: relative;
+    top: 40px;
+  }
+`
+
 export const Revert = styled(Underline)`
   width: 80px;
   :after {
