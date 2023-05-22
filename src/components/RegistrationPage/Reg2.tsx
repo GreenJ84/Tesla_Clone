@@ -38,17 +38,16 @@ const Reg2 = (props: Reg2Props) => {
     showCon ? setShowCon(false) : setShowCon(true);
   };
 
-  const displayTip = (el: HTMLElement) => {
-    el.style.visibility = "visible";
-    console.log(el);
-  };
-  const hideTip = (el: HTMLElement) => {
-    el.style.visibility = "hidden";
-  };
   useEffect(() => {
+    const displayTip = (el: HTMLElement) => {
+      el.style.visibility = "visible";
+      console.log(el);
+    };
+    const hideTip = (el: HTMLElement) => {
+      el.style.visibility = "hidden";
+    };
     let emailHover = document.getElementById("email-hover")!;
     let emailTip = document.getElementById("email-tip")!;
-
     emailHover.addEventListener("mouseover", () => displayTip(emailTip));
     emailHover.addEventListener("mouseout", () => hideTip(emailTip));
 
@@ -132,14 +131,16 @@ const Reg2 = (props: Reg2Props) => {
         required
         aria-required="true"
       />
-      {errors.email && <div
-        id="email-error"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        {errors.email}
-      </div>}
+      {errors.email && (
+        <div
+          id="email-error"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {errors.email}
+        </div>
+      )}
 
       <label
         htmlFor="password"
@@ -190,14 +191,16 @@ const Reg2 = (props: Reg2Props) => {
           set={showPassHandler}
         />
       )}
-      <div
-        id="pass-error"
-        role="alert"
-        aria-live="assertive"
-        aria-atomic="true"
-      >
-        {errors.pass}
-      </div>
+      {errors.pass && (
+        <div
+          id="pass-error"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {errors.pass}
+        </div>
+      )}
 
       <label htmlFor="con-pass">
         Confirm Password<span aria-hidden="true">*</span>
@@ -225,14 +228,14 @@ const Reg2 = (props: Reg2Props) => {
           set={showConHandler}
         />
       )}
-      <div
+      {errors.conPass && <div
         id="con-pass-error"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
       >
         {errors.conPass}
-      </div>
+      </div>}
 
       {email && password && conPass ? (
         <button
