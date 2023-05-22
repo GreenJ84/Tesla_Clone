@@ -192,11 +192,12 @@ const AltLogin = ({ close }: { close: Function }) => {
     });
   };
 
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>, provider: AuthProvider) => { 
-    accountExist[0]
-      ? altSignIn(e, provider)
-      : existingLogin(e, provider);
-  }
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    provider: AuthProvider
+  ) => {
+    accountExist[0] ? altSignIn(e, provider) : existingLogin(e, provider);
+  };
 
   return (
     <AltLoginModal
@@ -228,7 +229,15 @@ const AltLogin = ({ close }: { close: Function }) => {
           for the account with email: <b>{accountExist[1].email}</b>
         </p>
       )}
-      {error && <div role="alert" aria-live="assertive" aria-atomic="true">{error}</div>}
+      {error && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {error}
+        </div>
+      )}
 
       {/* Render all If there is no existing Acct errors*/}
       {/* Render the provider link for the existing account listed if not password */}
@@ -241,7 +250,7 @@ const AltLogin = ({ close }: { close: Function }) => {
                 handleClick(e, googleProvider);
               }}
             >
-              <FcGoogle className="h-16 w-16"/>
+              <FcGoogle className="h-16 w-16" />
               <span>Google</span>
             </button>
           )}
@@ -250,10 +259,9 @@ const AltLogin = ({ close }: { close: Function }) => {
               aria-label="Facebook Login Pop-Up Button"
               onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                 handleClick(e, facebookProvider);
-
               }}
             >
-              <BsFacebook className="h-16 w-16"/>
+              <BsFacebook className="h-16 w-16" />
               <span>Facebook</span>
             </button>
           )}
