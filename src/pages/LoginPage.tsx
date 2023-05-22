@@ -44,7 +44,7 @@ const LoginPage = () => {
     setPersistence(AUTH, browserSessionPersistence)
       .then(() => {
         return signInWithEmailAndPassword(AUTH, email, password)
-          .then(userCredential => {
+          .then((userCredential) => {
             dispatch(setLogin(userCredential.user));
             nav("/");
             return;
@@ -64,29 +64,49 @@ const LoginPage = () => {
   return (
     <>
       <MinimalHeader />
-      {altLogin &&
-        <>
-          <AltLogin
-            close={() => {
-              setAltLogin(false);
-            }}
+
+      {altLogin && (
+        <AltLogin
+          close={() => {
+            setAltLogin(false);
+          }}
         />
-      </>}
-      <Cover show={ altLogin } />
+      )}
+      <Cover
+        show={altLogin}
+        onClick={() => {
+          setAltLogin(false);
+        }}
+      />
+
       <LoginMainContainer>
+        <p aria-label="Form progress"> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Sign In</h1>
-        {secStep ? (
+        {secStep && (
           <div className="flex justify-between mb-6">
             <h4 className="text-lg">{email}</h4>
             <div className="relative">
-              <Revert onClick={() => setSecStep(false)}>Change</Revert>
+              <Revert
+                role="button"
+                aria-label="Go back to first step"
+                onClick={() => setSecStep(false)}
+              >
+                Change
+              </Revert>
             </div>
           </div>
-        ) : (
-          ""
         )}
 
         <form>
+          {error && (
+            <span
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              {error}
+            </span>
+          )}
           {!secStep ? (
             <Login1
               email={[email, setEmail]}
@@ -105,6 +125,7 @@ const LoginPage = () => {
           <Divide> Or </Divide>
         </div>
         <Button2
+          aria-label="Open Alternate Login Providers"
           onClick={() => {
             setAltLogin(true);
           }}
@@ -112,7 +133,12 @@ const LoginPage = () => {
           Alternate Sign-In
         </Button2>
         <br />
-        <Button2 onClick={() => nav("/registration")}>Create Account</Button2>
+        <Button2
+          aria-label="Navigate to Registration page"
+          onClick={() => nav("/registration")}
+        >
+          Create Account
+        </Button2>
       </LoginMainContainer>
       <SmallFooter />
     </>
