@@ -112,6 +112,8 @@ const Reg2 = (props: Reg2Props) => {
       <div
         id="email-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.email}
       </div>
@@ -168,6 +170,8 @@ const Reg2 = (props: Reg2Props) => {
       <div
         id="pass-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.pass}
       </div>
@@ -201,6 +205,8 @@ const Reg2 = (props: Reg2Props) => {
       <div
         id="con-pass-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.conPass}
       </div>

@@ -84,6 +84,8 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
       <div
         id="first-name-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.fnE}
       </div>
@@ -113,6 +115,8 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
       <div
         id="last-name-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.lnE}
       </div>
@@ -143,11 +147,18 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
       <div
         id="captcha-error"
         role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
       >
         {errors.capE}
       </div>
 
-      <p>
+      <p
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        aria-relevant="all"
+      >
         By continuing, I understand and agree to Tesla's{" "}
         <span>Privacy Notice</span> and <span>Terms of Use</span> for creating a
         Tesla Account
