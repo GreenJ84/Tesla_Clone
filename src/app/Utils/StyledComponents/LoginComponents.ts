@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-export const LoginMainContainer = styled.div`
+export const LoginMainContainer = styled.main`
   display: flex;
   flex-direction: column;
   padding-top: 90px;
