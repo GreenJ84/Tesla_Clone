@@ -25,6 +25,7 @@ import {
 } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
+import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const LoginPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const [secStep, setSecStep] = useState(false);
   const [altLogin, setAltLogin] = useState(false);
   const [error, setError] = useState("");
@@ -42,19 +44,19 @@ const LoginPage = () => {
     setPersistence(AUTH, browserSessionPersistence)
       .then(() => {
         return signInWithEmailAndPassword(AUTH, email, password)
-          .then((userCredential) => {
+          .then(userCredential => {
             dispatch(setLogin(userCredential.user));
             nav("/");
             return;
           })
           .catch((error) => {
-            const errorMessage = error.message.split(": ")[1];
+            const errorMessage = error.message;
             setError(`${errorMessage}`);
           });
       })
       .catch((error) => {
         // Handle Errors here.
-        const errorMessage = error.message.split(": ")[1];
+        const errorMessage = error.message;
         setError(`${errorMessage}`);
       });
   };
@@ -62,6 +64,15 @@ const LoginPage = () => {
   return (
     <>
       <MinimalHeader />
+      {altLogin &&
+        <>
+          <AltLogin
+            close={() => {
+              setAltLogin(false);
+            }}
+        />
+      </>}
+      <Cover show={ altLogin } />
       <LoginMainContainer>
         <h1>Sign In</h1>
         {secStep ? (
@@ -93,21 +104,13 @@ const LoginPage = () => {
         <div className="relative mt-10 mb-10">
           <Divide> Or </Divide>
         </div>
-        {!altLogin ? (
-          <Button2
-            onClick={() => {
-              setAltLogin(true);
-            }}
-          >
-            Alternate Sign-In
-          </Button2>
-        ) : (
-          <AltLogin
-            close={() => {
-              setAltLogin(false);
-            }}
-          />
-        )}
+        <Button2
+          onClick={() => {
+            setAltLogin(true);
+          }}
+        >
+          Alternate Sign-In
+        </Button2>
         <br />
         <Button2 onClick={() => nav("/registration")}>Create Account</Button2>
       </LoginMainContainer>
