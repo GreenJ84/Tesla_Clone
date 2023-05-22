@@ -70,7 +70,7 @@ export const Cover = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -10;
+  z-index: 10;
   background-color: rgba(0, 0, 0, 0.65);
   filter: blur();
 `;
@@ -119,11 +119,17 @@ export const SmallNav = styled.nav`
 
 export const Close = styled.button`
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 8px;
+  right: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 30px;
   height: 30px;
+  padding: 2px;
+  border-radius: 50%;
+  :hover{
+    background-color: rgba(0, 0, 0, 0.1);
+    border: .5px solid rgba(0, 0, 0, 0.5);
+  }
 `;
