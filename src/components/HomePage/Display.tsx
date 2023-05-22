@@ -60,7 +60,7 @@ const Display = (props: DisplayProps) => {
           </Button>
         </ButtonWrap>
       </Fade>
-      {props.id !== cars.length ? (
+      {props.id !== cars.length && (
         <DownArrow
           role="link"
           aria-label="Next Car Window Slide"
@@ -68,8 +68,6 @@ const Display = (props: DisplayProps) => {
           className="cursor mx-auto"
           src="images/down-arrow.svg"
         />
-      ) : (
-        ""
       )}
     </Container>
   );

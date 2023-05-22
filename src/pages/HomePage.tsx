@@ -22,22 +22,20 @@ const HomePage = () => {
   return (
     <>
       <AdModal />
-      <div style={{ position: "relative" }}>
-        <Header
-          slide={slideIntoView}
-        />
-        <Container ref={homeRef}>
-          {cars.map((car) => (
-            <Display
-              key={car.id}
-              id={car.id}
-              slide={slideIntoView}
-              title={car.title}
-              backgroundImg={car.backgroundImg}
-            />
-          ))}
-        </Container>
-      </div>
+      <Header
+        slide={slideIntoView}
+      />
+      <Container ref={homeRef}>
+        {cars.map((car) => (
+          <Display
+            key={car.id}
+            id={car.id}
+            slide={slideIntoView}
+            title={car.title}
+            backgroundImg={car.backgroundImg}
+          />
+        ))}
+      </Container>
     </>
   );
 };

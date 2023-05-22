@@ -14,12 +14,14 @@ export const AdModalContainer = styled.aside`
   height: 100px;
   font-size: 22px;
   text-align: center;
+  background-color: rgba(250, 250, 250);
+  z-index: 20;
   p {
     position: relative;
     width: 90vw;
     margin: 0 auto;
     top: 12px;
-    span {
+  span {
       cursor: pointer;
       border-bottom: 1.5px solid black;
     }
@@ -41,7 +43,7 @@ export const NavContainer = styled.header`
   min-width: 100vw;
   padding: 0 20px;
   min-height: 60px;
-  z-index: 1;
+  z-index: 10;
 `;
 
 export const Nav = styled.nav`
