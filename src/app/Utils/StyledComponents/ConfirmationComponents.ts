@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-export const ConfirmationContainer = styled.div`
+export const ConfirmationContainer = styled.main`
   position: relative;
   width: 80vw;
   max-width: 800px;
@@ -26,7 +26,7 @@ export const ConfirmationContainer = styled.div`
     }
   }
   > div:first-of-type {
-    > p {
+    > h2 {
       font-size: 24px;
       margin-bottom: 20px;
       > li {

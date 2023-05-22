@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+
 import {
   collection,
   CollectionReference,
@@ -12,19 +13,19 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { DB } from "../firebase/firebase";
 
 import Header from "../components/Layout/Header";
-import { billAddress, shipAddress } from "./OrderPage";
 import { Card } from "../components/OrderPage/Order2";
+import SmallFooter from "../components/Layout/SmallFooter";
 import {
   ConfirmationContainer,
   ConfirmationListItem,
 } from "../app/Utils/StyledComponents/ConfirmationComponents";
 
-import { DB } from "../firebase/firebase";
+import { billAddress, shipAddress } from "./OrderPage";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
-import SmallFooter from "../components/Layout/SmallFooter";
 
 interface orderData {
   tag: string | null;
@@ -38,7 +39,7 @@ interface orderData {
 const ConfirmationPage = () => {
   const nav = useNavigate();
   const user = useUserData();
-  const [empty, setEmpty] = useState(false);
+  const [empty, setEmpty] = useState(true);
   const [order, setOrder] = useState<orderData>({
     tag: null,
     order: null,
@@ -50,8 +51,9 @@ const ConfirmationPage = () => {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    if (!user) {
+    if (!user.user) {
       nav("/login");
+      return;
     }
     const getOrder = async () => {
       const userRef = user.user!.uid.slice(0, 8).toString().toLowerCase();
@@ -68,9 +70,9 @@ const ConfirmationPage = () => {
       );
       const queryRes = await getDocs(q);
       if (queryRes.empty) {
-        setEmpty(true);
         return;
       }
+      setEmpty(false);
       queryRes.forEach((order) => {
         setOrder(order.data());
       });
@@ -96,16 +98,26 @@ const ConfirmationPage = () => {
         )}
         <p>
           Check the status of
-          <Link to={"/account"}>
-            {!empty ? " recent " : " future "}
+          {!empty ? " recent " : " future "}
+          <Link
+            aria-label="Acount Page link"
+            to={"/account"}
+          >
             <span>orders</span>
           </Link>
-          ,{" "}
-          <Link to={"/account"}>
-            manage <span>returns</span>
-          </Link>
+          {!empty && (
+            <Link
+              aria-label="Acount Page link"
+              to={"/account"}
+            >
+              , manage <span>returns</span>
+            </Link>
+          )}
           , or discover{" "}
-          <Link to={"/"}>
+          <Link
+            aria-label="Home Page return"
+            to={"/"}
+          >
             new <span>products</span>
           </Link>
         </p>
@@ -113,13 +125,21 @@ const ConfirmationPage = () => {
         {!empty ? (
           <>
             <div>
-              <p>Order identifier: {order.tag}</p>
-              <p>Total Amount: {order.total}</p>
+              <h2>Order identifier: {order.tag}</h2>
+              <h2>
+                Total Amount: $
+                {new Intl.NumberFormat("en-US").format(order.total!)}
+              </h2>
             </div>
-            <div>
+            <ul aria-label="Order Items list">
               {!empty &&
-                order.order?.map((product) => (
-                  <ConfirmationListItem key={product.id}>
+                order.order?.map((product, idx) => (
+                  <ConfirmationListItem
+                    aria-label="Order Item"
+                    aria-posinset={idx + 1}
+                    aria-setsize={order.order?.length}
+                    key={product.id}
+                  >
                     <img
                       src={`/images/${product.backgroundImg}`}
                       alt={product.title}
@@ -127,31 +147,35 @@ const ConfirmationPage = () => {
                     <div>
                       <div>
                         <h3>{product.title}</h3>
-                        <h3>${product.price}</h3>
+                        <h3>
+                          $
+                          {new Intl.NumberFormat("en-US").format(product.price)}
+                        </h3>
                       </div>
                       <p>{product.description}</p>
                       <p>Amount ordered: {product.quantity}</p>
                     </div>
                   </ConfirmationListItem>
                 ))}
-            </div>
+            </ul>
             <p className={"mt-8 tracking-wider"}>
               Items count:
               <span className={"!border-b-0 ml-4"}>{order.order?.length}</span>
             </p>
           </>
         ) : (
-          <div>
-            <p>
-              {" "}
-              To get a confirmation you need to have to:{" "}
-              <li>
-                Complete an order for at least one
-                <Link to={"/"}>
-                  {" "}
-                  <span>car</span>
-                </Link>
-              </li>
+          <div className="relative top-32">
+            <h2>To get a confirmation you need to have:</h2>
+            <br />
+            <p className="relative left-12 text-xl">
+              - Completed an order for at least one
+              <Link
+                aria-label="Home Page return"
+                to={"/"}
+              >
+                {" "}
+                <span>item</span>
+              </Link>
             </p>
           </div>
         )}
