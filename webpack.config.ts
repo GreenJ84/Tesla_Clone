@@ -2,6 +2,7 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -23,12 +24,21 @@ module.exports = {
     }, // Entry point of your application
   output: {
     path: path.resolve(__dirname, "build"), // Output directory
-    filename:'bundle.[contenthash].js', // Output filename
+    filename: 'bundle.[contenthash].js', // Output filename
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"], // Resolve these extensions
   },
   devtool: "source-map",
+  devServer: {
+    static: {
+      directory: path.join(__dirname, 'public'),
+    },
+    compress: true,
+    port: 3000,
+    hot: true,
+    open: true
+  },
   module: {
     rules: [
       {
@@ -38,7 +48,7 @@ module.exports = {
     },
     {
         test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'style-loader', 'css-loader', 'postcss-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
@@ -58,15 +68,37 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.json$/,
+        use: 'file-loader',
+      },
     ],
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html", // HTML template file
+      template: __dirname + '/public/index.html',
+      filename: 'index.html',
+      inject: 'body'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public', to: '',
+          globOptions: {
+            ignore: ['**.html'],
+          },
+        },
+      ],
     }),
     new MiniCssExtractPlugin(),
-    new CompressionPlugin(),
-    new BundleAnalyzerPlugin(),
+    new CompressionPlugin({
+      algorithm: 'gzip', // Use gzip compression
+      filename: '[path][base].gz', // Output filename pattern
+      test: /\.(js|css|html)$/, // Apply compression to JavaScript, CSS, and HTML files
+      threshold: 10240, // Only compress files larger than 10KB
+      minRatio: 0.8, // Only compress files with a compression ratio of at least 0.8 (80%)
+    }),
+    // new BundleAnalyzerPlugin(),
   ],
   optimization: {
     usedExports: true,
@@ -77,6 +109,12 @@ module.exports = {
           format: {
             comments: false, // Remove comments from the output
           },
+          compress: {
+            dead_code: true, // Remove dead code from the output
+            drop_console: true,
+            drop_debugger: true,
+            warnings: true
+          }
         },
         extractComments: false,
       }),
