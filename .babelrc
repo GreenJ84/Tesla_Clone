@@ -3,5 +3,9 @@
     "@babel/preset-env",
     "@babel/preset-react",
     "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "minify-dead-code-elimination",
+    ["transform-remove-console", { "exclude": ["error", "warn"] }]
   ]
 }
