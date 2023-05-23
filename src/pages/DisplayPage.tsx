@@ -1,5 +1,6 @@
 /** @format */
 
+import React from "react";
 import Detail from "../components/DisplayPage/Detail";
 import Header from "../components/Layout/Header";
 

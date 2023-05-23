@@ -1,5 +1,6 @@
 /** @format */
 
+import React from "react";
 import { CarStatContainer } from "../../app/Utils/StyledComponents/DetailComponents";
 
 interface CarStats {
