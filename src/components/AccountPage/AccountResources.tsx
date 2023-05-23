@@ -1,7 +1,8 @@
 /** @format */
 
 import React from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 
 import { ResourceContainer } from "../../app/Utils/StyledComponents/AccountComponents";
 
