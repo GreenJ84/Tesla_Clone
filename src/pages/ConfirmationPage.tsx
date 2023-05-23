@@ -1,9 +1,10 @@
 /** @format */
 
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
+
 import {
   collection,
   CollectionReference,
@@ -12,19 +13,16 @@ import {
   orderBy,
   query,
 } from "firebase/firestore";
+import { DB } from "../firebase/firebase";
 
 import Header from "../components/Layout/Header";
-import { billAddress, shipAddress } from "./OrderPage";
 import { Card } from "../components/OrderPage/Order2";
-import {
-  ConfirmationContainer,
-  ConfirmationListItem,
-} from "../app/Utils/StyledComponents/ConfirmationComponents";
+import SmallFooter from "../components/Layout/SmallFooter";
 
-import { DB } from "..";
+import { billAddress, shipAddress } from "./OrderPage";
 import { useUserData } from "../app/Store/User/userSlice";
 import { carData } from "../teslaCarInfo";
-import SmallFooter from "../components/Layout/SmallFooter";
+import Confirmation from "../components/ConfirmationPage/Confirmation";
 
 interface orderData {
   tag: string | null;
@@ -38,7 +36,7 @@ interface orderData {
 const ConfirmationPage = () => {
   const nav = useNavigate();
   const user = useUserData();
-  const [empty, setEmpty] = useState(false);
+  const [empty, setEmpty] = useState(true);
   const [order, setOrder] = useState<orderData>({
     tag: null,
     order: null,
@@ -50,8 +48,9 @@ const ConfirmationPage = () => {
   const { width, height } = useWindowSize();
 
   useEffect(() => {
-    if (!user) {
+    if (!user.user) {
       nav("/login");
+      return;
     }
     const getOrder = async () => {
       const userRef = user.user!.uid.slice(0, 8).toString().toLowerCase();
@@ -68,9 +67,9 @@ const ConfirmationPage = () => {
       );
       const queryRes = await getDocs(q);
       if (queryRes.empty) {
-        setEmpty(true);
         return;
       }
+      setEmpty(false);
       queryRes.forEach((order) => {
         setOrder(order.data());
       });
@@ -88,74 +87,7 @@ const ConfirmationPage = () => {
         />
       )}
       <Header />
-      <ConfirmationContainer>
-        {!empty ? (
-          <h1>Order Placement Confirmed</h1>
-        ) : (
-          <h1>No Orders Placed ...yet</h1>
-        )}
-        <p>
-          Check the status of
-          <Link to={"/account"}>
-            {!empty ? " recent " : " future "}
-            <span>orders</span>
-          </Link>
-          ,{" "}
-          <Link to={"/account"}>
-            manage <span>returns</span>
-          </Link>
-          , or discover{" "}
-          <Link to={"/"}>
-            new <span>products</span>
-          </Link>
-        </p>
-
-        {!empty ? (
-          <>
-            <div>
-              <p>Order identifier: {order.tag}</p>
-              <p>Total Amount: {order.total}</p>
-            </div>
-            <div>
-              {!empty &&
-                order.order?.map((product) => (
-                  <ConfirmationListItem key={product.id}>
-                    <img
-                      src={`/images/${product.backgroundImg}`}
-                      alt={product.title}
-                    />
-                    <div>
-                      <div>
-                        <h3>{product.title}</h3>
-                        <h3>${product.price}</h3>
-                      </div>
-                      <p>{product.description}</p>
-                      <p>Amount ordered: {product.quantity}</p>
-                    </div>
-                  </ConfirmationListItem>
-                ))}
-            </div>
-            <p className={"mt-8 tracking-wider"}>
-              Items count:
-              <span className={"!border-b-0 ml-4"}>{order.order?.length}</span>
-            </p>
-          </>
-        ) : (
-          <div>
-            <p>
-              {" "}
-              To get a confirmation you need to have to:{" "}
-              <li>
-                Complete an order for at least one
-                <Link to={"/"}>
-                  {" "}
-                  <span>car</span>
-                </Link>
-              </li>
-            </p>
-          </div>
-        )}
-      </ConfirmationContainer>
+      <Confirmation empty={ empty } order={ order } />
       <SmallFooter />
     </>
   );

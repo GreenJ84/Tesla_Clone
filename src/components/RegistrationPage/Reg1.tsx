@@ -13,10 +13,9 @@ interface StepProps {
   setStep: Function;
 }
 
-const Reg1 = (props: StepProps) => {
-  const [fN, setFN] = props.firstName;
-  const [lN, setLN] = props.lastName;
-  const { setStep } = props;
+const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
+  const [fN, setFN] = firstName;
+  const [lN, setLN] = lastName;
 
   const [captcha, setCaptcha] = useCaptcha();
   const [cap, setCap] = useState(captcha);
@@ -24,107 +23,165 @@ const Reg1 = (props: StepProps) => {
   const [errors, setErrors] = useState({
     fnE: "",
     lnE: "",
-    capE: ""
-  })
+    capE: "",
+  });
 
-  const stepHandler = (e: React.FormEvent<HTMLButtonElement>) => {
+  const formValid = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formValid()) {
-      console.log("invalid");
-      return;
+    let noErrors = true;
+    let error = { ...errors };
+    if (!fN.match(/[A-Za-z]{2,}/g)) {
+      error.fnE = "Name must be longer then 2 characters";
+      noErrors = false;
+    } else {
+      error.fnE = "";
     }
-    else { 
-      console.log("valid");
+    if (!lN.match(/[A-Za-z]{2,}/g)) {
+      error.lnE = "Name must be longer then 2 characters";
+      noErrors = false;
+    } else {
+      error.lnE = "";
+    }
+    if (!confirmCap.match(cap)) {
+      error.capE = "Captch does not match";
+      noErrors = false;
+    } else {
+      error.capE = "";
+    }
+    setErrors({ ...error });
+
+    if (noErrors) {
       setStep();
+    } else {
+      return;
     }
   };
 
-  const formValid = () => {
-    let res = true;
-    let error = { ...errors }
-    if (!fN.match(/[A-Za-z]{2,}/g)) {
-      console.log("setting fn error");
-      error.fnE = "Name must be longer then 2 characters";
-      setErrors({...error})
-      res = false;
-    }
-    if (!lN.match(/[A-Za-z]{2,}/g)) {
-      console.log("setting ln error");
-      error.lnE = "Name must be longer then 2 characters";
-      setErrors({...error})
-      res = false;
-    }
-    if (!confirmCap.match(cap)) {
-      console.log("setting cap error");
-      error.capE = "Captch does not match";
-      setErrors({...error})
-      res = false;
-    }
-    return res
-  }
-
   return (
     <Reg1Container>
-      <label htmlFor="first-name">First Name</label>
+      <label htmlFor="first-name">
+        First Name<span aria-hidden="true">*</span>
+      </label>
       <input
+        id="first-name"
         name="first-name"
-        placeholder=""
+        aria-label="First Name"
+        aria-describedby="first-name-error"
+        className={fN ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
+        placeholder="Ex. John"
         value={fN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setFN(e.currentTarget.value);
         }}
+        pattern="[A-Za-z]{2,}"
+        aria-invalid={fN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
+        autoComplete="given-name"
         required
-        className={fN ? "border invalid:border-red-500" : ""}
-        pattern="[A-Za-z]{3,}"
+        aria-required="true"
       />
-      <div>{ errors.fnE }</div>
-      <label htmlFor="last-name">Last Name</label>
+      <div
+        id="first-name-error"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {errors.fnE}
+      </div>
+
+      <label htmlFor="last-name">
+        Last Name<span aria-hidden="true">*</span>
+      </label>
       <input
+        id="last-name"
         name="last-name"
+        aria-label="Last Name"
+        aria-describedby="last-name-error"
+        className={lN ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
+        placeholder="Ex. Smith"
         value={lN}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setLN(e.currentTarget.value);
         }}
-        className={lN ? "border invalid:border-red-500" : ""}
+        pattern="[A-Za-z]{2,}"
+        aria-invalid={lN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
+        autoComplete="family-name"
         required
-        pattern="[A-Za-z]{3,}"
+        aria-required="true"
       />
-      <div>{ errors.lnE }</div>
+      <div
+        id="last-name-error"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {errors.lnE}
+      </div>
+
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
-      <label htmlFor="CAPTCHA">Enter the characters in the image</label>
+
+      <label htmlFor="CAPTCHA">
+        Enter the characters in the image<span aria-hidden="true">*</span>
+      </label>
       <input
+        id="CAPTCHA"
         name="CAPTCHA"
+        aria-label="Human confirmation Captcha"
+        aria-describedby="captcha-error"
+        title="Incorrect image characters"
+        className={confirmCap ? "border invalid:border-red-500" : ""}
         type="text"
+        inputMode="text"
         value={confirmCap}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           setConfirmCap(e.currentTarget.value);
         }}
-        title="Incorrect image characters"
-        onInvalid={(e: React.ChangeEvent<HTMLInputElement>) => {
-          e.currentTarget.style.border = "2px solid red";
-        }}
-        className={confirmCap ? "border invalid:border-red-500" : ""}
-        required
         pattern={cap}
+        aria-invalid={confirmCap.match(cap) ? "false" : "true"}
+        required
+        aria-required="true"
       />
-      <div>{ errors.capE }</div>
-      <p>
+      <div
+        id="captcha-error"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {errors.capE}
+      </div>
+
+      <p
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        aria-relevant="all"
+      >
         By continuing, I understand and agree to Tesla's{" "}
         <span>Privacy Notice</span> and <span>Terms of Use</span> for creating a
         Tesla Account
       </p>
       {fN && lN && confirmCap ? (
         <button
-          type="submit"
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => stepHandler(e)}>Next</button>
+          type="button"
+          aria-label="Progress to next Registration step"
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => formValid(e)}
+        >
+          Next
+        </button>
       ) : (
-        <button disabled>Next</button>
+        <button
+          aria-disabled="true"
+          aria-label="Progression requirements not met"
+          disabled
+        >
+          Next
+        </button>
       )}
     </Reg1Container>
   );
 };
 
 export default Reg1;
-

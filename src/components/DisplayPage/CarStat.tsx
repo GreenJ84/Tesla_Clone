@@ -11,12 +11,12 @@ const CarStat = (props: CarStats) => {
     const { value, description } = props;
     return (
     <CarStatContainer>
-            <h1>
-                {value}
-            </h1>
             <h2>
-                {description}
+                {value}
             </h2>
+            <p>
+                {description}
+            </p>
     </CarStatContainer>
     );
 };

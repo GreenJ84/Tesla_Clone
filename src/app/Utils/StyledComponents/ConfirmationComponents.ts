@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 
-export const ConfirmationContainer = styled.div`
+export const ConfirmationContainer = styled.main`
   position: relative;
   width: 80vw;
   max-width: 800px;
@@ -26,7 +26,7 @@ export const ConfirmationContainer = styled.div`
     }
   }
   > div:first-of-type {
-    > p {
+    > h2 {
       font-size: 24px;
       margin-bottom: 20px;
       > li {
@@ -41,9 +41,20 @@ export const ConfirmationContainer = styled.div`
       letter-spacing: 1.1px;
     }
   }
-  > div:nth-of-type(2) {
+  > ul {
     border-top: 1px solid rgba(200, 200, 200);
     border-bottom: 1px solid rgba(200, 200, 200);
+  }
+  > div.noOrder {
+    position: relative;
+    top: 20vh;
+    text-align: center;
+    > h2 {
+      font-size: 32px;
+    }
+    > p{
+
+    }
   }
 `;
 

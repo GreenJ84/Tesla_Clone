@@ -1,5 +1,6 @@
 /** @format */
 
+import React from "react";
 import styled from "styled-components";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
@@ -20,9 +21,11 @@ const Show = (props: show) => {
 export default Show;
 
 const ShowContainer = styled.div`
-  position: absolute;
   width: 35px;
   height: 35px;
-  transform: translateY(-70px) translateX(385px);
   cursor: pointer;
+  transform: translateY(-40px) translateX(390px);
+  @media only screen and (min-width: 1400px) {
+    transform: translateY(-40px) translateX(510px);
+  }
 `;

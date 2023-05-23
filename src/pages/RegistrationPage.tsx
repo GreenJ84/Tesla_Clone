@@ -1,18 +1,35 @@
 /** @format */
 
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {  createUserWithEmailAndPassword, updateProfile, sendEmailVerification } from "firebase/auth";
+
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  sendEmailVerification,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { AUTH, DB } from "../firebase/firebase";
 
 import MinimalHeader from "../components/Layout/MinimalHeader";
 import SmallFooter from "../components/Layout/SmallFooter";
 import Reg1 from "../components/RegistrationPage/Reg1";
 import Reg2 from "../components/RegistrationPage/Reg2";
-import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
+import AltLogin from "../components/LoginPage/AltLogin";
 
-import { AUTH } from "../index";
+import { RegMainContainer } from "../app/Utils/StyledComponents/RegisrationComponents";
+import {
+  Button2,
+  Divide,
+  Revert,
+} from "../app/Utils/StyledComponents/LoginComponents";
+
+import { setLogin } from "../app/Store/User/userSlice";
+import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 const RegistrationPage = () => {
+  const dispatch = useDispatch();
   const nav = useNavigate();
 
   const [firstName, setFirstName] = useState("");
@@ -22,6 +39,7 @@ const RegistrationPage = () => {
   const [confPassword, setConfPassword] = useState("");
 
   const [secStep, setSecStep] = useState(false);
+  const [altLogin, setAltLogin] = useState(false);
   const [error, setError] = useState("");
 
   const register = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -30,50 +48,93 @@ const RegistrationPage = () => {
       setError("Passwords are not a match");
       return;
     }
-    const auth = AUTH;
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        // firebase authenticated and signed in
-        if (!auth.currentUser) return;
-        sendEmailVerification(auth.currentUser);
-        // eslint-disable-next-line no-restricted-globals
-        confirm(`A verification email has been sent to ${auth.currentUser.email}`);
+    createUserWithEmailAndPassword(AUTH, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
 
-        updateProfile(auth.currentUser, {
-          displayName: `${firstName}
-            ${lastName ? ` ${lastName}` : ""}`
+        updateProfile(user, {
+          displayName: `${firstName} ${lastName}`,
         })
           .then(() => {
-            console.log('Profile updated');
+            setDoc(
+              doc(DB, "users", user.uid),
+              {
+                name: user.displayName,
+                email: user.email,
+              },
+              { merge: true }
+            );
           })
-          .catch(err =>
-            console.log("User update error has occured\n", err
-            ));
-        // redirect for app sign
-        nav('/login');
+          .catch((err) =>
+            console.error("User update error has occured\n", err)
+          );
+
+        sendEmailVerification(user);
+        dispatch(setLogin(user));
+        alert(`A verification email has been sent to ${user.email}`);
+        nav("/");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message.split(": ")[1];
-        
-        console.log("A registration error has occured\n", `Error ${errorCode}: ${errorMessage}`)
+
+        console.error(
+          "A registration error has occured\n",
+          `Error ${errorCode}: ${errorMessage}`
+        );
         setError(errorMessage);
         setSecStep(false);
       });
-  }
+  };
 
   return (
     <>
       <MinimalHeader />
+
+      {altLogin && (
+        <AltLogin
+          close={() => {
+            setAltLogin(false);
+          }}
+        />
+      )}
+      <Cover
+        show={altLogin}
+        onClick={() => {
+          setAltLogin(false);
+        }}
+      />
+
       <RegMainContainer>
-        <p> Step {!secStep ? "1" : "2"} of 2</p>
+        <p aria-label="Form progress"> Step {!secStep ? "1" : "2"} of 2</p>
         <h1>Create Account</h1>
+        {secStep && (
+          <div className="flex justify-between mb-6">
+            <h4 className="text-lg">
+              {firstName} {lastName}
+            </h4>
+            <div className="relative">
+              <Revert
+                role="button"
+                aria-label="Go back to first step"
+                onClick={() => setSecStep(false)}
+              >
+                Change
+              </Revert>
+            </div>
+          </div>
+        )}
+
         <form>
-          {error ?
-            <span>{ error }</span>
-          : 
-            ""
-          }
+          {error && (
+            <span
+              role="alert"
+              aria-live="assertive"
+              aria-atomic="true"
+            >
+              {error}
+            </span>
+          )}
           {!secStep ? (
             <Reg1
               firstName={[firstName, setFirstName]}
@@ -89,6 +150,25 @@ const RegistrationPage = () => {
             />
           )}
         </form>
+
+        <div className="relative mt-10 mb-10">
+          <Divide> Or </Divide>
+        </div>
+        <Button2
+          aria-label="Open Alternate Login Providers"
+          onClick={() => {
+            setAltLogin(true);
+          }}
+        >
+          Alternate Sign-In
+        </Button2>
+        <br />
+        <Button2
+          aria-label="Navigate to Login page"
+          onClick={() => nav("/login")}
+        >
+          Already Registered?
+        </Button2>
       </RegMainContainer>
       <SmallFooter />
     </>

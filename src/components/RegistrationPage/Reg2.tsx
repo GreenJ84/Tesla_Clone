@@ -2,16 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 
-import { Reg2Container, RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
-import Show from "../Layout/Show";
-
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+
+import Show from "../Layout/Show";
+import {
+  Reg2Container,
+  RegToolTip,
+} from "../../app/Utils/StyledComponents/RegisrationComponents";
 
 interface Reg2Props {
   email: [string, Function];
   password: [string, Function];
   confPassword: [string, Function];
-  register: Function
+  register: Function;
 }
 
 const Reg2 = (props: Reg2Props) => {
@@ -22,90 +25,134 @@ const Reg2 = (props: Reg2Props) => {
   const [errors, setErrors] = useState({
     email: "",
     pass: "",
-    conPass: ""
-  })
+    conPass: "",
+  });
 
   const [showPass, setShowPass] = useState(false);
-  const [showCon, setShowCon] = useState(false);
   const showPassHandler = () => {
     showPass ? setShowPass(false) : setShowPass(true);
   };
+
+  const [showCon, setShowCon] = useState(false);
   const showConHandler = () => {
     showCon ? setShowCon(false) : setShowCon(true);
   };
 
   useEffect(() => {
-    let hover = document.getElementById("pass")!;
-    let tip = document.getElementById("passTip")!;
+    const displayTip = (el: HTMLElement) => {
+      el.style.visibility = "visible";
+      console.log(el);
+    };
+    const hideTip = (el: HTMLElement) => {
+      el.style.visibility = "hidden";
+    };
+    let emailHover = document.getElementById("email-hover")!;
+    let emailTip = document.getElementById("email-tip")!;
+    emailHover.addEventListener("mouseover", () => displayTip(emailTip));
+    emailHover.addEventListener("mouseout", () => hideTip(emailTip));
 
-    const displayTip = () => {
-      tip.style.visibility = "visible";
-    };
-    const hideTip = () => {
-      tip.style.visibility = "hidden";
-    };
-    hover.addEventListener("mouseover", displayTip);
-    hover.addEventListener("mouseout", hideTip);
+    let passHover = document.getElementById("pass-hover")!;
+    let passTip = document.getElementById("pass-tip")!;
+    passHover.addEventListener("mouseover", () => displayTip(passTip));
+    passHover.addEventListener("mouseout", () => hideTip(passTip));
+
     return () => {
-      hover.removeEventListener("mouseover", displayTip);
-      hover.removeEventListener("mouseout", hideTip);
+      passHover.removeEventListener("mouseover", () => displayTip(passTip));
+      passHover.removeEventListener("mouseout", () => hideTip(passTip));
+
+      emailHover.removeEventListener("mouseover", () => displayTip(emailTip));
+      emailHover.removeEventListener("mouseout", () => hideTip(emailTip));
     };
   }, []);
 
-  const registerHandler = (e: React.FormEvent<HTMLButtonElement>) => {
+  const formValid = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!formValid()){ return }
-    register(e);
-  };
-
-  const formValid = () => {
-    let res = true;
-    let error = { ...errors }
+    let noErrors = true;
+    let error = { ...errors };
     if (!email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)) {
       error.email = "Email is the incorrect format (example: name@email.com)";
-      res = false;
+      noErrors = false;
     }
     if (!password.match(/(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}/g)) {
-      error.pass = "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
-      res = false;
+      error.pass =
+        "Password must be longer than 8 characters with and contian at least 1 digit, 1 uppercase, and 1 lowercase letter";
+      noErrors = false;
     }
     if (!password.match(conPass)) {
       error.conPass = "Confirmation does not match";
-      res = false;
+      noErrors = false;
     }
-    setErrors({...error})
-    return res
-  }
+    setErrors({ ...error });
+
+    if (noErrors) {
+      register(e);
+    } else {
+      return;
+    }
+  };
 
   return (
     <Reg2Container>
       <label
-        htmlFor=""
-        inputMode="email"
+        htmlFor="email"
+        className="relative"
       >
-        Email
+        Email<span aria-hidden="true">*</span>
+        <InformationCircleIcon
+          id="email-hover"
+          className="relative inline bottom-[3px] w-4 h-4 ml-1"
+        />
+        <RegToolTip
+          id="email-tip"
+          className="relative"
+        >
+          Must be your valid Email address under any domain.
+        </RegToolTip>
       </label>
       <input
+        id="email"
+        name="email"
+        aria-label="Email for Registration"
+        aria-describedby="email-error"
         type="email"
+        inputMode="email"
         value={email}
+        placeholder="Ex. example.email@gmail.com"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setEmail(e.currentTarget.value)
         }
         pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        aria-invalid={
+          email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)
+            ? "false"
+            : "true"
+        }
+        autoComplete="email"
         required
+        aria-required="true"
       />
-      <div>{ errors.email }</div>
+      {errors.email && (
+        <div
+          id="email-error"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {errors.email}
+        </div>
+      )}
+
       <label
-        htmlFor=""
+        htmlFor="password"
         className="relative"
       >
-        Password
+        Password<span aria-hidden="true">*</span>
         <InformationCircleIcon
-          id="pass"
+          id="pass-hover"
           className="relative inline bottom-[3px] w-4 h-4 ml-1"
         />
         <RegToolTip
-          id="passTip"
+          id="pass-tip"
           className="invisible"
         >
           Password must be at least 8 characters and include at least one number
@@ -113,52 +160,99 @@ const Reg2 = (props: Reg2Props) => {
         </RegToolTip>
       </label>
       <input
+        id="password"
+        name="password"
+        aria-label="A Password 8 or more character long"
+        aria-describedby="pass-error"
+        className={`relative ${
+          password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"
+        }`}
         type={showPass ? "text" : "password"}
+        inputMode="text"
         value={password}
+        placeholder="Ex. not!aBadpasword99x84!"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPassword(e.currentTarget.value)
         }
-        className={password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"}
-        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])\w{8,}"
+        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}"
+        aria-invalid={
+          password.match(
+            /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}/g
+          )
+            ? "false"
+            : "true"
+        }
         required
+        aria-required="true"
       />
-      <div>{ errors.pass }</div>
-      <div>
-        {password && (
-          <Show
-            state={showPass}
-            set={showPassHandler}
-          />
-        )}
-      </div>
+      {password && (
+        <Show
+          state={showPass}
+          set={showPassHandler}
+        />
+      )}
+      {errors.pass && (
+        <div
+          id="pass-error"
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+        >
+          {errors.pass}
+        </div>
+      )}
 
-      <label htmlFor="">Confirm Password</label>
+      <label htmlFor="con-pass">
+        Confirm Password<span aria-hidden="true">*</span>
+      </label>
       <input
+        id="con-pass"
+        name="con-pass"
+        aria-label="Confirm previously entered password"
+        aria-describedby="con-pass-error"
+        className={conPass ? "border invalid:border-red-500" : ""}
         type={showCon ? "text" : "password"}
+        inputMode="text"
         value={conPass}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setConPass(e.currentTarget.value)
         }
-        className={conPass ? "border invalid:border-red-500" : ""}
         pattern={password}
+        aria-invalid={conPass.match(password) ? "false" : "true"}
         required
+        aria-required="true"
       />
-      <div>{ errors.conPass }</div>
-      <div>
-        {conPass && (
-          <Show
-            state={showCon}
-            set={showConHandler}
-          />
-        )}
-      </div>
+      {conPass && (
+        <Show
+          state={showCon}
+          set={showConHandler}
+        />
+      )}
+      {errors.conPass && <div
+        id="con-pass-error"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {errors.conPass}
+      </div>}
+
       {email && password && conPass ? (
         <button
           type="submit"
-          onClick={(e: React.FormEvent<HTMLButtonElement>) => registerHandler(e) }
-        >Create Account</button>
+          aria-label="Create Account"
+          onClick={(e: React.FormEvent<HTMLButtonElement>) => formValid(e)}
+        >
+          Create Account
+        </button>
       ) : (
-        <button disabled>Create Account</button>
+        <button
+          disabled
+          aria-disabled="true"
+          aria-label="Account requirements not met"
+        >
+          Create Account
+        </button>
       )}
     </Reg2Container>
   );

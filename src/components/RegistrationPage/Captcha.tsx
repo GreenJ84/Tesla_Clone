@@ -13,8 +13,16 @@ const Captcha = (props: captchaProps) => {
 
   return (
     <Container>
-      <p>{cap}</p>
+      <p
+        role="textbox"
+        aria-label="CAPTCHA"
+        aria-disabled="true"
+      >
+        {cap}
+      </p>
       <ArrowPathIcon
+        role="button"
+        aria-label="Refresh CAPTCHA"
         className="absolute cursor right-2 top-2 w-6 h-6"
         onClick={() => setCap()}
       />
@@ -40,5 +48,6 @@ const Container = styled.div`
     top: 14px;
     font-size: 28px;
     letter-spacing: 5px;
+    user-select: none;
   }
 `;
