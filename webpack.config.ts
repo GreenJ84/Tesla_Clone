@@ -7,6 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const TerserPlugin = require('terser-webpack-plugin');
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 
 
@@ -52,18 +53,20 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
+        type: "asset/resource",
         use: [
           'file-loader', // or 'url-loader'
           {
             loader: 'image-webpack-loader',
             options: {
-              // Configure the options for image-webpack-loader
-              // For example, you can set optimization options or specify plugins
               mozjpeg: {
-                progressive: true,
                 quality: 80,
+                progressive: true,
               },
-              // ... other options
+              pngquant: {
+                quality: '65-90',
+                speed: 4,
+              }
             },
           },
         ],
@@ -117,6 +120,17 @@ module.exports = {
           }
         },
         extractComments: false,
+      }),
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.imageminMinify,
+          options: {
+            plugins: [
+              ["jpegtran", { progressive: true }],
+              ["optipng", { optimizationLevel: 5 }],
+            ]
+          },
+        },
       }),
     ],
     splitChunks: {
