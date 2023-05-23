@@ -2,6 +2,7 @@
   "name": "tesla-mockup",
   "version": "0.1.0",
   "private": true,
+  "main": "index.tsx",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -38,8 +39,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "webpack serve --mode development --open",
-    "build": "webpack",
+    "dev": "webpack serve --mode development --open --port 3000",
+    "build": "webpack --mode production",
+    "prod": "npm run build && serve build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -70,8 +72,10 @@
     "@types/babel__core": "^7.20.0",
     "babel-loader": "^9.1.2",
     "babel-plugin-minify-dead-code-elimination": "^0.5.2",
+    "babel-plugin-styled-components": "^2.1.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "compression-webpack-plugin": "^10.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.4",
     "file-loader": "^6.2.0",
     "image-webpack-loader": "^8.1.0",
@@ -80,6 +84,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.0",
+    "serve": "^14.2.0",
     "style-loader": "^3.3.3",
     "tailwindcss": "^3.3.2",
     "ts-node": "^10.9.1",
