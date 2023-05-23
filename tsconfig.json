@@ -15,7 +15,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
-    "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx"
   },
@@ -29,5 +28,7 @@
     "src/setupTests.ts"
   ],
   "include": ["src"],
-  "types": ["typePatches"]
+  "types": ["typePatches"],
+  "sourceMap": true,
+  "declaration": true,
 }
