@@ -27,9 +27,11 @@ yarn install
 ```
 
 **3.** Change directories into the project
+
 ```cd Tesla_Clone```
 
 **4.** Run the application in developent
+
 ```npm run start```
 
 # Care to contribute?
