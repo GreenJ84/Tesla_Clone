@@ -5,6 +5,7 @@
     "@babel/preset-typescript"
   ],
   "plugins": [
+    "styled-components",
     "minify-dead-code-elimination",
     ["transform-remove-console", { "exclude": ["error", "warn"] }]
   ]
