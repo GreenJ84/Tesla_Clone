@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const OrderBody = styled.div`
+export const CartBody = styled.main`
 min-height: 100vh;
 padding-bottom: 100px;
 @media screen and (min-width: 1280px) {
@@ -15,7 +15,7 @@ padding-bottom: 100px;
 }
 `;
 
-export const CartContainer = styled.div`
+export const CartContainer = styled.section`
   display: flex;
   margin-bottom: 200px;
   max-width: 1400px;
@@ -28,7 +28,7 @@ export const CartContainer = styled.div`
   }
 `;
 
-export const Cart = styled.div`
+export const Cart = styled.ul`
   border-bottom: 1.5px solid rgba(225, 225, 225);
   @media screen and (min-width: 1280px) {
     width: 640px;
@@ -37,10 +37,11 @@ export const Cart = styled.div`
   }
 `;
 
-export const EmptyCart = styled.div`
+export const EmptyCart = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
+  list-style: none;
   h3{
     font-size: 28px;
     font-weight: 400;
@@ -63,7 +64,7 @@ export const EmptyCart = styled.div`
   }
 `;
 
-export const Checkout = styled.div`
+export const Checkout = styled.section`
   visibility: hidden;
   position: fixed;
   display: flex;
@@ -103,15 +104,21 @@ export const CartItemContainer = styled.li`
   justify-content: space-between;
   align-items: center;
   height: 158px;
+  list-style: none;
   >img{
     height 100px;
     width: 100px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(200, 200, 200);
+    :hover{
+      box-shadow: 0 0 14px rgba(200, 200, 200);
+    }
   }
   >div{
     position: relative;
     left: -16%;
     top: -20px;
-    >p{
+    >h3{
       font-size: 22px;
       font-weight: 500;
       letter-spacing: 1.2px;
@@ -119,21 +126,21 @@ export const CartItemContainer = styled.li`
     }
     >div{
       font-size: 18px;
-      >p>input{
+      >input{
         background-color: rgba(240 , 240, 240);
         padding: 0 0 0 5px;
-        margin-right: 10px;
+        margin: 0 10px;
         max-width: 30px;
       }
       >button{
         padding-bottom: .5px;
         color: rgba(80, 80, 80);
         border-bottom: 1.5px solid black;
-      }
-      >button:hover{
-        padding-bottom: 0px;
-        color: rgba(0, 0, 0);
-        border-bottom: 2px solid black;
+        :hover{
+          padding-bottom: 0px;
+          color: rgba(0, 0, 0);
+          border-bottom: 2px solid black;
+        }
       }
     }
   }
@@ -151,7 +158,7 @@ export const CartItemContainer = styled.li`
 `;
 
 export const OrderSumaryContainer = styled.div`
-  h1{
+  h2{
     margin-top: 45px;
     margin-bottom: 20px;
     font-size: 26px;
@@ -201,6 +208,9 @@ export const OrderSumaryContainer = styled.div`
   }
   button:hover {
     background-color: rgba(0, 35, 205, 0.8);
+  }
+  button:disabled {
+    background-color: rgba(0, 35, 205, 0.4);
   }
 }
 `;

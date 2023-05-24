@@ -7,18 +7,24 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import OrderSummary from "../components/CartPage/OrderSummary";
 import CartItem from "../components/CartPage/CartItem";
-import { Cart, CartContainer, Checkout, EmptyCart, OrderBody } from "../app/Utils/StyledComponents/CartComponents";
+import {
+  Cart,
+  CartContainer,
+  Checkout,
+  EmptyCart,
+  CartBody,
+} from "../app/Utils/StyledComponents/CartComponents";
 
 import { useCartState } from "../app/Utils/hooks/useCartState";
 import { setTotal } from "../app/Store/Car/carSlice";
 import SmallFooter from "../components/Layout/SmallFooter";
 
 const CartPage = () => {
-  const _products = useCartState();
+  const orderItems = useCartState();
   const dispatch = useDispatch();
   const nav = useNavigate();
 
-  const subTotal = _products.reduce((acc, curr) => {
+  const subTotal = orderItems.reduce((acc, curr) => {
     acc += curr.price * curr.quantity;
     return acc;
   }, 0);
@@ -26,48 +32,65 @@ const CartPage = () => {
   return (
     <>
       <Header />
-      <OrderBody className="py-2 mx-auto">
+      <CartBody className="py-2 mx-auto">
         <h1
-          style={{ "maxWidth": "1400px", "position": "relative" }}
-          className="pt-32 xl:pt-32 mb-2 xl:mb-0 xl:mx-auto pb-8 border-b-[1.5px] xl:border-none text-3xl xl:text-5xl font-semibold"> Cart </h1>
+          id="cart-title"
+          aria-label="All Items currently in your cart"
+          style={{ maxWidth: "1400px", position: "relative" }}
+          className="pt-32 xl:pt-32 mb-2 xl:mb-0 xl:mx-auto pb-8 border-b-[1.5px] xl:border-none text-3xl xl:text-5xl font-semibold"
+        >
+          Shopping Cart Items
+        </h1>
         <CartContainer>
-          <Cart>
-            {_products.length > 0 ?
+          <Cart aria-describedby="cart-title">
+            {orderItems.length > 0 ? (
               <>
-                {_products.map((product) => (
-                  <span key={product.id}>
-                    <CartItem product={product} />
-                  </span>
+                {orderItems.map((product, idx) => (
+                  <CartItem
+                    aria-label={`Cart Item: ${product.title}, is selected with a Quantity of ${product.quantity}`}
+                    aria-posinset={idx}
+                    aria-setsize={orderItems.length}
+                    key={product.id}
+                    product={product}
+                  />
                 ))}
               </>
-            :
-              <EmptyCart>
+            ) : (
+              <EmptyCart aria-label="No Cart Items available">
                 <h3>No items in Cart</h3>
                 <button
-                  onClick={() => nav('/')}
-                > Return Shopping </button>
+                  aria-label="Home page return"
+                  onClick={() => nav("/")}
+                >
+                  Return Shopping
+                </button>
               </EmptyCart>
-            }
+            )}
           </Cart>
-          <OrderSummary subTot={ subTotal } />
+          <OrderSummary subTot={subTotal} disabled={orderItems.length! === 0} />
         </CartContainer>
         <Checkout>
-          {_products.length! > 0 ?
+          {orderItems.length! > 0 ? (
             <button
+              aria-label="Continue to Order page to checkout"
               onClick={() => {
                 dispatch(setTotal(subTotal));
-                nav('/order')
+                nav("/order");
               }}
             >
               Checkout
             </button>
-          :
-            <button disabled>
+          ) : (
+            <button
+              disabled
+              aria-disabled="true"
+              aria-label="Cannot proceed without any Items to order"
+            >
               Checkout
             </button>
-          }
+          )}
         </Checkout>
-      </OrderBody>
+      </CartBody>
       <SmallFooter />
     </>
   );

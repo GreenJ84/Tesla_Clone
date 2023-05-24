@@ -9,13 +9,19 @@ import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/CartCompo
 import { setTotal } from "../../app/Store/Car/carSlice";
 import { useCommas } from "../../app/Utils/hooks/useCommas";
 
-const OrderSummary = (props: { subTot: number }) => {
-  const dispatch = useDispatch()
+const OrderSummary = ({
+  subTot,
+  disabled = true,
+}: {
+  subTot: number;
+  disabled: boolean;
+}) => {
+  const dispatch = useDispatch();
   const nav = useNavigate();
 
   return (
     <OrderSumaryContainer>
-      <h1>Order Summary</h1>
+      <h2 aria-label="Order Cost summary estimates">Order Summary</h2>
       <div>
         <div>
           <p>Shipping</p>
@@ -23,19 +29,32 @@ const OrderSummary = (props: { subTot: number }) => {
           <p>Subtotal</p>
         </div>
         <div>
-          <p>Free</p>
-          <p>Calculated at checkout</p>
-          <p>${useCommas(props.subTot)}.00</p>
+          <p aria-label="No cost for Shipping">Free</p>
+          <p aria-label="Taxes will be calculated at Checkout">
+            Calculated at checkout
+          </p>
+          <p aria-label="Subtotal for current Cart">${useCommas(subTot)}.00</p>
         </div>
       </div>
-      <button
-        onClick={() => {
-          dispatch(setTotal(props.subTot));
-          nav('/order');
-        }}
-      >
-        Checkout
-      </button>
+      {!disabled ? (
+        <button
+          aria-label="Continue to Order page to checkout"
+          onClick={() => {
+            dispatch(setTotal(subTot));
+            nav("/order");
+          }}
+        >
+          Checkout
+        </button>
+      ) : (
+        <button
+          disabled
+          aria-disabled="true"
+          aria-label="Cannot proceed without any Items to order"
+        >
+          Checkout
+        </button>
+      )}
     </OrderSumaryContainer>
   );
 };

@@ -20,45 +20,58 @@ const CartItem = (props: CartProps) => {
   return (
     <CartItemContainer>
       <img
+        aria-label={`${product.title} display image`}
         src={`/images/${product.backgroundImg}`}
         alt={product.title}
       />
       <div>
-        <p>{product.title}</p>
+        <h3>{product.title}</h3>
         <div className="flex">
-          <p>
-            Quantity:
-            {window.location.pathname !== "/order" ? 
-              <input
-                type="number"
-                value={product.quantity}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  dispatch(setQuantity(
-                    {
-                      id: product.id,
-                      quantity: parseInt(e.currentTarget.value)
-                    }
-                  ))
-                }
-                min={0}
-                max={3}
-              />
-            :
-              <input
+          <label>Quantity:</label>
+          {window.location.pathname !== "/order" ? (
+            <input
               type="number"
+              inputMode="numeric"
               value={product.quantity}
-              readOnly
+              aria-label="Updatable purchase quantity"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                dispatch(
+                  setQuantity({
+                    id: product.id,
+                    quantity: parseInt(e.currentTarget.value),
+                  })
+                )
+              }
+              min={0}
+              max={3}
             />
-            }
-          </p>
+          ) : (
+            <input
+              type="number"
+              inputMode="numeric"
+              value={product.quantity}
+              aria-label="Confirmed purchase quantity"
+              readOnly
+              aria-readonly="true"
+            />
+          )}
           <button
+            aria-label="Remove all of this product from Cart"
             onClick={() => {
-              dispatch(removeFromCart(product.id))
+              dispatch(removeFromCart(product.id));
             }}
-          >Remove</button>
+          >
+            Remove
+          </button>
         </div>
       </div>
-      <p>${useCommas(product.price)}.00</p>
+      <p
+        aria-label={`Subtotal for ${
+          product.quantity > 1 && `all ${product.quantity} of`
+        } this product`}
+      >
+        ${useCommas(product.price)}.00
+      </p>
     </CartItemContainer>
   );
 };
