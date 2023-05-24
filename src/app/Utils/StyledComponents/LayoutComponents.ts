@@ -8,11 +8,12 @@ export interface StyledProps {
 
 export const AdModalContainer = styled.aside`
   position: sticky;
-  display: ${({ show }: StyledProps) => (show ? "block" : "none")};
+  display: ${({ show }: StyledProps) => (show ? "flex" : "none")};
   top: 0;
+  align-items: center;
   width: 100vw;
-  height: 100px;
-  font-size: 22px;
+  height: 70px;
+  font-size: 20px;
   text-align: center;
   background-color: rgba(250, 250, 250);
   z-index: 20;
@@ -20,7 +21,6 @@ export const AdModalContainer = styled.aside`
     position: relative;
     width: 90vw;
     margin: 0 auto;
-    top: 12px;
   span {
       cursor: pointer;
       border-bottom: 1.5px solid black;

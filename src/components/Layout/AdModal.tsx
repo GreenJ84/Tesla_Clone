@@ -9,15 +9,16 @@ const AdModal = () => {
 
     return (
     <AdModalContainer show={modalStatus}>
-        <Close>
+        <Close
+          onClick={() => setModalStatus(false)}
+        >
           <XMarkIcon
             style={{ cursor: "pointer" }}
             className="h-6 w-6"
-            onClick={() => setModalStatus(false)}
           />
         </Close>
         <p>
-            Until March 2023, certain new Model 3 and Model Y vehicles qualify for a $7,500 federal tax credit for eligible buyers. <span>Learn More</span>
+            Up to $7,500 federal tax credit for Model Y and Model 3&emsp;<span>Learn More</span>
         </p>
     </AdModalContainer>
     );
