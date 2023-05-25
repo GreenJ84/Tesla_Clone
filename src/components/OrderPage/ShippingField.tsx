@@ -141,7 +141,9 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
             shipHandler("state", e)
           }
           pattern="^[A-Za-z\s-]{2,}$"
-          aria-invalid={shipAdd.state.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"}
+          aria-invalid={
+            shipAdd.state.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
+          }
           autoComplete="state"
           aria-autocomplete="both"
           required
@@ -174,7 +176,9 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
             shipHandler("lastName", e)
           }
           pattern="^[A-Za-z\s-]{2,}$"
-          aria-invalid={shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"}
+          aria-invalid={
+            shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
+          }
           autoComplete="family-name"
           required
           aria-required="true"
@@ -202,7 +206,9 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
             shipHandler("address2", e)
           }
           pattern="^[A-Za-z0-9\s-.,#]*$"
-          aria-invalid={shipAdd.lastName.match(/^[A-Za-z0-9\s-.,#]*$/) ? "false" : "true"}
+          aria-invalid={
+            shipAdd.lastName.match(/^[A-Za-z0-9\s-.,#]*$/) ? "false" : "true"
+          }
           autoComplete="building-address"
           required
           aria-required="true"
@@ -232,7 +238,9 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
             shipHandler("city", e)
           }
           pattern="^[A-Za-z\s-]{2,}$"
-          aria-invalid={shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"}
+          aria-invalid={
+            shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
+          }
           autoComplete="city"
           required
           aria-required="true"
@@ -262,7 +270,9 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
             shipHandler("phone", e)
           }
           pattern="^[A-Za-z0-9\s-._,#]*$"
-          aria-invalid={shipAdd.phone?.match(/^[A-Za-z0-9\s-._,#]*$/) ? "false" : "true"}
+          aria-invalid={
+            shipAdd.phone?.match(/^[A-Za-z0-9\s-._,#]*$/) ? "false" : "true"
+          }
           autoComplete="phone-number"
           required
           aria-required="true"
