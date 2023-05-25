@@ -2,12 +2,16 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE } from 'redux-persist';
-import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 import storage from "redux-persist/lib/storage";
+import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
-import { carsData } from "../../teslaCarInfo";
-import carReducer, { CarState } from "./Car/carSlice";
+import carReducer, { CartState } from "./Cart/cartSlice";
 import userReducer, { UserState } from "./User/userSlice";
+
+export interface storeType{
+  user: UserState
+  car: CartState
+}
 
 const persistConfig = {
   key: 'root',
@@ -16,7 +20,7 @@ const persistConfig = {
 }
 
 const persistedUserReducer = persistReducer<UserState>({ ...persistConfig, blacklist: ['isLoggedIn'] }, userReducer)
-const persistedCarReducer = persistReducer<CarState>({ ...persistConfig, blacklist: ['cars'] }, carReducer)
+const persistedCarReducer = persistReducer<CartState>({ ...persistConfig}, carReducer)
 
 export const store = configureStore({
   reducer: {
@@ -27,15 +31,8 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: ["user/setLogin", FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-        ignoredActionPaths: ["payload.ref", "user.user"],
-        ignoredPaths: [
-          ...carsData.map((_, index) => {
-            return `car.cars.${index}.ref`;
-          }),
-          ...carsData.map((_, index) => {
-            return `car.cart.${index}.ref`;
-          }),
-        "user.user"],
+        ignoredActionPaths: [ "user.user"],
+        ignoredPaths: ["user.user"],
       },
       immutableCheck: false,
     }),
