@@ -46,7 +46,7 @@ const persistedOrderReducer = persistReducer<OrderState>(
 export const store = configureStore({
   reducer: {
     user: persistedUserReducer,
-    car: persistedCartReducer,
+    cart: persistedCartReducer,
     order: persistedOrderReducer,
   },
   middleware: (getDefaultMiddleware) =>

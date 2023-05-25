@@ -7,7 +7,9 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
 export const useCartState = () =>
-  useAppSelector((state: RootState) => state.car.cart);
+  useAppSelector((state: RootState) => state.cart);
+export const useOrderState = () =>
+  useAppSelector((state: RootState) => state.order);
 
 const choices =
   "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
