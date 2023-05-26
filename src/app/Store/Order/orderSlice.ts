@@ -91,12 +91,12 @@ export default orderSlice.reducer;
 const validateAddress = (address: Address, errors: Address): boolean => { 
   let noErrors = true;
   // First Name Validation
-  if (!address.firstName.match(/^[A-Za-z]{2,}$/)) { 
+  if (!address.firstName.match(/^[A-Za-z\s-]{2,}$/)) { 
     noErrors = false;
     errors.firstName = "First Name must be 2 or more characters";
   } else { errors.firstName = ""; }
   // Last Name Validation
-  if (!address.lastName.match(/^[A-Za-z]{2,}$/)) { 
+  if (!address.lastName.match(/^[A-Za-z\s-]{2,}$/)) { 
     noErrors = false;
     errors.lastName = "Last Name must be 2 or more characters";
   } else { errors.lastName = ""; }
@@ -111,12 +111,12 @@ const validateAddress = (address: Address, errors: Address): boolean => {
     errors.address1 = "Building Address must only be alphanumeric characters, hyphens, commas, periods, pound signs or spaces";
   } else { errors.address2 = ""; }
   // City Validation
-  if (!address.city.match(/^[A-Za-z\s-.]*$/)) { 
+  if (!address.city.match(/^[A-Za-z\s-]{2,}$/)) { 
     noErrors = false;
     errors.city = "City must only be alphanumeric characters, spaces, and hyphens";
   } else { errors.city = ""; }
   // State Validation
-  if (!address.state.match(/^[A-Za-z]{2}$/)) { 
+  if (!address.state.match(/^[A-Za-z\s-]{2,}$/)) { 
     noErrors = false;
     errors.state = "State must only be alphabetic characters";
   } else { errors.state = ""; }
@@ -144,12 +144,12 @@ export const validateBilling = (billing: Address, errors: Address): boolean => {
   let noErrors = true;
   noErrors = validateAddress(billing, errors);
   // Validate Company Name
-  if (!billing.company?.match(/^$/)) {
+  if (!billing.company?.match(/^[A-Za-z\s-.,']{2,}$/)) {
     noErrors = false;
     errors.company = "Company name must must only be alphanumeric characters, hyphens, commas, periods, pound signs or spaces";
   } else { errors.company = ""; }
   // Validate Country Name
-  if (!billing.country?.match(/^[A-Za-z]{2}$/)) {
+  if (!billing.country?.match(/^[A-Za-z\s-]{2,}$/)) {
     noErrors = false;
     errors.country = "Country must only be alphabetic characters";
   } else { errors.country = ""; }
