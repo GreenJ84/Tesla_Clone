@@ -53,6 +53,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.firstName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -87,6 +88,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -164,6 +166,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
                     : "true"
                 }
                 autoComplete="on"
+                aria-autocomplete="both"
                 required
                 aria-required="true"
               />
@@ -199,6 +202,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.country?.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -229,6 +233,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.address2.match(/^[A-Za-z0-9\s-.,#]*$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -261,6 +266,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.state.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -288,7 +294,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.address1 && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder={ shipAdd.address1}
+            placeholder={shipAdd.address1}
             value={billAdd.address1}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("address1", e)
@@ -298,6 +304,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.address1.match(/^[A-Za-z0-9\s-.,]*$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -330,6 +337,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.city.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />
@@ -352,7 +360,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.zip && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder={ shipAdd.zip }
+            placeholder={shipAdd.zip}
             value={billAdd.zip}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("zip", e)
@@ -362,6 +370,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
               billAdd.zip.match(/^\d{5}(-\d{4})?$/) ? "false" : "true"
             }
             autoComplete="on"
+            aria-autocomplete="both"
             required
             aria-required="true"
           />

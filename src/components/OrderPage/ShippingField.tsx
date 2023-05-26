@@ -45,7 +45,7 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.firstName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
           }
-          autoComplete="given-name"
+          autoComplete="on"
           aria-autocomplete="both"
           required
           aria-required="true"
@@ -78,7 +78,7 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.address1.match(/^[A-Za-z0-9\s-.,]*$/) ? "false" : "true"
           }
-          autoComplete="street-address"
+          autoComplete="on"
           aria-autocomplete="both"
           required
           aria-required="true"
@@ -92,12 +92,12 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           {errors.address1}
         </div>
 
-        <label htmlFor="zipCode">
+        <label htmlFor="shippingZipCode">
           Zip Code<span aria-hidden="true">*</span>
         </label>
         <input
-          id="zipCode"
-          name="zipCode"
+          id="shippingZipCode"
+          name="shippingZipCode"
           aria-describedby="shippingZipError"
           className={shipAdd.zip && "border invalid:border-red-500"}
           type="text"
@@ -111,7 +111,7 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.zip.match(/^\d{5}(-\d{4})?$/) ? "false" : "true"
           }
-          autoComplete="zip-code"
+          autoComplete="on"
           aria-autocomplete="both"
           required
           aria-required="true"
@@ -144,7 +144,7 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.state.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
           }
-          autoComplete="state"
+          autoComplete="on"
           aria-autocomplete="both"
           required
           aria-required="true"
@@ -179,7 +179,8 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
           }
-          autoComplete="family-name"
+          autoComplete="on"
+          aria-autocomplete="both"
           required
           aria-required="true"
         />
@@ -209,7 +210,8 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.lastName.match(/^[A-Za-z0-9\s-.,#]*$/) ? "false" : "true"
           }
-          autoComplete="building-address"
+          autoComplete="on"
+          aria-autocomplete="both"
           required
           aria-required="true"
         />
@@ -241,7 +243,8 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.lastName.match(/^[A-Za-z\s-]{2,}$/) ? "false" : "true"
           }
-          autoComplete="city"
+          autoComplete="on"
+          aria-autocomplete="both"
           required
           aria-required="true"
         />
@@ -273,7 +276,8 @@ const ShippingField = ({ shipping, errors }: ShippingProps) => {
           aria-invalid={
             shipAdd.phone?.match(/^[A-Za-z0-9\s-._,#]*$/) ? "false" : "true"
           }
-          autoComplete="phone-number"
+          autoComplete="on"
+          aria-autocomplete="both"
           required
           aria-required="true"
         />
