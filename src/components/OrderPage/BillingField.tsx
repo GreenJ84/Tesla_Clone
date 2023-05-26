@@ -1,9 +1,8 @@
 /** @format */
 
 import React, { useState } from "react";
-import { Form } from "react-router-dom";
 
-import { Form2 } from "../../app/Utils/StyledComponents/OrderComponents";
+import { Form, Form2 } from "../../app/Utils/StyledComponents/OrderComponents";
 
 import { Address } from "../../app/Store/Order/orderSlice";
 
@@ -44,7 +43,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.firstName && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. John"
+            placeholder={shipAdd.firstName}
             value={billAdd.firstName}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("firstName", e)
@@ -78,7 +77,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.lastName && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. Smith"
+            placeholder={shipAdd.lastName}
             value={billAdd.lastName}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("lastName", e)
@@ -220,7 +219,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.address2 && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. Apt G #84"
+            placeholder={shipAdd.address2}
             value={billAdd.address2}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("address2", e)
@@ -252,7 +251,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.state && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. TX"
+            placeholder={shipAdd.state}
             value={billAdd.state}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("state", e)
@@ -289,7 +288,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.address1 && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. 1234 Main St"
+            placeholder={ shipAdd.address1}
             value={billAdd.address1}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("address1", e)
@@ -321,7 +320,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.city && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. New York"
+            placeholder={shipAdd.city}
             value={billAdd.city}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("city", e)
@@ -353,7 +352,7 @@ const BillingField = ({ shipAdd, billing, errors }: BillingProps) => {
             className={billAdd.zip && "border invalid:border-red-500"}
             type="text"
             inputMode="text"
-            placeholder="Ex. 12345"
+            placeholder={ shipAdd.zip }
             value={billAdd.zip}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               billHandler("zip", e)
