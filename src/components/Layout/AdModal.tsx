@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+
 import { AdModalContainer, Close } from "../../app/Utils/StyledComponents/LayoutComponents";
 
 const AdModal = () => {

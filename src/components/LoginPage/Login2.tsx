@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
+import Show from "../Layout/Show";
 import {
   Button,
   LoginContainer,
   Underline,
 } from "../../app/Utils/StyledComponents/LoginComponents";
 import { RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
-import Show from "../Layout/Show";
 
 interface Login2Props {
   password: [string, Function];

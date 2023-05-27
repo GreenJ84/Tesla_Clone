@@ -1,8 +1,8 @@
 /** @format */
 
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import {
   collection,
   serverTimestamp,
@@ -10,6 +10,7 @@ import {
   setDoc,
   getCountFromServer,
 } from "firebase/firestore";
+import { DB } from "../../firebase/firebase";
 
 import CartItem from "../CartPage/CartItem";
 import CardModal from "./CardModal";
@@ -21,17 +22,14 @@ import {
   OrderButton,
 } from "../../app/Utils/StyledComponents/OrderComponents";
 
-import { useAppSelector } from "../../app/Utils/hooks/hooks";
 import { clearCart } from "../../app/Store/Cart/cartSlice";
-
-import { DB } from "../../firebase/firebase";
 import { useUserData } from "../../app/Store/User/userSlice";
-
 import { Payment, initialOrderState, setOrder, setPayment } from "../../app/Store/Order/orderSlice";
+import { useAppDispatch, useAppSelector } from "../../app/Utils/hooks/hooks";
 
 const Order2 = ({ setStep }: {setStep: Function}) => {
   const nav = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUserData();
 
   const [cardDetails, setCardDetails] = useState<Payment>({ ...initialOrderState.payment });

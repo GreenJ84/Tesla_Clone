@@ -1,13 +1,12 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 
 import { CartItemContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
-import { removeFromCart, setQuantity } from "../../app/Store/Car/carSlice";
+import { removeFromCart, setQuantity } from "../../app/Store/Cart/cartSlice";
+import { formatPrice, useAppDispatch } from "../../app/Utils/hooks/hooks";
 import { carData } from "../../teslaCarInfo";
-import { useCommas } from "../../app/Utils/hooks/useCommas";
 
 interface CartProps {
   product: carData;
@@ -15,7 +14,7 @@ interface CartProps {
 
 const CartItem = (props: CartProps) => {
   const { product } = props;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <CartItemContainer>
@@ -70,7 +69,7 @@ const CartItem = (props: CartProps) => {
           product.quantity > 1 && `all ${product.quantity} of`
         } this product`}
       >
-        ${useCommas(product.price)}.00
+        ${formatPrice(product.price)}
       </p>
     </CartItemContainer>
   );

@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import {
@@ -16,9 +15,9 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import { RootState } from "../../app/Store/store";
-import { selectCars } from "../../app/Store/Car/carSlice";
 import { setLogout } from "../../app/Store/User/userSlice";
-import { useCartState } from "../../app/Utils/hooks/useCartState";
+import { useAppSelector, useAppDispatch } from "../../app/Utils/hooks/hooks";
+import { carsData } from "../../teslaCarInfo";
 
 interface HeaderType {
   bgColor?: string;
@@ -34,11 +33,10 @@ const blackBGStyle = "text-black hover:bg-gray-800 hover:bg-opacity-50";
 const Header = (props: HeaderType) => {
   const { bgColor, slide } = props;
   const nav = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const user = useSelector((state: RootState) => state.user);
-  const cars = useSelector(selectCars);
-  const _cartData = useCartState();
+  const user = useAppSelector((state: RootState) => state.user);
+  const _cartData = useAppSelector((state: RootState) => state.cart.items);
 
   const [menuStatus, setMenuStatus] = useState([false, false]);
 
@@ -78,7 +76,7 @@ const Header = (props: HeaderType) => {
         aria-label="Product Selection Navigation"
         className="flex gap-6 pt-2.5"
       >
-        {cars.map((car) => (
+        {carsData.map((car) => (
           <h1
             className={`${buttonStyle} ${
               window.location.pathname === "/cars/1"
@@ -174,7 +172,7 @@ const Header = (props: HeaderType) => {
           />
         </Close>
         <ul>
-          {cars.map((car) => (
+          {carsData.map((car) => (
             <li
               key={car.id}
               onClick={() => {

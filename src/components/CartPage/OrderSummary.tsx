@@ -1,13 +1,13 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
-import { setTotal } from "../../app/Store/Car/carSlice";
-import { useCommas } from "../../app/Utils/hooks/useCommas";
+import { formatPrice } from "../../app/Utils/hooks/hooks";
+import { setTotal } from "../../app/Store/Cart/cartSlice";
+import { useAppDispatch } from "../../app/Utils/hooks/hooks";
 
 const OrderSummary = ({
   subTot,
@@ -16,7 +16,7 @@ const OrderSummary = ({
   subTot: number;
   disabled: boolean;
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   return (
@@ -33,7 +33,7 @@ const OrderSummary = ({
           <p aria-label="Taxes will be calculated at Checkout">
             Calculated at checkout
           </p>
-          <p aria-label="Subtotal for current Cart">${useCommas(subTot)}.00</p>
+          <p aria-label="Subtotal for current Cart">${formatPrice(subTot)}</p>
         </div>
       </div>
       {!disabled ? (

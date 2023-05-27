@@ -1,12 +1,13 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Header from "../components/Layout/Header";
 import OrderSummary from "../components/CartPage/OrderSummary";
 import CartItem from "../components/CartPage/CartItem";
+import SmallFooter from "../components/Layout/SmallFooter";
+
 import {
   Cart,
   CartContainer,
@@ -15,19 +16,14 @@ import {
   CartBody,
 } from "../app/Utils/StyledComponents/CartComponents";
 
-import { useCartState } from "../app/Utils/hooks/useCartState";
-import { setTotal } from "../app/Store/Car/carSlice";
-import SmallFooter from "../components/Layout/SmallFooter";
+import { useAppDispatch, useAppSelector } from "../app/Utils/hooks/hooks";
+import { setTotal } from "../app/Store/Cart/cartSlice";
 
 const CartPage = () => {
-  const orderItems = useCartState();
-  const dispatch = useDispatch();
+  const {items, subTotal} = useAppSelector(state => state.cart);
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
-  const subTotal = orderItems.reduce((acc, curr) => {
-    acc += curr.price * curr.quantity;
-    return acc;
-  }, 0);
 
   return (
     <>
@@ -43,13 +39,13 @@ const CartPage = () => {
         </h1>
         <CartContainer>
           <Cart aria-describedby="cart-title">
-            {orderItems.length > 0 ? (
+            {items.length > 0 ? (
               <>
-                {orderItems.map((product, idx) => (
+                {items.map((product, idx) => (
                   <CartItem
                     aria-label={`Cart Item: ${product.title}, is selected with a Quantity of ${product.quantity}`}
                     aria-posinset={idx}
-                    aria-setsize={orderItems.length}
+                    aria-setsize={items.length}
                     key={product.id}
                     product={product}
                   />
@@ -67,10 +63,10 @@ const CartPage = () => {
               </EmptyCart>
             )}
           </Cart>
-          <OrderSummary subTot={subTotal} disabled={orderItems.length! === 0} />
+          <OrderSummary subTot={subTotal} disabled={items.length! === 0} />
         </CartContainer>
         <Checkout>
-          {orderItems.length! > 0 ? (
+          {items.length! > 0 ? (
             <button
               aria-label="Continue to Order page to checkout"
               onClick={() => {

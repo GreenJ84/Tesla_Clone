@@ -23,9 +23,9 @@ import {
   Divide,
   Revert,
 } from "../app/Utils/StyledComponents/LoginComponents";
+import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
-import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 import { useAppDispatch } from "../app/Utils/hooks/hooks";
 
 const RegistrationPage = () => {

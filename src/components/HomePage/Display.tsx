@@ -4,10 +4,9 @@ import React, { BaseSyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Fade } from "react-awesome-reveal";
 
-import { selectCars } from "../../app/Store/Car/carSlice";
-import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
-
 import { Container, ButtonWrap, Button, DownArrow } from "./DisplayComponents";
+
+import { carsData } from "../../teslaCarInfo";
 
 interface DisplayProps {
   id: number;
@@ -18,7 +17,6 @@ interface DisplayProps {
 
 const Display = (props: DisplayProps) => {
   const nav = useNavigate();
-  const cars = useAppSelector(selectCars);
 
   return (
     <Container bgImage={props.backgroundImg}>
@@ -60,7 +58,7 @@ const Display = (props: DisplayProps) => {
           </Button>
         </ButtonWrap>
       </Fade>
-      {props.id !== cars.length && (
+      {props.id !== carsData.length && (
         <DownArrow
           role="link"
           aria-label="Next Car Window Slide"

@@ -16,22 +16,10 @@ import {
 import { DB } from "../firebase/firebase";
 
 import Header from "../components/Layout/Header";
-import { Card } from "../components/OrderPage/Order2";
 import SmallFooter from "../components/Layout/SmallFooter";
+import Confirmation, {orderData} from "../components/ConfirmationPage/Confirmation";
 
-import { billAddress, shipAddress } from "./OrderPage";
 import { useUserData } from "../app/Store/User/userSlice";
-import { carData } from "../teslaCarInfo";
-import Confirmation from "../components/ConfirmationPage/Confirmation";
-
-interface orderData {
-  tag: string | null;
-  order: carData[] | null;
-  shipping: shipAddress | null;
-  billing: billAddress | null;
-  card: Card | null;
-  total: number | null;
-}
 
 const ConfirmationPage = () => {
   const nav = useNavigate();
@@ -43,7 +31,6 @@ const ConfirmationPage = () => {
     shipping: null,
     billing: null,
     card: null,
-    total: null,
   });
   const { width, height } = useWindowSize();
 

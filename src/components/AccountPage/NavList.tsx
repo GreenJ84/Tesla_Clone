@@ -1,9 +1,7 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
 
 import {
   ArrowRightOnRectangleIcon,
@@ -14,15 +12,17 @@ import {
   UserIcon,
 } from "@heroicons/react/24/outline";
 
-import { setLogout } from "../../app/Store/User/userSlice";
 import {
   ActiveIcon,
   IconStyle,
   NavListContainer,
 } from "../../app/Utils/StyledComponents/AccountComponents";
 
+import { setLogout } from "../../app/Store/User/userSlice";
+import { useAppDispatch } from "../../app/Utils/hooks/hooks";
+
 const NavList = ({ toggle, wide }: { wide: boolean; toggle?: Function }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   return (

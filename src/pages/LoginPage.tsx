@@ -22,10 +22,10 @@ import {
   LoginMainContainer,
   Revert,
 } from "../app/Utils/StyledComponents/LoginComponents";
+import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
 import { useAppDispatch } from "../app/Utils/hooks/hooks";
-import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 const LoginPage = () => {
   const dispatch = useAppDispatch();
