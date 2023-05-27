@@ -1,7 +1,8 @@
 /** @format */
 import { createSlice } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
-import { useAppSelector } from "../../Utils/hooks/useAppSelector";
+
+import { useAppSelector } from "../../Utils/hooks/hooks";
 
 export interface UserState {
   user: User | null;

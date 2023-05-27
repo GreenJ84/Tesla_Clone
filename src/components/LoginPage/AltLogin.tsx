@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -36,6 +35,7 @@ import { Close } from "../../app/Utils/StyledComponents/LayoutComponents";
 import Login2 from "./Login2";
 
 import { setLogin } from "../../app/Store/User/userSlice";
+import { useAppDispatch } from "../../app/Utils/hooks/hooks";
 
 interface existingAccount {
   email: string;
@@ -44,7 +44,7 @@ interface existingAccount {
 }
 
 const AltLogin = ({ close }: { close: Function }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
   const [accountExist, setAccountExist] = useState<[boolean, existingAccount]>([
     false,

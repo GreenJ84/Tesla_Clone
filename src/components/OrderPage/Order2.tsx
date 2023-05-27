@@ -1,8 +1,8 @@
 /** @format */
 
 import React, { BaseSyntheticEvent, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import {
   collection,
   serverTimestamp,
@@ -10,6 +10,7 @@ import {
   setDoc,
   getCountFromServer,
 } from "firebase/firestore";
+import { DB } from "../../firebase/firebase";
 
 import CartItem from "../CartPage/CartItem";
 import CardModal from "./CardModal";
@@ -21,47 +22,23 @@ import {
   OrderButton,
 } from "../../app/Utils/StyledComponents/OrderComponents";
 
-import { useAppSelector } from "../../app/Utils/hooks/useAppSelector";
-import { useCartState } from "../../app/Utils/hooks/useCartState";
-import { completeOrder, setTotal } from "../../app/Store/Car/carSlice";
-import { billAddress, shipAddress } from "../../pages/OrderPage";
-import { DB } from "../../firebase/firebase";
+import { clearCart } from "../../app/Store/Cart/cartSlice";
 import { useUserData } from "../../app/Store/User/userSlice";
-import { carData } from "../../teslaCarInfo";
+import { Payment, initialOrderState, setOrder, setPayment } from "../../app/Store/Order/orderSlice";
+import { useAppDispatch, useAppSelector } from "../../app/Utils/hooks/hooks";
 
-export interface Card {
-  name: string;
-  number: string;
-  exp: string;
-  cvv: string;
-}
-interface order2Props {
-  ship: shipAddress;
-  bill: billAddress;
-  setStep: Function;
-}
-
-const Order2 = (props: order2Props) => {
+const Order2 = ({ setStep }: {setStep: Function}) => {
   const nav = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useUserData();
 
-  const [cardDet, setCardDet] = useState<Card>({
-    name: "",
-    number: "",
-    exp: "",
-    cvv: "",
-  });
+  const [cardDetails, setCardDetails] = useState<Payment>({ ...initialOrderState.payment });
+  const {shipping, billing} = useAppSelector(state => state.order);
+  const cart = useAppSelector(state => state.cart);
+  
   const [cardModal, setCardModal] = useState(false);
   const [wide, setWide] = useState(false);
 
-  const { ship, bill, setStep } = props;
-  const _products: carData[] = useCartState();
-  const subTotal = useAppSelector((state) => state.car.total);
-
-  const getTax = (value: number) => {
-    return value * 0.103;
-  };
 
   useEffect(() => {
     const toggleSize = () => {
@@ -80,15 +57,22 @@ const Order2 = (props: order2Props) => {
     setStep();
   };
 
-  const cardHandler = (value: keyof Card, e: BaseSyntheticEvent) => {
-    let copy = { ...cardDet };
+  const cardHandler = (value: keyof Payment, e: BaseSyntheticEvent) => {
+    e.preventDefault();
+    let copy = { ...cardDetails };
     copy[value] = e.currentTarget.value;
-    setCardDet({ ...copy });
+    setCardDetails({ ...copy });
   };
+
+  const cardSubmission = (e: BaseSyntheticEvent) => { 
+    e.preventDefault();
+    toggleCardModal();
+    dispatch(setPayment(cardDetails));
+    dispatch(setOrder(cart));
+  }
 
   const logOrder = async (e: BaseSyntheticEvent) => {
     e.preventDefault();
-    let total = subTotal + getTax(subTotal);
     try {
       const userRef = user.user!.uid.slice(0, 8).toString().toLowerCase();
       const count = await getCountFromServer(
@@ -99,39 +83,37 @@ const Order2 = (props: order2Props) => {
 
       await setDoc(doc(DB, userRef, "account", "orders", dataTag), {
         tag: dataTag,
-        order: _products,
-        shipping: ship,
-        billing: bill,
-        card: cardDet,
-        total: total,
+        order: cart,
+        shipping: shipping,
+        billing: billing,
+        card: cardDetails,
         timestamp: serverTimestamp(),
       });
       console.log("Saving Order");
-      dispatch(setTotal(total));
-      dispatch(completeOrder());
+      dispatch(clearCart());
       nav("/confirmation");
-    } catch (e) {
-      console.error("Error adding document: ", e);
+    } catch (err) {
+      console.error("Error adding document: ", err);
     }
   };
 
   return (
     <>
-      {cardModal ? (
+      {/* {confirmation && <OrderReview />} */}
+      {cardModal && (
         <CardModal
           toggle={toggleCardModal}
-          setCard={[cardDet, cardHandler]}
+          submit={cardSubmission}
+          setCard={[cardDetails, cardHandler]}
         />
-      ) : (
-        ""
       )}
       <Order2Body>
         <h1>Review and Pay</h1>
-        {!wide ? <p>Order Summary ({_products.length} items)</p> : ""}
+        {!wide ? <p>Order Summary ({cart.items.length} items)</p> : ""}
         <Order2Container>
           <div>
             <ul>
-              {_products.map((product) => (
+              {cart.items.map((product) => (
                 <span key={product.id}>
                   <CartItem product={product} />
                 </span>
@@ -139,12 +121,10 @@ const Order2 = (props: order2Props) => {
             </ul>
           </div>
           <div>
-            {wide ? (
+            {wide && (
               <p className="!text-3xl !font-bold">
-                Order Summary ({_products.length} items)
+                Order Summary ({cart.items.length} items)
               </p>
-            ) : (
-              " "
             )}
             <Address>
               <div>
@@ -154,14 +134,14 @@ const Order2 = (props: order2Props) => {
                 </button>
               </div>
               <p>
-                {ship.firstName} {ship.lastName}
+                {shipping.firstName} {shipping.lastName}
               </p>
-              <p>{ship.address1}</p>
-              {ship.address2 ? <p>{ship.address2}</p> : <p></p>}
+              <p>{shipping.address1}</p>
+              {shipping.address2 ? <p>{shipping.address2}</p> : <p></p>}
               <p>
-                {ship.city}, {ship.state} {ship.zip}
+                {shipping.city}, {shipping.state} {shipping.zip}
               </p>
-              <p>{ship.phone}</p>
+              <p>{shipping.phone}</p>
             </Address>
 
             <Address>
@@ -171,21 +151,21 @@ const Order2 = (props: order2Props) => {
                   Edit
                 </button>
               </div>
-              {bill.companyName ? <p>{bill.companyName}</p> : ""}
+              {billing.company ? <p>{billing.company}</p> : ""}
               <p>
-                {bill.firstName} {bill.lastName}
+                {billing.firstName} {billing.lastName}
               </p>
-              <p>{bill.address1}</p>
-              {bill.address2 ? <p>{bill.address2}</p> : ""}
+              <p>{billing.address1}</p>
+              {billing.address2 ? <p>{billing.address2}</p> : ""}
               <p>
-                {bill.city}, {bill.state} {bill.zip}
+                {billing.city}, {billing.state} {billing.zip}
               </p>
-              <p>{bill.country}</p>
+              <p>{billing.country}</p>
             </Address>
 
             <p>Add Promo Code</p>
 
-            <FinalOrder subTot={subTotal} />
+            <FinalOrder />
             <OrderButton onClick={() => toggleCardModal()}>Card</OrderButton>
             <p>Add Gift Card</p>
             <p>
@@ -196,7 +176,7 @@ const Order2 = (props: order2Props) => {
               </span>{" "}
               and <span>Privacy Notice</span>.
             </p>
-            {cardDet.name && cardDet.cvv && cardDet.exp && cardDet.number ? (
+            {cardDetails.cardHolderName && cardDetails.cvv && cardDetails.expYear && cardDetails.cardNumber ? (
               <OrderButton
                 className="px-8"
                 onClick={(e: BaseSyntheticEvent) => {

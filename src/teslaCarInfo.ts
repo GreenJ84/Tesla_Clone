@@ -22,7 +22,6 @@ export interface carData {
   inStock: boolean;
   highlights: string[];
   quantity: number;
-  ref: React.RefObject<HTMLDivElement> | null;
 }
 
 export const carsData: carData[] = [
@@ -57,7 +56,6 @@ export const carsData: carData[] = [
       "Traffic Light and Stop Sign Control",
     ],
     quantity: 1,
-    ref: null,
   },
   {
     id: 2,
@@ -90,7 +88,6 @@ export const carsData: carData[] = [
       "Traffic Light and Stop Sign Control",
     ],
     quantity: 1,
-    ref: null,
   },
   {
     id: 3,
@@ -124,7 +121,6 @@ export const carsData: carData[] = [
       "Traffic Light and Stop Sign Control",
     ],
     quantity: 1,
-    ref: null,
   },
   {
     id: 4,
@@ -157,6 +153,5 @@ export const carsData: carData[] = [
       "Traffic Light and Stop Sign Control",
     ],
     quantity: 1,
-    ref: null,
   },
 ];

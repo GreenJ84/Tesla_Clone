@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
   browserSessionPersistence,
@@ -23,12 +22,13 @@ import {
   LoginMainContainer,
   Revert,
 } from "../app/Utils/StyledComponents/LoginComponents";
-
-import { setLogin } from "../app/Store/User/userSlice";
 import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
+import { setLogin } from "../app/Store/User/userSlice";
+import { useAppDispatch } from "../app/Utils/hooks/hooks";
+
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   const [email, setEmail] = useState("");

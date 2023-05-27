@@ -1,21 +1,27 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { OrderSumaryContainer } from "../../app/Utils/StyledComponents/CartComponents";
 
-import { setTotal } from "../../app/Store/Car/carSlice";
-import { useCommas } from "../../app/Utils/hooks/useCommas";
+import { formatPrice } from "../../app/Utils/hooks/hooks";
+import { setTotal } from "../../app/Store/Cart/cartSlice";
+import { useAppDispatch } from "../../app/Utils/hooks/hooks";
 
-const OrderSummary = (props: { subTot: number }) => {
-  const dispatch = useDispatch()
+const OrderSummary = ({
+  subTot,
+  disabled = true,
+}: {
+  subTot: number;
+  disabled: boolean;
+}) => {
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   return (
     <OrderSumaryContainer>
-      <h1>Order Summary</h1>
+      <h2 aria-label="Order Cost summary estimates">Order Summary</h2>
       <div>
         <div>
           <p>Shipping</p>
@@ -23,19 +29,32 @@ const OrderSummary = (props: { subTot: number }) => {
           <p>Subtotal</p>
         </div>
         <div>
-          <p>Free</p>
-          <p>Calculated at checkout</p>
-          <p>${useCommas(props.subTot)}.00</p>
+          <p aria-label="No cost for Shipping">Free</p>
+          <p aria-label="Taxes will be calculated at Checkout">
+            Calculated at checkout
+          </p>
+          <p aria-label="Subtotal for current Cart">${formatPrice(subTot)}</p>
         </div>
       </div>
-      <button
-        onClick={() => {
-          dispatch(setTotal(props.subTot));
-          nav('/order');
-        }}
-      >
-        Checkout
-      </button>
+      {!disabled ? (
+        <button
+          aria-label="Continue to Order page to checkout"
+          onClick={() => {
+            dispatch(setTotal(subTot));
+            nav("/order");
+          }}
+        >
+          Checkout
+        </button>
+      ) : (
+        <button
+          disabled
+          aria-disabled="true"
+          aria-label="Cannot proceed without any Items to order"
+        >
+          Checkout
+        </button>
+      )}
     </OrderSumaryContainer>
   );
 };

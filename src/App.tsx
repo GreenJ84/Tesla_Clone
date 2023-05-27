@@ -6,10 +6,10 @@ import { Route, Routes } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import lazySizes from "lazysizes";
 
+import { AUTH } from "./firebase/firebase";
 import { setLogin, setLogout } from "./app/Store/User/userSlice";
 
 import HomePage from "./pages/HomePage";
-import { AUTH } from "./firebase/firebase";
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegistrationPage = lazy(() => import("./pages/RegistrationPage"));
 const AccountPage = lazy(() => import("./pages/AccountPage"));
@@ -17,6 +17,7 @@ const DisplayPage = lazy(() => import("./pages/DisplayPage"));
 const CartPage = lazy(() => import("./pages/CartPage"));
 const OrderPage = lazy(() => import("./pages/OrderPage"));
 const ConfirmationPage = lazy(() => import("./pages/ConfirmationPage"));
+
 
 function App() {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 /** @format */
 
 import React from "react";
-import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import { CheckIcon, ClockIcon } from "@heroicons/react/24/solid";
 
 import CarStat from "./CarStat";
@@ -13,13 +13,14 @@ import {
   socialIconStyle,
 } from "../../app/Utils/StyledComponents/DetailComponents";
 
-import { addToCart } from "../../app/Store/Car/carSlice";
+import { addToCart } from "../../app/Store/Cart/cartSlice";
+import { useAppDispatch } from "../../app/Utils/hooks/hooks";
 import { carsData } from "../../teslaCarInfo";
 
 const Detail = () => {
   const { id } = useParams();
   const [product] = carsData.filter((car) => car.id === parseInt(id ?? ""));
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const shareUrl =
     "https://twitter.com/intent/tweet?text=" +

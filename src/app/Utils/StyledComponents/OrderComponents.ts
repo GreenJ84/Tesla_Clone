@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const OrderPageContainer = styled.div`
+export const OrderPageContainer = styled.main`
   position: relative;
   width: 670px;
   margin: 0 auto 0;
@@ -33,7 +33,7 @@ export const OrderPageContainer = styled.div`
 }
 `;
 
-export const Order1Container = styled.div`
+export const Order1Container = styled.form`
   h1{
     font-size: 56px;
     font-weight: 500;
@@ -83,7 +83,7 @@ export const Order1Container = styled.div`
 }
 `;
 
-export const Form = styled.form`
+export const Form = styled.fieldset`
   display: flex;
   justify-content: space-between;
   input[type="radio"]{
@@ -106,7 +106,7 @@ export const Form = styled.form`
   input[type="radio"] + label{
     font-size: 20px;
   }
-  >div{
+  div{
     width: 47.5%;
     >label{
       display: block;
@@ -128,7 +128,7 @@ export const Form = styled.form`
   }
   `;
 
-export const Form2 = styled.form`
+export const Form2 = styled.fieldset`
   label{
     display: flex;
     align-items: center;

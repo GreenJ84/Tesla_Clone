@@ -4,13 +4,13 @@ import React, { useEffect, useState } from "react";
 
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 
+import Show from "../Layout/Show";
 import {
   Button,
   LoginContainer,
   Underline,
 } from "../../app/Utils/StyledComponents/LoginComponents";
 import { RegToolTip } from "../../app/Utils/StyledComponents/RegisrationComponents";
-import Show from "../Layout/Show";
 
 interface Login2Props {
   password: [string, Function];
@@ -73,8 +73,7 @@ const Login2 = (props: Login2Props) => {
       <input
         id="password"
         name="password"
-        aria-label="A Password 8 or more character long"
-        aria-describedby="pass-error"
+        aria-describedby="passError"
         className={`relative ${
           password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"
         }`}
@@ -84,10 +83,10 @@ const Login2 = (props: Login2Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPassword(e.currentTarget.value)
         }
-        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}"
+        pattern="^[A-Za-z0-9!@#$%^&*]{8,}$"
         aria-invalid={
           password.match(
-            /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}/g
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]){8,}$/
           )
             ? "false"
             : "true"
@@ -103,7 +102,7 @@ const Login2 = (props: Login2Props) => {
       )}
       {error && (
         <div
-          id="pass-error"
+          id="passError"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"

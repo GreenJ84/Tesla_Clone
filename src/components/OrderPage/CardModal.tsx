@@ -1,22 +1,30 @@
-import { XMarkIcon } from '@heroicons/react/24/solid';
-import React, { BaseSyntheticEvent } from 'react'
-import styled from 'styled-components';
-import { Button } from '../../app/Utils/StyledComponents/LoginComponents';
-import { Card } from './Order2';
+/** @format */
 
-interface cardProps{
-  toggle: Function
-  setCard: [Card, Function]
+import React, { BaseSyntheticEvent } from "react";
+import styled from "styled-components";
+
+import { XMarkIcon } from "@heroicons/react/24/solid";
+
+import { Button } from "../../app/Utils/StyledComponents/LoginComponents";
+
+import { Payment } from "../../app/Store/Order/orderSlice";
+
+interface cardProps {
+  toggle: Function;
+  setCard: [Payment, Function];
+  submit: Function;
 }
 
 const todayDate = () => {
   let date = new Date();
-  return `${date.getFullYear()}-${date.getMonth() < 10 ? `0${date.getMonth()}` : `${date.getMonth()}`}`;
-}
+  return `${date.getFullYear()}-${
+    date.getMonth() < 10 ? `0${date.getMonth()}` : `${date.getMonth()}`
+  }`;
+};
 
 const CardModal = (props: cardProps) => {
-  const { toggle } = props;
-  const [ card, setCard ] = props.setCard;
+  const { toggle, submit } = props;
+  const [card, setCard] = props.setCard;
   return (
     <Container>
       <div>
@@ -31,8 +39,8 @@ const CardModal = (props: cardProps) => {
         <input
           name="card name"
           type="text"
-          value={card.name}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+          value={card.cardHolderName}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCard("name", e)
           }
         />
@@ -41,8 +49,8 @@ const CardModal = (props: cardProps) => {
         <input
           name="card number"
           type="text"
-          value={card.number}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
+          value={card.cardNumber}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setCard("number", e)
           }
         />
@@ -54,8 +62,22 @@ const CardModal = (props: cardProps) => {
               name="expiration"
               type="month"
               min={todayDate()}
-              value={card.exp}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("exp", e)}
+              value={card.expMonth}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCard("exp", e)
+              }
+            />
+          </div>
+          <div>
+            <label htmlFor="expiration">Expiration</label>
+            <input
+              name="expiration"
+              type="year"
+              min={todayDate().slice(0, 4)}
+              value={card.expYear}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCard("exp", e)
+              }
             />
           </div>
           <div>
@@ -64,20 +86,28 @@ const CardModal = (props: cardProps) => {
               name="cvv"
               type="text"
               value={card.cvv}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("cvv", e)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setCard("cvv", e)
+              }
             />
           </div>
         </CardDetail>
-        {card.name && card.number && card.exp && card.cvv ?
-          <Button
-            onClick={(e: BaseSyntheticEvent) => toggle(e)}
-          > Continue </Button>
-        :
-          <Button disabled> Continue </Button>}
+        {card.cardHolderName &&
+        card.cardNumber &&
+        card.expMonth &&
+        card.expYear &&
+        card.cvv ? (
+          <Button onClick={(e: BaseSyntheticEvent) => submit(e)}>
+            {" "}
+            Continue{" "}
+          </Button>
+        ) : (
+          <Button disabled> Continue </Button>
+        )}
       </div>
     </Container>
-  )
-}
+  );
+};
 
 export default CardModal;
 
@@ -93,7 +123,7 @@ const Container = styled.div`
   z-index: 500;
   overflow: auto;
   transition: all 0.3s linear;
-  >div{
+  > div {
     display: flex;
     flex-direction: column;
     position: fixed;
@@ -108,21 +138,21 @@ const Container = styled.div`
     z-index: 1000;
     background-color: white;
     border-radius: 16px;
-    box-shadow: 0px 10px 60px rgba(80, 80, 80, .5);
-    >h1{
+    box-shadow: 0px 10px 60px rgba(80, 80, 80, 0.5);
+    > h1 {
       font-size: 34px;
       font-weight: 550;
       margin-bottom: 14px;
     }
-    label{
+    label {
       font-size: 18px;
       font-weight: 550;
       color: rgba(80, 80, 80);
       margin-bottom: 9px;
     }
-    input{
+    input {
       height: 50px;
-      background-color: rgba(80, 80, 80, .07);
+      background-color: rgba(80, 80, 80, 0.07);
       border-radius: 5px;
       margin-bottom: 30px;
     }
@@ -132,16 +162,16 @@ const Container = styled.div`
 const CardDetail = styled.div`
   display: flex;
   justify-content: start;
-  >div:first-of-type{
+  > div:first-of-type {
     margin-right: 4%;
   }
-  >div{
+  > div {
     display: flex;
     flex-direction: column;
     width: 30%;
-    input{
+    input {
       height: 50px;
-      background-color: rgba(80, 80, 80, .07);
+      background-color: rgba(80, 80, 80, 0.07);
       border-radius: 5px;
       margin-bottom: 30px;
     }

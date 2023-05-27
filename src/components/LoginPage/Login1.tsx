@@ -27,6 +27,7 @@ const Login1 = (props: Login1Props) => {
       setError(`Invalid email format, please check again and re-enter.`);
       return;
     }
+    setError("");
     setStep();
   };
 
@@ -69,8 +70,7 @@ const Login1 = (props: Login1Props) => {
       <input
         id="email"
         name="email"
-        aria-label="Email for Registration"
-        aria-describedby="email-error"
+        aria-describedby="emailError"
         type="email"
         inputMode="email"
         value={email}
@@ -78,7 +78,7 @@ const Login1 = (props: Login1Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setEmail(e.currentTarget.value)
         }
-        className="w-[430px]"
+        className={email ? "border invalid:border-red-500" : ""}
         pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         aria-invalid={
           email.match(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/g)
@@ -91,7 +91,7 @@ const Login1 = (props: Login1Props) => {
       />
       {error && (
         <div
-          id="email-error"
+          id="emailError"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"

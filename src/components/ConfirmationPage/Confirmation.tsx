@@ -3,22 +3,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Card } from "../OrderPage/Order2";
 import {
   ConfirmationContainer,
   ConfirmationListItem,
 } from "../../app/Utils/StyledComponents/ConfirmationComponents";
 
-import { billAddress, shipAddress } from "../../pages/OrderPage";
-import { carData } from "../../teslaCarInfo";
+import { Payment, Address } from "../../app/Store/Order/orderSlice";
+import { CartState } from "../../app/Store/Cart/cartSlice";
 
-interface orderData {
+export interface orderData {
   tag: string | null;
-  order: carData[] | null;
-  shipping: shipAddress | null;
-  billing: billAddress | null;
-  card: Card | null;
-  total: number | null;
+  order: CartState | null;
+  shipping: Address | null;
+  billing: Address | null;
+  card: Payment | null;
 }
 
 const Confirmation = ({
@@ -69,16 +67,16 @@ const Confirmation = ({
               <br />
               <br />
               Total Amount: $
-              {new Intl.NumberFormat("en-US").format(order.total!)}
+              {new Intl.NumberFormat("en-US").format(order.order?.total!)}
             </h2>
           </div>
           <ul aria-label="Order Items list">
             {!empty &&
-              order.order?.map((product, idx) => (
+              order.order?.items.map((product, idx) => (
                 <ConfirmationListItem
                   aria-label="Order Item"
                   aria-posinset={idx + 1}
-                  aria-setsize={order.order?.length}
+                  aria-setsize={order.order?.items.length}
                   key={product.id}
                 >
                   <img
@@ -100,7 +98,9 @@ const Confirmation = ({
           </ul>
           <p className={"mt-8 tracking-wider"}>
             Items count:
-            <span className={"!border-b-0 ml-4"}>{order.order?.length}</span>
+            <span className={"!border-b-0 ml-4"}>
+              {order.order?.items.length}
+            </span>
           </p>
         </>
       ) : (
