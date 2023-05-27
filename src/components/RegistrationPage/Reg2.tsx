@@ -174,10 +174,10 @@ const Reg2 = (props: Reg2Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setPassword(e.currentTarget.value)
         }
-        pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}"
+        pattern="^[A-Za-z0-9!@#$%^&*]{8,}$"
         aria-invalid={
           password.match(
-            /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])\S{8,}/g
+            /(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]){8,}/
           )
             ? "false"
             : "true"
