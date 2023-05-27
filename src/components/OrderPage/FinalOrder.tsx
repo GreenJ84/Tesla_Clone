@@ -2,14 +2,11 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useCommas } from "../../app/Utils/hooks/useCommas";
 
-const FinalOrder = (props: { subTot: number }) => {
-  const { subTot } = props;
+import { formatPrice, useAppSelector } from "../../app/Utils/hooks/hooks";
 
-  const getTax = (value: number) => {
-    return Math.round(value * 0.103 * 100) / 100;
-  };
+const FinalOrder = () => {
+  const cart = useAppSelector((state) => state.cart);
 
   return (
     <FinalOrderContainer>
@@ -21,10 +18,10 @@ const FinalOrder = (props: { subTot: number }) => {
           <h2>Total Due</h2>
         </div>
         <div>
-          <p> $ {useCommas(subTot)}.00</p>
+          <p> $ {formatPrice(cart.subTotal)}.00</p>
           <p> Free </p>
-          <p> $ {useCommas(getTax(subTot))} </p>
-          <h2> $ {useCommas(subTot + getTax(subTot))}</h2>
+          <p> $ {formatPrice(cart.tax)} </p>
+          <h2> $ {formatPrice(cart.total)}</h2>
         </div>
       </div>
     </FinalOrderContainer>

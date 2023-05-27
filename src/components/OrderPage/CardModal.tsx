@@ -2,11 +2,12 @@ import { XMarkIcon } from '@heroicons/react/24/solid';
 import React, { BaseSyntheticEvent } from 'react'
 import styled from 'styled-components';
 import { Button } from '../../app/Utils/StyledComponents/LoginComponents';
-import { Card } from './Order2';
+import { Payment } from '../../app/Store/Order/orderSlice';
 
 interface cardProps{
   toggle: Function
-  setCard: [Card, Function]
+  setCard: [Payment, Function]
+  submit: Function
 }
 
 const todayDate = () => {
@@ -15,7 +16,7 @@ const todayDate = () => {
 }
 
 const CardModal = (props: cardProps) => {
-  const { toggle } = props;
+  const { toggle, submit } = props;
   const [ card, setCard ] = props.setCard;
   return (
     <Container>
@@ -31,7 +32,7 @@ const CardModal = (props: cardProps) => {
         <input
           name="card name"
           type="text"
-          value={card.name}
+          value={card.cardHolderName}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
             setCard("name", e)
           }
@@ -41,7 +42,7 @@ const CardModal = (props: cardProps) => {
         <input
           name="card number"
           type="text"
-          value={card.number}
+          value={card.cardNumber}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => 
             setCard("number", e)
           }
@@ -54,7 +55,17 @@ const CardModal = (props: cardProps) => {
               name="expiration"
               type="month"
               min={todayDate()}
-              value={card.exp}
+              value={card.expMonth}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("exp", e)}
+            />
+          </div>
+          <div>
+            <label htmlFor="expiration">Expiration</label>
+            <input
+              name="expiration"
+              type="year"
+              min={todayDate().slice(0, 4)}
+              value={card.expYear}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCard("exp", e)}
             />
           </div>
@@ -68,9 +79,9 @@ const CardModal = (props: cardProps) => {
             />
           </div>
         </CardDetail>
-        {card.name && card.number && card.exp && card.cvv ?
+        {card.cardHolderName && card.cardNumber && card.expMonth &&card.expYear && card.cvv ?
           <Button
-            onClick={(e: BaseSyntheticEvent) => toggle(e)}
+            onClick={(e: BaseSyntheticEvent) => submit(e)}
           > Continue </Button>
         :
           <Button disabled> Continue </Button>}
