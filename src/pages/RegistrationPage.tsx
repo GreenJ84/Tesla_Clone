@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -27,9 +26,10 @@ import {
 
 import { setLogin } from "../app/Store/User/userSlice";
 import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
+import { useAppDispatch } from "../app/Utils/hooks/hooks";
 
 const RegistrationPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   const [firstName, setFirstName] = useState("");

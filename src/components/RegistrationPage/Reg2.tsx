@@ -112,8 +112,8 @@ const Reg2 = (props: Reg2Props) => {
       <input
         id="email"
         name="email"
-        aria-label="Email for Registration"
-        aria-describedby="email-error"
+        aria-describedby="emailError"
+        className={email ? "border invalid:border-red-500" : ""}
         type="email"
         inputMode="email"
         value={email}
@@ -127,13 +127,14 @@ const Reg2 = (props: Reg2Props) => {
             ? "false"
             : "true"
         }
-        autoComplete="email"
+        autoComplete="on"
+        aria-autocomplete="both"
         required
         aria-required="true"
       />
       {errors.email && (
         <div
-          id="email-error"
+          id="emailError"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"
@@ -162,10 +163,9 @@ const Reg2 = (props: Reg2Props) => {
       <input
         id="password"
         name="password"
-        aria-label="A Password 8 or more character long"
-        aria-describedby="pass-error"
+        aria-describedby="passwordError"
         className={`relative ${
-          password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"
+          password ? "border invalid:border-red-500" : ""
         }`}
         type={showPass ? "text" : "password"}
         inputMode="text"
@@ -191,25 +191,22 @@ const Reg2 = (props: Reg2Props) => {
           set={showPassHandler}
         />
       )}
-      {errors.pass && (
-        <div
-          id="pass-error"
-          role="alert"
-          aria-live="assertive"
-          aria-atomic="true"
-        >
-          {errors.pass}
-        </div>
-      )}
+      <div
+        id="passwordError"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        {errors.pass}
+      </div>
 
-      <label htmlFor="con-pass">
+      <label htmlFor="confirmPassword">
         Confirm Password<span aria-hidden="true">*</span>
       </label>
       <input
-        id="con-pass"
-        name="con-pass"
-        aria-label="Confirm previously entered password"
-        aria-describedby="con-pass-error"
+        id="confirmPassword"
+        name="confirmPassword"
+        aria-describedby="confirmPasswordError"
         className={conPass ? "border invalid:border-red-500" : ""}
         type={showCon ? "text" : "password"}
         inputMode="text"
@@ -228,14 +225,14 @@ const Reg2 = (props: Reg2Props) => {
           set={showConHandler}
         />
       )}
-      {errors.conPass && <div
-        id="con-pass-error"
+      <div
+        id="confirmPasswordError"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
       >
         {errors.conPass}
-      </div>}
+      </div>
 
       {email && password && conPass ? (
         <button

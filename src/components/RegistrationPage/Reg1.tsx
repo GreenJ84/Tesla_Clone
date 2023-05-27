@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Captcha from "./Captcha";
 import { Reg1Container } from "../../app/Utils/StyledComponents/RegisrationComponents";
 
-import { useCaptcha } from "../../app/Utils/hooks/useCaptcha";
+import { useCaptcha } from "../../app/Utils/hooks/hooks";
 
 interface StepProps {
   firstName: [string, Function];
@@ -20,6 +20,7 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
   const [captcha, setCaptcha] = useCaptcha();
   const [cap, setCap] = useState(captcha);
   const [confirmCap, setConfirmCap] = useState("");
+
   const [errors, setErrors] = useState({
     fnE: "",
     lnE: "",
@@ -59,15 +60,14 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
 
   return (
     <Reg1Container>
-      <label htmlFor="first-name">
+      <label htmlFor="firstName">
         First Name<span aria-hidden="true">*</span>
       </label>
       <input
-        id="first-name"
-        name="first-name"
-        aria-label="First Name"
-        aria-describedby="first-name-error"
-        className={fN ? "border invalid:border-red-500" : ""}
+        id="firstName"
+        name="firstName"
+        aria-describedby="firstNameError"
+        className={fN && "border invalid:border-red-500"}
         type="text"
         inputMode="text"
         placeholder="Ex. John"
@@ -77,12 +77,13 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
         }}
         pattern="[A-Za-z]{2,}"
         aria-invalid={fN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
-        autoComplete="given-name"
+        autoComplete="on"
+        aria-autocomplete="both"
         required
         aria-required="true"
       />
       <div
-        id="first-name-error"
+        id="firstNameError"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
@@ -90,14 +91,13 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
         {errors.fnE}
       </div>
 
-      <label htmlFor="last-name">
+      <label htmlFor="lastName">
         Last Name<span aria-hidden="true">*</span>
       </label>
       <input
-        id="last-name"
-        name="last-name"
-        aria-label="Last Name"
-        aria-describedby="last-name-error"
+        id="lastName"
+        name="lastName"
+        aria-describedby="lastNameError"
         className={lN ? "border invalid:border-red-500" : ""}
         type="text"
         inputMode="text"
@@ -108,12 +108,13 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
         }}
         pattern="[A-Za-z]{2,}"
         aria-invalid={lN.match(/[A-Za-z]{2,}/g) ? "false" : "true"}
-        autoComplete="family-name"
+        autoComplete="on"
+        aria-autocomplete="both"
         required
         aria-required="true"
       />
       <div
-        id="last-name-error"
+        id="lastNameError"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
@@ -123,15 +124,13 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
 
       <Captcha cap={[cap, () => setCap(setCaptcha)]} />
 
-      <label htmlFor="CAPTCHA">
+      <label htmlFor="captcha">
         Enter the characters in the image<span aria-hidden="true">*</span>
       </label>
       <input
-        id="CAPTCHA"
-        name="CAPTCHA"
-        aria-label="Human confirmation Captcha"
-        aria-describedby="captcha-error"
-        title="Incorrect image characters"
+        id="captcha"
+        name="captcha"
+        aria-describedby="captchaError"
         className={confirmCap ? "border invalid:border-red-500" : ""}
         type="text"
         inputMode="text"
@@ -141,11 +140,12 @@ const Reg1 = ({ firstName, lastName, setStep }: StepProps) => {
         }}
         pattern={cap}
         aria-invalid={confirmCap.match(cap) ? "false" : "true"}
+        autoComplete="off"
         required
         aria-required="true"
       />
       <div
-        id="captcha-error"
+        id="captchaError"
         role="alert"
         aria-live="assertive"
         aria-atomic="true"
