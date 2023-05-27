@@ -73,8 +73,7 @@ const Login2 = (props: Login2Props) => {
       <input
         id="password"
         name="password"
-        aria-label="A Password 8 or more character long"
-        aria-describedby="pass-error"
+        aria-describedby="passError"
         className={`relative ${
           password ? "w-[430px] border invalid:border-red-500" : "w-[430px]"
         }`}
@@ -103,7 +102,7 @@ const Login2 = (props: Login2Props) => {
       )}
       {error && (
         <div
-          id="pass-error"
+          id="passError"
           role="alert"
           aria-live="assertive"
           aria-atomic="true"

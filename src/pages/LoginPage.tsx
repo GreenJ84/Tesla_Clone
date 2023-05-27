@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import {
   browserSessionPersistence,
@@ -25,10 +24,11 @@ import {
 } from "../app/Utils/StyledComponents/LoginComponents";
 
 import { setLogin } from "../app/Store/User/userSlice";
+import { useAppDispatch } from "../app/Utils/hooks/hooks";
 import { Cover } from "../app/Utils/StyledComponents/LayoutComponents";
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nav = useNavigate();
 
   const [email, setEmail] = useState("");
